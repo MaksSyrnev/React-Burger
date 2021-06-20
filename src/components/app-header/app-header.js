@@ -15,13 +15,13 @@ class AppHeader extends React.Component {
             <li className="mr-2">
               <div className={`${appHeaderStyle.but} pl-5 pr-5 pb-4 pt-4`}>
                 <BurgerIcon type="primary" />
-                <div className={`{appHeaderStyle.active_button} pl-2 text text_type_main-default`}>Конструктор</div>
+                <div className="pl-2 text text_type_main-default">Конструктор</div>
               </div>
             </li>
             <li>
               <div className={`${appHeaderStyle.but} pl-5 pr-5 pb-4 pt-4`}>
                 <ListIcon type="secondary" />
-                <div className={`{appHeaderStyle.active_button} pl-2 text text_type_main-default text_color_inactive`}>Лента заказов</div>
+                <div className="pl-2 text text_type_main-default text_color_inactive">Лента заказов</div>
               </div>
             </li>
           </ul>
@@ -34,7 +34,6 @@ class AppHeader extends React.Component {
             <ProfileIcon type="secondary" />
             <div className={`{appHeaderStyle.active_button} pl-2 text text_type_main-default text_color_inactive`}>Личный кабинет</div>
           </div>
-
         </nav>
       </header >
     )

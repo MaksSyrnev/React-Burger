@@ -1,0 +1,50 @@
+.box {
+  width: 50%;
+  max-width: 600px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 464px;
+  overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: #2f2f37;        /* цвет дорожки */
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #8585ad;    /* цвет плашки */
+  border: 3px solid #8585ad;  /* padding вокруг плашки */
+}
+
+.list_item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.summary_box {
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  height: 64px;
+}
+
+.summary_price {
+  composes:summary_box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 120px;
+}
