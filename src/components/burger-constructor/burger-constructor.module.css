@@ -12,6 +12,10 @@
   max-height: 464px;
   overflow-y: auto;
 	overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
 }
 
 .list::-webkit-scrollbar {
@@ -19,12 +23,12 @@
 }
 
 .list::-webkit-scrollbar-track {
-  background: #2f2f37;        /* цвет дорожки */
+  background: #2f2f37;
 }
 
 .list::-webkit-scrollbar-thumb {
-  background-color: #8585ad;    /* цвет плашки */
-  border: 3px solid #8585ad;  /* padding вокруг плашки */
+  background-color: #8585ad;
+  border: 3px solid #8585ad;
 }
 
 .list_item {
