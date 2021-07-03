@@ -63,3 +63,7 @@
 .product_item {
   box-sizing: border-box;
 }
+
+.product_item:hover {
+  cursor: pointer;
+}

@@ -14,6 +14,8 @@ function BurgerIngredients(props) {
     setCurrent(e);
   };
 
+
+
   const ingredientPropTypes = PropTypes.shape({
     _id: PropTypes.symbol.isRequired,
     type: PropTypes.string.isRequired,
@@ -22,9 +24,14 @@ function BurgerIngredients(props) {
   });
 
   const Ingredient = ({ item, index }) => {
+
+    const handleClickIngredient = () => {
+      props.onOpen(item);
+    }
+
     return (
       <li className={`${burgerIngredientsStyle.product_item} ml-4 pr-2`} key={`${item._id}_${index}`}>
-        <div className={burgerIngredientsStyle.product_card} >
+        <div className={burgerIngredientsStyle.product_card} onClick={handleClickIngredient}>
           <img src={item.image} alt={item.name} className="pl-4 pr-4" />
           <div className={`${burgerIngredientsStyle.price} `}>
             <p className={`pb-1 pt-1 text text_type_digits-default`} >

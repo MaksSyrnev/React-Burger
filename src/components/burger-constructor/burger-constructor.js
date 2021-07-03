@@ -28,19 +28,19 @@ function BurgerConstructor(props) {
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <div className="ml-8 mr-4">
+        <div className="ml-8 mr-4"> {/*_id булки 60d3b41abdacab0026a733c6 */}
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={state.top.image}
+            text={`${state[0].name} (верх)`}
+            price={state[0].price}
+            thumbnail={state[0].image}
           />
         </div>
 
         <ul className={burgerConstructorStyle.list}>
 
-          {state.main.map((item, index) => (
+          {state.map((item, index) => (
             <li className={burgerConstructorStyle.list_item} key={`${item._id}_${index}`}>
               <DragIcon type="primary" />
               <ConstructorElement
@@ -58,9 +58,9 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={state.top.image}
+            text={`${state[0].name} (низ)`}
+            price={state[0].price}
+            thumbnail={state[0].image}
           />
         </div>
 
@@ -73,7 +73,7 @@ function BurgerConstructor(props) {
           </p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={props.onOpen}>
           Оформить заказ
         </Button>
 
