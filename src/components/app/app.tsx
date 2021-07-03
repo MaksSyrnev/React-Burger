@@ -4,7 +4,7 @@ import appStyle from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { data } from '../../utils/data';
+import { data, stateBurger } from '../../utils/data';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <AppHeader />
       <main className={appStyle.content}>
         <BurgerIngredients data={data} />
-        <BurgerConstructor />
+        <BurgerConstructor stateBurger={stateBurger} />
       </main>
     </div>
   );

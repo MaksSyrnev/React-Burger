@@ -3,6 +3,7 @@ import burgerIngredientsStyle from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 function BurgerIngredients(props) {
 
@@ -13,7 +14,14 @@ function BurgerIngredients(props) {
     setCurrent(e);
   };
 
-  const Ingredient = (item, index) => {
+  const ingredientPropTypes = PropTypes.shape({
+    _id: PropTypes.symbol.isRequired,
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+  });
+
+  const Ingredient = ({ item, index }) => {
     return (
       <li className={`${burgerIngredientsStyle.product_item} ml-4 pr-2`} key={`${item._id}_${index}`}>
         <div className={burgerIngredientsStyle.product_card} >
@@ -31,6 +39,10 @@ function BurgerIngredients(props) {
         </div>
       </li>
     );
+  };
+
+  BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropTypes),
   };
 
   return (
@@ -56,21 +68,6 @@ function BurgerIngredients(props) {
             if (item.type === "bun") {
               return (
                 <Ingredient item={item} index={index} />
-                /*  <li className={`${burgerIngredientsStyle.product_item} ml-4 pr-2`} key={`${item._id}_${index}`}>
-                   <div className={burgerIngredientsStyle.product_card} >
-                     <img src={item.image} alt={item.name} className="pl-4 pr-4" />
-                     <div className={`${burgerIngredientsStyle.price} `}>
-                       <p className={`pb-1 pt-1 text text_type_digits-default`} >
-                         {item.price}
-                       </p>
-                       <CurrencyIcon type="primary" />
-                     </div>
-                     <p className={`${burgerIngredientsStyle.description} text text_type_main-default`}>
-                       {item.name}
-                     </p>
-                     <Counter count={1} size="default" />
-                   </div>
-                 </li> */
               );
             }
           })}
@@ -81,21 +78,7 @@ function BurgerIngredients(props) {
           {data.map(function (item, index) {
             if (item.type === "sauce") {
               return (
-                <li className={`${burgerIngredientsStyle.product_item} ml-4 pr-2`} key={`${item._id}_${index}`}>
-                  <div className={burgerIngredientsStyle.product_card} >
-                    <img src={item.image} alt={item.name} className="pl-4 pr-4" />
-                    <div className={`${burgerIngredientsStyle.price} `}>
-                      <p className={`pb-1 pt-1 text text_type_digits-default`} >
-                        {item.price}
-                      </p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className={`${burgerIngredientsStyle.description} text text_type_main-default`}>
-                      {item.name}
-                    </p>
-                    <Counter count={1} size="default" />
-                  </div>
-                </li>
+                <Ingredient item={item} index={index} />
               );
             }
           })}
@@ -103,25 +86,10 @@ function BurgerIngredients(props) {
 
         <h3 className="text text_type_main-medium mt-10 pb-6">Начинка</h3>
         <ul className={`${burgerIngredientsStyle.product_list}`}>
-
           {data.map(function (item, index) {
             if (item.type === "main") {
               return (
-                <li className={`${burgerIngredientsStyle.product_item} ml-4 pr-2`} key={`${item._id}_${index}`}>
-                  <div className={burgerIngredientsStyle.product_card} >
-                    <img src={item.image} alt={item.name} className="pl-4 pr-4" />
-                    <div className={`${burgerIngredientsStyle.price} `}>
-                      <p className={`pb-1 pt-1 text text_type_digits-default`} >
-                        {item.price}
-                      </p>
-                      <CurrencyIcon type="primary" />
-                    </div>
-                    <p className={`${burgerIngredientsStyle.description} text text_type_main-default`}>
-                      {item.name}
-                    </p>
-                    <Counter count={1} size="default" />
-                  </div>
-                </li>
+                <Ingredient item={item} index={index} />
               );
             }
           })}
