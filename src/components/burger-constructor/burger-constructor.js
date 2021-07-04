@@ -32,9 +32,9 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${state[0].name} (верх)`}
-            price={state[0].price}
-            thumbnail={state[0].image}
+            text="Краторная булка N-200i (верх)"
+            price="1255"
+            thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
           />
         </div>
 
@@ -58,9 +58,9 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${state[0].name} (низ)`}
-            price={state[0].price}
-            thumbnail={state[0].image}
+            text="Краторная булка N-200i (низ)"
+            price="1255"
+            thumbnail="https://code.s3.yandex.net/react/code/bun-02.png"
           />
         </div>
 
