@@ -28,7 +28,7 @@ const AppHeader = () => {
         </div>
         <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
           <ProfileIcon type="secondary" />
-          <div className={`{appHeaderStyle.active_button} pl-2 text text_type_main-default text_color_inactive`}>Личный кабинет</div>
+          <div className={`${appHeaderStyle.active_button} pl-2 text text_type_main-default text_color_inactive`}>Личный кабинет</div>
         </div>
       </nav>
     </header >

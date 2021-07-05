@@ -10,21 +10,6 @@ function BurgerConstructor(props) {
 
   const state = props.stateBurger;
 
-  const ingredientPropTypes = PropTypes.shape({
-    _id: PropTypes.symbol.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-
-  });
-
-  BurgerConstructor.propTypes = {
-    state: PropTypes.shape({
-      top: PropTypes.objectOf(ingredientPropTypes),
-      main: PropTypes.arrayOf(ingredientPropTypes)
-    }),
-  };
-
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -78,9 +63,20 @@ function BurgerConstructor(props) {
         </Button>
 
       </div>
-    </div>
+    </div >
   )
 
 }
+
+const ingredientPropTypes = PropTypes.shape({
+  _id: PropTypes.symbol.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+});
+
+BurgerConstructor.propTypes = {
+  stateBurger: PropTypes.arrayOf(ingredientPropTypes).isRequired
+};
 
 export default BurgerConstructor;

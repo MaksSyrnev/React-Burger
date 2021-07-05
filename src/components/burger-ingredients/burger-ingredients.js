@@ -1,9 +1,8 @@
 import React from 'react';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import Ingredient from '../ingredient/ingredient';
 
 function BurgerIngredients(props) {
 
@@ -12,44 +11,6 @@ function BurgerIngredients(props) {
 
   const handleClickTab = (e) => {
     setCurrent(e);
-  };
-
-
-
-  const ingredientPropTypes = PropTypes.shape({
-    _id: PropTypes.symbol.isRequired,
-    type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-  });
-
-  const Ingredient = ({ item, index }) => {
-
-    const handleClickIngredient = () => {
-      props.onOpen(item);
-    }
-
-    return (
-      <li className={`${burgerIngredientsStyle.product_item} ml-4 pr-2`} key={`${item._id}_${index}`}>
-        <div className={burgerIngredientsStyle.product_card} onClick={handleClickIngredient}>
-          <img src={item.image} alt={item.name} className="pl-4 pr-4" />
-          <div className={`${burgerIngredientsStyle.price} `}>
-            <p className={`pb-1 pt-1 text text_type_digits-default`} >
-              {item.price}
-            </p>
-            <CurrencyIcon type="primary" />
-          </div>
-          <p className={`${burgerIngredientsStyle.description} text text_type_main-default`}>
-            {item.name}
-          </p>
-          <Counter count={1} size="default" />
-        </div>
-      </li>
-    );
-  };
-
-  BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropTypes),
   };
 
   return (
@@ -74,7 +35,7 @@ function BurgerIngredients(props) {
           {data.map(function (item, index) {
             if (item.type === "bun") {
               return (
-                <Ingredient item={item} index={index} />
+                <Ingredient item={item} onOpen={props.onOpen} key={`${item._id}_${index}`} />
               );
             }
           })}
@@ -85,7 +46,7 @@ function BurgerIngredients(props) {
           {data.map(function (item, index) {
             if (item.type === "sauce") {
               return (
-                <Ingredient item={item} index={index} />
+                <Ingredient item={item} onOpen={props.onOpen} key={`${item._id}_${index}`} />
               );
             }
           })}
@@ -96,7 +57,7 @@ function BurgerIngredients(props) {
           {data.map(function (item, index) {
             if (item.type === "main") {
               return (
-                <Ingredient item={item} index={index} />
+                <Ingredient item={item} onOpen={props.onOpen} key={`${item._id}_${index}`} />
               );
             }
           })}
@@ -109,3 +70,14 @@ function BurgerIngredients(props) {
 }
 
 export default BurgerIngredients;
+
+const ingredientPropTypes = PropTypes.shape({
+  _id: PropTypes.symbol.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+});
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropTypes),
+};

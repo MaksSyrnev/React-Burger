@@ -1,0 +1,31 @@
+.product_card {
+  position: relative;
+  width: 272px;
+  padding: 0;
+  margin: 0;
+}
+
+.product_item {
+  box-sizing: border-box;
+}
+
+.product_item:hover {
+  cursor: pointer;
+}
+
+.price {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.description {
+  width: 272px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+}

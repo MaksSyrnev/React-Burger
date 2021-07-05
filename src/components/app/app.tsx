@@ -5,7 +5,6 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
-import ModalOverlay from '../modal-overlay/modal-overlay';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
@@ -42,10 +41,10 @@ function App() {
     setIsOpen(true);
   };
 
-  function handleClickOpenIngredient(i: React.SetStateAction<{}>) {
+  const handleClickOpenIngredient = () => {
     setTitleModal('Детали ингредиента');
-    setSelectedItem(i);
-    setIsOpen(true);
+    /*  setSelectedItem(i);
+     setIsOpen(true); */
   };
 
   const closePopup = () => {
@@ -53,18 +52,16 @@ function App() {
   };
 
   const modal = (
-    <ModalOverlay onClose={closePopup}>
-      <Modal onClose={closePopup} title={titleModal}>
-        {titleModal ? <IngredientDetails item={selectedItem} /> : <OrderDetails />}
-      </Modal >
-    </ModalOverlay>
+    <Modal onClose={closePopup} title={titleModal}>
+      {titleModal ? <IngredientDetails item={selectedItem} /> : <OrderDetails />}
+    </Modal >
   );
 
   return (
     <div className={appStyle.page}>
       <AppHeader />
       <main className={appStyle.content}>
-        <BurgerIngredients data={dataIngredients} onOpen={handleClickOpenIngredient} />
+        <BurgerIngredients data={dataIngredients} />
         <BurgerConstructor stateBurger={dataIngredients} onOpen={handleClickOpenOrder} />
       </main>
 
@@ -74,3 +71,6 @@ function App() {
 }
 
 export default App;
+
+// onOpen={handleClickOpenIngredient}
+//onOpen={handleClickOpenOrder}
