@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 export default function Ingredient(props) {
 
-  const { item } = props;
+  const item = props.item;
 
   function handleClickIngredient() {
-
-    props.onOpen(item);
+    const i = item._id;
+    props.openIngredient(i);
   }
 
   return (
@@ -31,18 +31,12 @@ export default function Ingredient(props) {
   );
 };
 
-// const itemPropTypes = PropTypes.shape({
-//   _id: PropTypes.symbol.isRequired,
-//   price: PropTypes.number.isRequired,
-//   name: PropTypes.string.isRequired,
-//   image: PropTypes.string.isRequired,
-// });
-
-// Ingredient.propTypes = {
-//   item: PropTypes.shape({
-//     _id: PropTypes.symbol.isRequired,
-//     price: PropTypes.number.isRequired,
-//     name: PropTypes.string.isRequired,
-//     image: PropTypes.string.isRequired,
-//   });
-// }
+Ingredient.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+  }),
+  openIngredient: PropTypes.func.isRequired
+};

@@ -1,10 +1,11 @@
 import React from 'react';
 import ingredientDetailsStyle from './ingredient-details.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
-const IngredientDetails = ({ item }) => {
+const IngredientDetails = (props) => {
 
-  //const item = props;
+  const item = props.current;
 
   return (
     <div className={`${ingredientDetailsStyle.box}`}>
@@ -33,5 +34,17 @@ const IngredientDetails = ({ item }) => {
   );
 
 };
+
+IngredientDetails.propTypes = {
+  current: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    proteins: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+  })
+}
 
 export default IngredientDetails;

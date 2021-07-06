@@ -34,9 +34,9 @@ function BurgerIngredients(props) {
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "bun") {
-              return (
-                <Ingredient item={item} onOpen={props.onOpen} key={`${item._id}_${index}`} />
-              );
+              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} />
+            } else {
+              return null;
             }
           })}
         </ul>
@@ -45,9 +45,9 @@ function BurgerIngredients(props) {
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "sauce") {
-              return (
-                <Ingredient item={item} onOpen={props.onOpen} key={`${item._id}_${index}`} />
-              );
+              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} />
+            } else {
+              return null;
             }
           })}
         </ul>
@@ -56,9 +56,9 @@ function BurgerIngredients(props) {
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "main") {
-              return (
-                <Ingredient item={item} onOpen={props.onOpen} key={`${item._id}_${index}`} />
-              );
+              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} />
+            } else {
+              return null;
             }
           })}
         </ul>
@@ -69,15 +69,15 @@ function BurgerIngredients(props) {
 
 }
 
-export default BurgerIngredients;
-
 const ingredientPropTypes = PropTypes.shape({
-  _id: PropTypes.symbol.isRequired,
+  _id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
 });
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes),
+  data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
 };
+
+export default BurgerIngredients;

@@ -13,7 +13,7 @@ function BurgerConstructor(props) {
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <div className="ml-8 mr-4"> {/*_id булки 60d3b41abdacab0026a733c6 */}
+        <div className="ml-8 mr-4">
           <ConstructorElement
             type="top"
             isLocked={true}
@@ -31,11 +31,11 @@ function BurgerConstructor(props) {
               <ConstructorElement
                 text={item.name}
                 price={item.price}
-                thumbnail={item.image} style={{ flexGrow: '1' }}
+                thumbnail={item.image}
               />
             </li>
-          ))
-          }
+          )
+          )}
 
         </ul>
 
@@ -58,18 +58,18 @@ function BurgerConstructor(props) {
           </p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium" onClick={props.onOpen}>
+        <Button type="primary" size="medium" onClick={props.openOrder}>
           Оформить заказ
         </Button>
-
       </div>
+
     </div >
   )
 
 }
 
 const ingredientPropTypes = PropTypes.shape({
-  _id: PropTypes.symbol.isRequired,
+  _id: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,

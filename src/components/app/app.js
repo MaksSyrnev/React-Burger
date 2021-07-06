@@ -14,7 +14,7 @@ function App() {
   const [dataIngredients, setDataIngredients] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
   const [titleModal, setTitleModal] = React.useState('');
-  const [selectedItem, setSelectedItem] = React.useState({});
+  const [currentIngredients, setCurrentIngredients] = React.useState({});
 
   useEffect(() => {
     fetch(url, {
@@ -28,7 +28,7 @@ function App() {
       .then((res) => {
         const data = res.data;
         setDataIngredients(data);
-        console.log(data);
+        //console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -36,15 +36,19 @@ function App() {
 
   }, []);
 
-  const handleClickOpenOrder = () => {
+  const handleOpenOrder = () => {
     setTitleModal('');
     setIsOpen(true);
   };
 
-  const handleClickOpenIngredient = () => {
+  const handleOpenIngredient = (idIngridient) => {
+    const currentIngredients = dataIngredients.filter(
+      (item) => item._id === idIngridient
+    );
+    const current = currentIngredients[0];
     setTitleModal('Детали ингредиента');
-    /*  setSelectedItem(i);
-     setIsOpen(true); */
+    setCurrentIngredients(current);
+    setIsOpen(true);
   };
 
   const closePopup = () => {
@@ -53,7 +57,7 @@ function App() {
 
   const modal = (
     <Modal onClose={closePopup} title={titleModal}>
-      {titleModal ? <IngredientDetails item={selectedItem} /> : <OrderDetails />}
+      {titleModal ? <IngredientDetails current={currentIngredients} /> : <OrderDetails />}
     </Modal >
   );
 
@@ -61,8 +65,8 @@ function App() {
     <div className={appStyle.page}>
       <AppHeader />
       <main className={appStyle.content}>
-        <BurgerIngredients data={dataIngredients} />
-        <BurgerConstructor stateBurger={dataIngredients} onOpen={handleClickOpenOrder} />
+        <BurgerIngredients data={dataIngredients} openIngredient={handleOpenIngredient} />
+        <BurgerConstructor stateBurger={dataIngredients} openOrder={handleOpenOrder} />
       </main>
 
       {isOpen && modal}
@@ -71,6 +75,3 @@ function App() {
 }
 
 export default App;
-
-// onOpen={handleClickOpenIngredient}
-//onOpen={handleClickOpenOrder}
