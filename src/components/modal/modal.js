@@ -12,7 +12,7 @@ const Modal = (props) => {
   return ReactDOM.createPortal(
     (
       <ModalOverlay onClose={props.onClose}>
-        <div className={`${modalStyle.box} pl-10 pr-10 pt-10 pb-15`}>
+        <div className={`${modalStyle.box} pl-10 pr-10 pt-10 pb-15`} onClick={(e) => e.stopPropagation()}>
           <div className={modalStyle.header}>
             <h2 className={`${modalStyle.title} text text_type_main-large`}>{props.title}</h2>
             <CloseIcon type="primary" onClick={props.onClose} />
