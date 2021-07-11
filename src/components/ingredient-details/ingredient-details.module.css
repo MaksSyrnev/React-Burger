@@ -1,0 +1,16 @@
+.box {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.footer_card {
+  display: flex;
+}
+
+.footer_text {
+  color: #8585ad;
+  text-align: center;
+}

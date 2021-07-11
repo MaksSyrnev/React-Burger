@@ -1,0 +1,41 @@
+.header {
+  margin: 0 auto;
+  padding: 0;
+  background-color: #1C1C21;
+  width: 100%;
+  height: 88px;
+  display: flex;
+}
+
+.nav_panel {
+  margin: 0 auto;
+  padding: 0;
+  flex-basis: 1280px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button_list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  align-self: center;
+  margin: 40%;
+  position: absolute;
+}

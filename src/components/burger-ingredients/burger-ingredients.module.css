@@ -1,0 +1,69 @@
+.box {
+  width: 50%;
+  max-width: 600px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.ingredients_box {
+  max-width: 100%;
+  height: 686px;
+  overflow-y: auto;
+	overflow-x: hidden;
+}
+
+ .ingredients_box::-webkit-scrollbar {
+	 width: 8px;
+   height: 664px;
+ }
+
+ .ingredients_box::-webkit-scrollbar-track {
+  background: #2f2f37;        /* цвет дорожки */
+}
+
+.ingredients_box::-webkit-scrollbar-thumb {
+  background-color: #8585ad;    /* цвет плашки */
+  border: 3px solid #8585ad;  /* padding вокруг плашки */
+}
+
+.product_card {
+  position: relative;
+  width: 272px;
+  padding: 0;
+  margin: 0;
+}
+
+.price {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.description {
+  width: 272px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.product_list {
+  list-style: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product_item {
+  box-sizing: border-box;
+}
+
+.product_item:hover {
+  cursor: pointer;
+}
