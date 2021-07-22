@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { IngredientsContext } from '../../utils/ingredients-context';
 
 function BurgerConstructor(props) {
-
-  const state = props.stateBurger;
+  const state = useContext(IngredientsContext);
+  //const state = props.stateBurger;
 
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`}>

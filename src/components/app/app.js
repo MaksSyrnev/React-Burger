@@ -7,6 +7,8 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { IngredientsContext } from '../../utils/ingredients-context';
+
 
 function App() {
 
@@ -60,14 +62,16 @@ function App() {
       {titleModal ? <IngredientDetails current={currentIngredients} /> : <OrderDetails />}
     </Modal >
   );
-
+  //data={dataIngredients} stateBurger={dataIngredients}
   return (
     <div className={appStyle.page}>
       <AppHeader />
-      <main className={appStyle.content}>
-        <BurgerIngredients data={dataIngredients} openIngredient={handleOpenIngredient} />
-        <BurgerConstructor stateBurger={dataIngredients} openOrder={handleOpenOrder} />
-      </main>
+      <IngredientsContext.Provider value={dataIngredients}>
+        <main className={appStyle.content}>
+          <BurgerIngredients openIngredient={handleOpenIngredient} />
+          <BurgerConstructor openOrder={handleOpenOrder} />
+        </main>
+      </IngredientsContext.Provider>
 
       {isOpen && modal}
     </div >
