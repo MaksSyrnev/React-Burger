@@ -30,7 +30,7 @@ function App() {
       .then((res) => {
         const data = res.data;
         setDataIngredients(data);
-        //console.log(data);
+        console.log(data);
       })
       .catch((err) => {
         console.log(err);

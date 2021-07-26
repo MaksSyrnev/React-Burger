@@ -8,7 +8,6 @@ import { IngredientsContext } from '../../utils/ingredients-context';
 function BurgerIngredients(props) {
 
   const [current, setCurrent] = React.useState('one');
-  //const { data } = props;
   const data = useContext(IngredientsContext);
 
   const handleClickTab = (e) => {
