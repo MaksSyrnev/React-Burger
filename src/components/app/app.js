@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import appStyle from './app.module.css';
 
 import AppHeader from '../app-header/app-header';
@@ -8,18 +8,20 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { IngredientsContext } from '../../utils/ingredients-context';
+import { StateBurgerContext } from '../../utils/state-burger-context';
 
 
 function App() {
 
-  const url = 'https://norma.nomoreparties.space/api/ingredients';
-  const [dataIngredients, setDataIngredients] = React.useState([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [titleModal, setTitleModal] = React.useState('');
-  const [currentIngredients, setCurrentIngredients] = React.useState({});
+  const url = 'https://norma.nomoreparties.space/api/';
+  const [dataIngredients, setDataIngredients] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [titleModal, setTitleModal] = useState('');
+  const [currentIngredients, setCurrentIngredients] = useState({});
+  const [order, setOrder] = useState([]);
 
   useEffect(() => {
-    fetch(url, {
+    fetch(`${url}ingredients`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -30,7 +32,6 @@ function App() {
       .then((res) => {
         const data = res.data;
         setDataIngredients(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -38,8 +39,28 @@ function App() {
 
   }, []);
 
-  const handleOpenOrder = () => {
+  const handleOpenOrder = (order) => {
     setTitleModal('');
+    fetch(`${url}orders`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "ingredients": order
+      })
+    })
+      .then((res) => {
+        return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((res) => {
+        const orderData = res.order;
+        setOrder(orderData.number);
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     setIsOpen(true);
   };
 
@@ -59,10 +80,10 @@ function App() {
 
   const modal = (
     <Modal onClose={closePopup} title={titleModal}>
-      {titleModal ? <IngredientDetails current={currentIngredients} /> : <OrderDetails />}
+      {titleModal ? <IngredientDetails current={currentIngredients} /> : <OrderDetails orderNumber={order} />}
     </Modal >
   );
-  //data={dataIngredients} stateBurger={dataIngredients}
+
   return (
     <div className={appStyle.page}>
       <AppHeader />

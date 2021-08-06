@@ -1,14 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { IngredientsContext } from '../../utils/ingredients-context';
-import Ingredient from '../ingredient/ingredient';
+import React, { useContext } from 'react';
+import { StateBurgerContext } from '../../utils/state-burger-context';
 
-export const TotalPrice = (props) => {
-  const ingredientsData = useContext(IngredientsContext);
-  const stateBurger = props.stateBurger;
+export const TotalPrice = () => {
+  const stateBurger = useContext(StateBurgerContext);
   let total = 0;
-  if (stateBurger.length > 0) {
-    stateBurger.forEach(function (item) {
-      total = total + ingredientsData.filter(itemData => itemData._id === item).price;
+  if ((stateBurger.top !== undefined) && (stateBurger.top._id !== undefined)) {
+    total = stateBurger.top.price * 2;
+  }
+  if ((stateBurger.main !== undefined) && (stateBurger.main.length !== 0)) {
+    stateBurger.main.forEach(function (item) {
+      total = total + item.price;
     });
   }
 

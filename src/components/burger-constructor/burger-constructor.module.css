@@ -1,8 +1,15 @@
 .box {
   width: 50%;
   max-width: 600px;
+  min-height: 464px;
   margin: 0;
   box-sizing: border-box;
+}
+
+.conteiner {
+  display: 'flex';
+  gap: '10px';
+  flex-direction: column;
 }
 
 .list {
