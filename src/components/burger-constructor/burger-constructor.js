@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { IngredientsContext } from '../../utils/ingredients-context';
-import { StateBurgerContext } from '../../utils/state-burger-context';
 import { TotalPrice } from '../total-price/total-price';
+import { useSelector, useDispatch } from 'react-redux';
+import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
+
 
 function BurgerConstructor(props) {
-  const dataIngredients = useContext(IngredientsContext);
-  const [burger, setBurger] = useState({});
-
-  console.log(dataIngredients);
-  console.log(burger);
+  const dataIngredients = useSelector(store => store.ingredients.items);
+  const dispatch = useDispatch();
+  const burger = useSelector(store => store.burger);
 
   useEffect(() => {
     if (dataIngredients.length > 0) {
@@ -25,25 +24,26 @@ function BurgerConstructor(props) {
 
       function generateBurger() {
         let count = Math.floor(Math.random() * (dataIngredients.length));
-        //console.log(count);
-        let elementsBurger = { top: {}, main: [] };
 
         for (let i = 0; i <= count; i = i + 1) {
           let element = elementBurger();
           if (element.type === "bun") {
-            elementsBurger.top = element;
+            dispatch({
+              type: ADD_BUN,
+              item: element
+            });
           } else {
-            elementsBurger.main.push(element);
+            dispatch({
+              type: ADD_MAIN,
+              item: element
+            });
           }
         }
-        //console.log(elementsBurger);
-        return elementsBurger;
       }
 
-      const items = generateBurger();
-      setBurger(items);
+      generateBurger();
     }
-  }, [dataIngredients]);
+  }, [dataIngredients, dispatch]);
 
   const bunTop = useMemo(
     () => {
@@ -98,7 +98,7 @@ function BurgerConstructor(props) {
 
     }, [burger]);
 
-  function orderDispatch() {
+  function orderHandle() {
     const order = [];
     if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
       order.push(burger.top._id);
@@ -108,7 +108,6 @@ function BurgerConstructor(props) {
         order.push(item._id);
       });
     }
-    console.log(order);
     props.openOrder(order);
   }
 
@@ -119,20 +118,15 @@ function BurgerConstructor(props) {
         {main}
         {bunBottom}
       </div>
-      <StateBurgerContext.Provider value={burger}>
-        <div className={`${burgerConstructorStyle.summary_box} mt-10 mb-10`}>
-          <div className={`${burgerConstructorStyle.summary_price} mr-10`}>
-            <TotalPrice />
-            {/* <p className="text text_type_digits-medium">
-              610
-            </p> */}
-            <CurrencyIcon type="primary" />
-          </div>
-          <Button type="primary" size="medium" onClick={orderDispatch}>
-            Оформить заказ
-          </Button>
+      <div className={`${burgerConstructorStyle.summary_box} mt-10 mb-10`}>
+        <div className={`${burgerConstructorStyle.summary_price} mr-10`}>
+          <TotalPrice />
+          <CurrencyIcon type="primary" />
         </div>
-      </StateBurgerContext.Provider>
+        <Button type="primary" size="medium" onClick={orderHandle}>
+          Оформить заказ
+        </Button>
+      </div>
     </div >
   )
 

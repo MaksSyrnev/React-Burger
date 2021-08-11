@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 export default function Ingredient(props) {
 
   const item = props.item;
+  let count = 0;
 
   function handleClickIngredient() {
     const i = item._id;
@@ -25,7 +26,7 @@ export default function Ingredient(props) {
         <p className={`${ingredientStyle.description} text text_type_main-default`}>
           {item.name}
         </p>
-        <Counter count={1} size="default" />
+        {count && <Counter count={count} size="default" />}
       </div>
     </li>
   );

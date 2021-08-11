@@ -1,37 +1,60 @@
-import React, { useContext } from 'react';
+import React, { useRef } from 'react';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import Ingredient from '../ingredient/ingredient';
-import { IngredientsContext } from '../../utils/ingredients-context';
+import { useSelector } from 'react-redux';
 
 function BurgerIngredients(props) {
 
-  const [current, setCurrent] = React.useState('one');
-  const data = useContext(IngredientsContext);
+  const [currentTab, setCurrentTab] = React.useState('one');
+  const data = useSelector(store => store.ingredients.items);
+  const ingredientsBoxRef = useRef(null);
+  const bunRef = useRef(null);
+  const sauceRef = useRef(null);
+  const mainRef = useRef(null);
 
   const handleClickTab = (e) => {
-    setCurrent(e);
+    setCurrentTab(e);
+  };
+
+  const handleScroll = () => {
+    const ingredientsBoxRefPosition = ingredientsBoxRef.current.getBoundingClientRect().top;
+    const bunRefPosition = bunRef.current.getBoundingClientRect().top;
+    const sauceRefPosition = sauceRef.current.getBoundingClientRect().top;
+    const mainRefPosition = mainRef.current.getBoundingClientRect().top;
+
+    const bunDiff = Math.abs(ingredientsBoxRefPosition - bunRefPosition);
+    const sauceDiff = Math.abs(ingredientsBoxRefPosition - sauceRefPosition);
+    const mainDiff = Math.abs(ingredientsBoxRefPosition - mainRefPosition);
+
+    if (bunDiff < sauceDiff) {
+      setCurrentTab("one");
+    } else if (sauceDiff < mainDiff) {
+      setCurrentTab("two");
+    } else {
+      setCurrentTab("three");
+    }
   };
 
   return (
     <section className={`${burgerIngredientsStyle.box} mr-10`}>
       <h2 className="pb-5 pt-10 text text_type_main-large">Соберите бургер</h2>
       <div style={{ display: 'flex' }} >
-        <Tab value="one" active={current === 'one'} onClick={handleClickTab}>
+        <Tab value="one" active={currentTab === 'one'} onClick={handleClickTab}>
           Булки
         </Tab>
-        <Tab value="two" active={current === 'two'} onClick={handleClickTab}>
+        <Tab value="two" active={currentTab === 'two'} onClick={handleClickTab}>
           Соусы
         </Tab>
-        <Tab value="three" active={current === 'three'} onClick={handleClickTab}>
+        <Tab value="three" active={currentTab === 'three'} onClick={handleClickTab}>
           Начинки
         </Tab>
       </div>
 
-      <div className={burgerIngredientsStyle.ingredients_box}>
+      {<div className={burgerIngredientsStyle.ingredients_box} ref={ingredientsBoxRef} onScroll={handleScroll}>
 
-        <h3 className="text text_type_main-medium mt-10 pb-6">Булки</h3>
+        <h3 className="text text_type_main-medium mt-10 pb-6" ref={bunRef}>Булки</h3>
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "bun") {
@@ -42,7 +65,7 @@ function BurgerIngredients(props) {
           })}
         </ul>
 
-        <h3 className="text text_type_main-medium mt-10 pb-6">Соусы</h3>
+        <h3 className="text text_type_main-medium mt-10 pb-6" ref={sauceRef}>Соусы</h3>
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "sauce") {
@@ -53,7 +76,7 @@ function BurgerIngredients(props) {
           })}
         </ul>
 
-        <h3 className="text text_type_main-medium mt-10 pb-6">Начинка</h3>
+        <h3 className="text text_type_main-medium mt-10 pb-6" ref={mainRef}>Начинка</h3>
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "main") {
@@ -63,22 +86,21 @@ function BurgerIngredients(props) {
             }
           })}
         </ul>
-      </div>
-
+      </div>}
     </section>
   )
 
 }
 
-const ingredientPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-});
+// const ingredientPropTypes = PropTypes.shape({
+//   _id: PropTypes.string.isRequired,
+//   type: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+//   image: PropTypes.string.isRequired,
+// });
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-};
+// BurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+// };
 
 export default BurgerIngredients;

@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import { StateBurgerContext } from '../../utils/state-burger-context';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 export const TotalPrice = () => {
-  const stateBurger = useContext(StateBurgerContext);
+  const stateBurger = useSelector(store => store.burger);
+
   let total = 0;
   if ((stateBurger.top !== undefined) && (stateBurger.top._id !== undefined)) {
     total = stateBurger.top.price * 2;
