@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import appStyle from './app.module.css';
-
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -52,6 +53,19 @@ function App() {
     setIsOpen(false);
   };
 
+  /* const onDropHandler = (id) => {
+    const elementId = id.itemId;
+    const element = dataIngredients.filter(item => item._id === elementId);
+    console.log(element);
+    if (element[0].type === "bun") {
+      console.log("работает");
+      dispatch({
+        type: ADD_BUN,
+        item: element[0]
+      });
+    }
+  }; */
+
   const modal = (
     <Modal onClose={closePopup} title={titleModal}>
       {titleModal ? <IngredientDetails /> : <OrderDetails orderNumber={order.number} />}
@@ -63,8 +77,10 @@ function App() {
       <AppHeader />
 
       <main className={appStyle.content}>
-        {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
-        <BurgerConstructor openOrder={handleOpenOrder} />
+        <DndProvider backend={HTML5Backend}>
+          {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
+          <BurgerConstructor openOrder={handleOpenOrder} />
+        </DndProvider>
       </main>
 
       {isOpen && modal}

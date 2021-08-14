@@ -2,20 +2,40 @@ import ingredientStyle from './ingredient.module.css';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { useDrag } from "react-dnd";
+import { useEffect } from 'react';
 
 export default function Ingredient(props) {
 
   const item = props.item;
-  let count = 0;
+  const itemId = item._id;
+
+  let count;
+
+  const [{ isDrag, itemType, element }, dragRef] = useDrag({
+    type: item.type === 'bun' ? 'bun' : 'main',
+    item: { itemId },
+    collect: monitor => ({
+      isDrag: monitor.isDragging(),
+      itemType: monitor.getItemType(),
+      element: monitor.getItem(),
+    })
+  });
+
+  /* useEffect(() => {
+    console.log(element, itemType);
+  }, [isDrag]);
+ */
+
 
   function handleClickIngredient() {
     const i = item._id;
     props.openIngredient(i);
   }
 
-  return (
+  return (!isDrag &&
     <li className={`${ingredientStyle.product_item} ml-4 pr-2`} >
-      <div className={ingredientStyle.product_card} onClick={handleClickIngredient}>
+      <div className={ingredientStyle.product_card} onClick={handleClickIngredient} ref={dragRef} >
         <img src={item.image} alt={item.name} className="pl-4 pr-4" />
         <div className={`${ingredientStyle.price} `}>
           <p className={`pb-1 pt-1 text text_type_digits-default`} >

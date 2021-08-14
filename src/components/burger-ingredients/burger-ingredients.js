@@ -99,8 +99,9 @@ function BurgerIngredients(props) {
 //   image: PropTypes.string.isRequired,
 // });
 
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-// };
+BurgerIngredients.propTypes = {
+  openIngredient: PropTypes.func.isRequired
+  // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+};
 
 export default BurgerIngredients;

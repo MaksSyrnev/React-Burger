@@ -10,6 +10,7 @@
   display: 'flex';
   gap: '10px';
   flex-direction: column;
+  min-height: 464px;
 }
 
 .list {
@@ -63,4 +64,13 @@
 .summary_price > svg {
   width: 33px;
   height: 33px;
+}
+
+.text {
+  color: #8585ad;
+  text-align: center;
+}
+
+.drop_bun_style {
+  border: '1px solid #8585ad',
 }

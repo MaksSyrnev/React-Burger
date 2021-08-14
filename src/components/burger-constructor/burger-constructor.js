@@ -7,57 +7,98 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TotalPrice } from '../total-price/total-price';
 import { useSelector, useDispatch } from 'react-redux';
-import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
-
+import { ADD_BUN, ADD_MAIN, DELETE_MAIN_ELEMENT } from '../../services/actions/burger-constructor';
+import { useDrop } from "react-dnd";
 
 function BurgerConstructor(props) {
   const dataIngredients = useSelector(store => store.ingredients.items);
-  const dispatch = useDispatch();
   const burger = useSelector(store => store.burger);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (dataIngredients.length > 0) {
+  const [{ isBunHover }, DropBunTarget] = useDrop({
+    accept: "bun",
+    drop(itemId) {
+      onDropHandler(itemId);
+    },
+    collect: monitor => ({
+      isBunHover: monitor.isOver()
+    })
+  });
 
-      function elementBurger() {
-        return dataIngredients[Math.floor(Math.random() * (dataIngredients.length))];
-      }
+  const [{ isMainHover, itemType, element }, DropMainTarget] = useDrop({
+    accept: 'main',
+    drop(itemId) {
+      console.log("конструктор:", itemId, itemType, element);
+      onDropMainHandler(itemId);
+    },
+    collect: monitor => ({
+      isMainHover: monitor.isOver(),
+      itemType: monitor.getItemType(),
+      element: monitor.getItem(),
+    })
+  });
 
-      function generateBurger() {
-        let count = Math.floor(Math.random() * (dataIngredients.length));
+  const bunBorderColor = isBunHover ? '#8585ad' : 'transparent';
+  const dropBunStyle = {
+    border: '1px solid',
+    borderColor: bunBorderColor,
+  };
 
-        for (let i = 0; i <= count; i = i + 1) {
-          let element = elementBurger();
-          if (element.type === "bun") {
-            dispatch({
-              type: ADD_BUN,
-              item: element
-            });
-          } else {
-            dispatch({
-              type: ADD_MAIN,
-              item: element
-            });
-          }
-        }
-      }
+  const borderColor = isMainHover ? '#8585ad' : 'transparent';
+  const dropMainStyle = {
+    border: '1px solid',
+    borderColor: borderColor,
+  };
 
-      generateBurger();
+  const onDropHandler = (id) => {
+    const elementId = id.itemId;
+    const element = dataIngredients.filter(item => item._id === elementId);
+    console.log(element);
+    if (element[0].type === "bun") {
+      dispatch({
+        type: ADD_BUN,
+        item: element[0]
+      });
     }
-  }, [dataIngredients, dispatch]);
+  };
+
+  const onDropMainHandler = (id) => {
+    const elementId = id.itemId;
+    const element = dataIngredients.filter(item => item._id === elementId);
+    console.log(element);
+    if (element[0].type !== "bun") {
+      dispatch({
+        type: ADD_MAIN,
+        item: element[0]
+      });
+    }
+  };
+
+  const deleteElementBurger = (id) => {
+    dispatch({
+      type: DELETE_MAIN_ELEMENT,
+      itemId: id
+    });
+    console.log('работает', id);
+  };
 
   const bunTop = useMemo(
     () => {
       return (burger.top !== undefined) && (burger.top._id !== undefined) ? (
-        <div className="ml-8 mr-4 mb-4">
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${burger.top.name} (верх)`}
-            price={burger.top.price}
-            thumbnail={burger.top.image}
-          />
+        <ConstructorElement
+          type="top"
+          isLocked={true}
+          text={`${burger.top.name} (верх)`}
+          price={burger.top.price}
+          thumbnail={burger.top.image}
+        />
+      ) : (
+        <div className={`${burgerConstructorStyle.text} mt-10`}>
+          <p className="text text_type_main-default pt-5 pb-20">
+            добавьте булку для бургера
+          </p>
         </div>
-      ) : null
+      )
 
     }, [burger]);
 
@@ -88,13 +129,20 @@ function BurgerConstructor(props) {
                 text={item.name}
                 price={item.price}
                 thumbnail={item.image}
+                handleClose={() => deleteElementBurger(item._id)}
               />
             </li>
           )
           )
           }
         </ul>
-      ) : null
+      ) : (
+        <div className={`${burgerConstructorStyle.text} mt-10`}>
+          <p className="text text_type_main-default pt-5 pb-15">
+            добавьте начинку для бургера
+          </p>
+        </div>
+      )
 
     }, [burger]);
 
@@ -112,12 +160,18 @@ function BurgerConstructor(props) {
   }
 
   return (
-    <div className={`${burgerConstructorStyle.box} pl-4 pt-25`}>
+    <div className={`${burgerConstructorStyle.box} pl-4 pt-25`} >
+
       <div className={burgerConstructorStyle.conteiner}>
-        {bunTop}
-        {main}
+        <div className="ml-8 mr-4 mb-4" ref={DropBunTarget} style={dropBunStyle} >
+          {bunTop}
+        </div>
+        <div style={dropMainStyle} ref={DropMainTarget}>
+          {main}
+        </div>
         {bunBottom}
       </div>
+
       <div className={`${burgerConstructorStyle.summary_box} mt-10 mb-10`}>
         <div className={`${burgerConstructorStyle.summary_price} mr-10`}>
           <TotalPrice />
@@ -127,8 +181,9 @@ function BurgerConstructor(props) {
           Оформить заказ
         </Button>
       </div>
+
     </div >
-  )
+  );
 
 }
 
@@ -139,8 +194,9 @@ function BurgerConstructor(props) {
 //   image: PropTypes.string.isRequired,
 // });
 
-// BurgerConstructor.propTypes = {
-//   stateBurger: PropTypes.arrayOf(ingredientPropTypes).isRequired
-// };
+BurgerConstructor.propTypes = {
+  openOrder: PropTypes.func.isRequired
+  //   stateBurger: PropTypes.arrayOf(ingredientPropTypes).isRequired
+};
 
 export default BurgerConstructor;
