@@ -3,14 +3,13 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
-import { useEffect } from 'react';
+
 
 export default function Ingredient(props) {
-
   const item = props.item;
   const itemId = item._id;
+  const count = props.count;
 
-  let count;
 
   const [{ isDrag, itemType, element }, dragRef] = useDrag({
     type: item.type === 'bun' ? 'bun' : 'main',
@@ -21,12 +20,6 @@ export default function Ingredient(props) {
       element: monitor.getItem(),
     })
   });
-
-  /* useEffect(() => {
-    console.log(element, itemType);
-  }, [isDrag]);
- */
-
 
   function handleClickIngredient() {
     const i = item._id;

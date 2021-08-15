@@ -1,20 +1,21 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TotalPrice } from '../total-price/total-price';
 import { useSelector, useDispatch } from 'react-redux';
-import { ADD_BUN, ADD_MAIN, DELETE_MAIN_ELEMENT } from '../../services/actions/burger-constructor';
+import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
 import { useDrop } from "react-dnd";
+import Main from './main/main';
 
 function BurgerConstructor(props) {
   const dataIngredients = useSelector(store => store.ingredients.items);
   const burger = useSelector(store => store.burger);
   const dispatch = useDispatch();
 
+  //принятие дропа элемента булка
   const [{ isBunHover }, DropBunTarget] = useDrop({
     accept: "bun",
     drop(itemId) {
@@ -25,35 +26,21 @@ function BurgerConstructor(props) {
     })
   });
 
-  const [{ isMainHover, itemType, element }, DropMainTarget] = useDrop({
+  //принятие дропа эелементов начинки
+  const [{ isMainHover, }, DropMainTarget] = useDrop({
     accept: 'main',
     drop(itemId) {
-      console.log("конструктор:", itemId, itemType, element);
       onDropMainHandler(itemId);
     },
     collect: monitor => ({
-      isMainHover: monitor.isOver(),
-      itemType: monitor.getItemType(),
-      element: monitor.getItem(),
+      isMainHover: monitor.isOver()
     })
   });
 
-  const bunBorderColor = isBunHover ? '#8585ad' : 'transparent';
-  const dropBunStyle = {
-    border: '1px solid',
-    borderColor: bunBorderColor,
-  };
-
-  const borderColor = isMainHover ? '#8585ad' : 'transparent';
-  const dropMainStyle = {
-    border: '1px solid',
-    borderColor: borderColor,
-  };
-
+  //обработчик события дропа для булки (логика)
   const onDropHandler = (id) => {
     const elementId = id.itemId;
     const element = dataIngredients.filter(item => item._id === elementId);
-    console.log(element);
     if (element[0].type === "bun") {
       dispatch({
         type: ADD_BUN,
@@ -62,24 +49,32 @@ function BurgerConstructor(props) {
     }
   };
 
+  //обработчик события дропа для начинки (логика)
   const onDropMainHandler = (id) => {
     const elementId = id.itemId;
-    const element = dataIngredients.filter(item => item._id === elementId);
-    console.log(element);
-    if (element[0].type !== "bun") {
-      dispatch({
-        type: ADD_MAIN,
-        item: element[0]
-      });
+    if (elementId !== undefined) {
+      const element = dataIngredients.filter(item => item._id === elementId);
+      if (element[0].type !== "bun") {
+        dispatch({
+          type: ADD_MAIN,
+          item: element[0]
+        });
+      }
     }
   };
 
-  const deleteElementBurger = (id) => {
-    dispatch({
-      type: DELETE_MAIN_ELEMENT,
-      itemId: id
-    });
-    console.log('работает', id);
+  //подсветка зоны дропа для булок
+  const bunBorderColor = isBunHover ? '#8585ad' : 'transparent';
+  const dropBunStyle = {
+    border: '1px solid',
+    borderColor: bunBorderColor,
+  };
+
+  //подсветка зоны дропа для начинки
+  const borderColor = isMainHover ? '#8585ad' : 'transparent';
+  const dropMainStyle = {
+    border: '1px solid',
+    borderColor: borderColor,
   };
 
   const bunTop = useMemo(
@@ -121,21 +116,7 @@ function BurgerConstructor(props) {
   const main = useMemo(
     () => {
       return (burger.main !== undefined) && (burger.main.length !== 0) ? (
-        <ul className={burgerConstructorStyle.list}>
-          {burger.main.map((item, index) => (
-            <li className={burgerConstructorStyle.list_item} key={`${item._id}_${index}`}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
-                handleClose={() => deleteElementBurger(item._id)}
-              />
-            </li>
-          )
-          )
-          }
-        </ul>
+        <Main />
       ) : (
         <div className={`${burgerConstructorStyle.text} mt-10`}>
           <p className="text text_type_main-default pt-5 pb-15">
@@ -146,6 +127,7 @@ function BurgerConstructor(props) {
 
     }, [burger]);
 
+  //обработчик кнопки отправки заказа (начальный)
   function orderHandle() {
     const order = [];
     if ((burger.top !== undefined) && (burger.top._id !== undefined)) {

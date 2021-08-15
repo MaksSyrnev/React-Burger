@@ -1,4 +1,4 @@
-import { ADD_BUN, ADD_MAIN, DELETE_MAIN_ELEMENT } from '../actions/burger-constructor';
+import { ADD_BUN, ADD_MAIN, DELETE_MAIN_ELEMENT, REORDER_MAIN_ELEMENTS } from '../actions/burger-constructor';
 
 const initialState = {
   top: {},
@@ -22,8 +22,14 @@ export const burgerConstructorReducer = (store = initialState, action) => {
     case DELETE_MAIN_ELEMENT: {
       return {
         ...store,
-        main: [...store.main.filter(element => element.id !== action.itemId)]
-      };
+        main: action.payload
+      }
+    }
+    case REORDER_MAIN_ELEMENTS: {
+      return {
+        ...store,
+        main: action.payload
+      }
     }
     default: {
       return store;
