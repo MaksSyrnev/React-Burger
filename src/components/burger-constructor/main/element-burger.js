@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import elementBurgerStyle from './element-burger.module.css';
@@ -58,10 +59,23 @@ function ElementBurger(props) {
         text={item.name}
         price={item.price}
         thumbnail={item.image}
-        handleClose={() => deleteElementBurger(index)}
+        handleClose={() => deleteElementBurger(index, id)}
       />
     </li>
   );
 }
+
+ElementBurger.propTypes = {
+  item: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+  }),
+  index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  moveElementBurger: PropTypes.func.isRequired,
+  deleteElementBurger: PropTypes.func.isRequired
+};
 
 export default ElementBurger;

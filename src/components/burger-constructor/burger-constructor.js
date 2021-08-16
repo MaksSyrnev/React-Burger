@@ -7,6 +7,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { TotalPrice } from '../total-price/total-price';
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
+import { ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN } from '../../services/actions/burger-ingredients';
 import { useDrop } from "react-dnd";
 import Main from './main/main';
 
@@ -46,6 +47,16 @@ function BurgerConstructor(props) {
         type: ADD_BUN,
         item: element[0]
       });
+      dispatch({
+        type: DELETE_COUNT_BUN,
+        id: elementId,
+        count: 0
+      });
+      dispatch({
+        type: ADD_COUNT_INGRIDIENT,
+        id: elementId,
+        count: element[0].count + 2
+      });
     }
   };
 
@@ -59,8 +70,23 @@ function BurgerConstructor(props) {
           type: ADD_MAIN,
           item: element[0]
         });
+        dispatch({
+          type: ADD_COUNT_INGRIDIENT,
+          id: elementId,
+          count: element[0].count + 1
+        });
       }
     }
+  };
+
+  const deleteCountElement = (id) => {
+    const element = dataIngredients.filter(item => item._id === id);
+    console.log(element);
+    dispatch({
+      type: ADD_COUNT_INGRIDIENT,
+      id: id,
+      count: element[0].count - 1
+    });
   };
 
   //подсветка зоны дропа для булок
@@ -113,20 +139,6 @@ function BurgerConstructor(props) {
 
     }, [burger]);
 
-  const main = useMemo(
-    () => {
-      return (burger.main !== undefined) && (burger.main.length !== 0) ? (
-        <Main />
-      ) : (
-        <div className={`${burgerConstructorStyle.text} mt-10`}>
-          <p className="text text_type_main-default pt-5 pb-15">
-            добавьте начинку для бургера
-          </p>
-        </div>
-      )
-
-    }, [burger]);
-
   //обработчик кнопки отправки заказа (начальный)
   function orderHandle() {
     const order = [];
@@ -149,7 +161,15 @@ function BurgerConstructor(props) {
           {bunTop}
         </div>
         <div style={dropMainStyle} ref={DropMainTarget}>
-          {main}
+          {(burger.main !== undefined) && (burger.main.length !== 0) ? (
+            <Main deleteCountElement={deleteCountElement} />
+          ) : (
+            <div className={`${burgerConstructorStyle.text} mt-10`}>
+              <p className="text text_type_main-default pt-5 pb-15">
+                добавьте начинку для бургера
+              </p>
+            </div>
+          )}
         </div>
         {bunBottom}
       </div>
@@ -168,13 +188,6 @@ function BurgerConstructor(props) {
   );
 
 }
-
-// const ingredientPropTypes = PropTypes.shape({
-//   _id: PropTypes.string.isRequired,
-//   price: PropTypes.number.isRequired,
-//   name: PropTypes.string.isRequired,
-//   image: PropTypes.string.isRequired,
-// });
 
 BurgerConstructor.propTypes = {
   openOrder: PropTypes.func.isRequired

@@ -2,6 +2,7 @@ import { url } from '../../utils/data';
 export const ADD_LIST_ORDER = 'ADD_LIST_ORDER';
 export const ADD_NUMBER_ORDER = 'ADD_NUMBER_ORDER';
 
+
 export function orderPost(order) {
   return function (dispatch) {
     dispatch({
@@ -27,7 +28,6 @@ export function orderPost(order) {
           type: ADD_NUMBER_ORDER,
           number: orderData.number
         });
-        //setOrder(orderData.number);
       })
       .catch((err) => {
         console.log(err);

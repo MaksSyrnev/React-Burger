@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import orderDetailsStyle from './order-details.module.css';
 import pathDone from '../../images/done.svg';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -18,3 +19,8 @@ const OrderDetails = (props) => {
 };
 
 export default OrderDetails;
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired
+};
+

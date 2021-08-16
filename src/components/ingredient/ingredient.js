@@ -8,7 +8,7 @@ import { useDrag } from "react-dnd";
 export default function Ingredient(props) {
   const item = props.item;
   const itemId = item._id;
-  const count = props.count;
+  const count = item.count;
 
 
   const [{ isDrag, itemType, element }, dragRef] = useDrag({
@@ -39,7 +39,7 @@ export default function Ingredient(props) {
         <p className={`${ingredientStyle.description} text text_type_main-default`}>
           {item.name}
         </p>
-        {count && <Counter count={count} size="default" />}
+        {(count > 0) && <Counter count={count} size="default" />}
       </div>
     </li>
   );

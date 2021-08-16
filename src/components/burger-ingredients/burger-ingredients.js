@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
@@ -9,12 +9,11 @@ function BurgerIngredients(props) {
 
   const [currentTab, setCurrentTab] = React.useState('one');
   const data = useSelector(store => store.ingredients.items);
-  const burger = useSelector(store => store.burger);
   const ingredientsBoxRef = useRef(null);
   const bunRef = useRef(null);
   const sauceRef = useRef(null);
   const mainRef = useRef(null);
-  let count;
+
 
   const handleClickTab = (e) => {
     setCurrentTab(e);
@@ -60,7 +59,7 @@ function BurgerIngredients(props) {
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "bun") {
-              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} count={count} />
+              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} />
             } else {
               return null;
             }
@@ -71,7 +70,7 @@ function BurgerIngredients(props) {
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "sauce") {
-              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} count={count} />
+              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} />
             } else {
               return null;
             }
@@ -82,7 +81,7 @@ function BurgerIngredients(props) {
         <ul className={`${burgerIngredientsStyle.product_list}`}>
           {data.map(function (item, index) {
             if (item.type === "main") {
-              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} count={count} />
+              return <Ingredient item={item} openIngredient={props.openIngredient} key={`${item._id}_${index}`} />
             } else {
               return null;
             }
@@ -94,16 +93,17 @@ function BurgerIngredients(props) {
 
 }
 
+BurgerIngredients.propTypes = {
+  openIngredient: PropTypes.func.isRequired
+};
+
+export default BurgerIngredients;
+
+
 // const ingredientPropTypes = PropTypes.shape({
 //   _id: PropTypes.string.isRequired,
 //   type: PropTypes.string.isRequired,
 //   name: PropTypes.string.isRequired,
 //   image: PropTypes.string.isRequired,
 // });
-
-BurgerIngredients.propTypes = {
-  openIngredient: PropTypes.func.isRequired
-  // data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-};
-
-export default BurgerIngredients;
+// data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
