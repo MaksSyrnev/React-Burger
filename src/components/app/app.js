@@ -1,43 +1,33 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import appStyle from './app.module.css';
-
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { useDispatch, useSelector } from 'react-redux';
+import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
+import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
+import { orderPost } from '../../services/actions/order-details';
 
 function App() {
 
-  const url = 'https://norma.nomoreparties.space/api/ingredients';
-  const [dataIngredients, setDataIngredients] = React.useState([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [titleModal, setTitleModal] = React.useState('');
-  const [currentIngredients, setCurrentIngredients] = React.useState({});
+  const [isOpen, setIsOpen] = useState(false);
+  const [titleModal, setTitleModal] = useState('');
+  const dispatch = useDispatch();
+  const dataIngredients = useSelector(store => store.ingredients.items);
+  const order = useSelector(store => store.order);
 
   useEffect(() => {
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((res) => {
-        const data = res.data;
-        setDataIngredients(data);
-        //console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-
+    dispatch(getBurgerIngredients());
   }, []);
 
-  const handleOpenOrder = () => {
+  const handleOpenOrder = (order) => {
     setTitleModal('');
+    dispatch(orderPost(order));
     setIsOpen(true);
   };
 
@@ -47,26 +37,50 @@ function App() {
     );
     const current = currentIngredients[0];
     setTitleModal('Детали ингредиента');
-    setCurrentIngredients(current);
+    dispatch({
+      type: OPEN_ITEM,
+      item: current
+    });
     setIsOpen(true);
   };
 
   const closePopup = () => {
+    if (titleModal) {
+      dispatch({
+        type: CLOSE_ITEM
+      });
+    }
     setIsOpen(false);
   };
 
+  /* const onDropHandler = (id) => {
+    const elementId = id.itemId;
+    const element = dataIngredients.filter(item => item._id === elementId);
+    console.log(element);
+    if (element[0].type === "bun") {
+      console.log("работает");
+      dispatch({
+        type: ADD_BUN,
+        item: element[0]
+      });
+    }
+  }; */
+
   const modal = (
     <Modal onClose={closePopup} title={titleModal}>
-      {titleModal ? <IngredientDetails current={currentIngredients} /> : <OrderDetails />}
+      {titleModal ? <IngredientDetails /> : <OrderDetails orderNumber={order.number} />}
     </Modal >
   );
 
   return (
     <div className={appStyle.page}>
       <AppHeader />
+
       <main className={appStyle.content}>
-        <BurgerIngredients data={dataIngredients} openIngredient={handleOpenIngredient} />
-        <BurgerConstructor stateBurger={dataIngredients} openOrder={handleOpenOrder} />
+        <DndProvider backend={HTML5Backend}>
+          {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
+          <BurgerConstructor openOrder={handleOpenOrder} />
+        </DndProvider>
       </main>
 
       {isOpen && modal}

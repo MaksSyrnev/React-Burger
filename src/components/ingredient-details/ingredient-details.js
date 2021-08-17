@@ -1,11 +1,13 @@
 import React from 'react';
 import ingredientDetailsStyle from './ingredient-details.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const IngredientDetails = (props) => {
-
-  const item = props.current;
+const IngredientDetails = () => {
+  const item = useSelector(store => store.current.ingredientDetails);
+  //const item = props.current;
+  console.log(item);
 
   return (
     <div className={`${ingredientDetailsStyle.box}`}>
@@ -35,16 +37,16 @@ const IngredientDetails = (props) => {
 
 };
 
-IngredientDetails.propTypes = {
-  current: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-  })
-}
+// IngredientDetails.propTypes = {
+//   current: PropTypes.shape({
+//     _id: PropTypes.string.isRequired,
+//     name: PropTypes.string.isRequired,
+//     image_large: PropTypes.string.isRequired,
+//     carbohydrates: PropTypes.number.isRequired,
+//     fat: PropTypes.number.isRequired,
+//     proteins: PropTypes.number.isRequired,
+//     calories: PropTypes.number.isRequired,
+//   })
+// }
 
 export default IngredientDetails;
