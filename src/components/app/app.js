@@ -53,19 +53,6 @@ function App() {
     setIsOpen(false);
   };
 
-  /* const onDropHandler = (id) => {
-    const elementId = id.itemId;
-    const element = dataIngredients.filter(item => item._id === elementId);
-    console.log(element);
-    if (element[0].type === "bun") {
-      console.log("работает");
-      dispatch({
-        type: ADD_BUN,
-        item: element[0]
-      });
-    }
-  }; */
-
   const modal = (
     <Modal onClose={closePopup} title={titleModal}>
       {titleModal ? <IngredientDetails /> : <OrderDetails orderNumber={order.number} />}
