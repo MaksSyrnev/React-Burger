@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import appStyle from './app.module.css';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -12,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import { orderPost } from '../../services/actions/order-details';
+import { LoginPage, NotFound404 } from '../../pages';
 
 function App() {
 
@@ -63,12 +65,24 @@ function App() {
     <div className={appStyle.page}>
       <AppHeader />
 
-      <main className={appStyle.content}>
-        <DndProvider backend={HTML5Backend}>
-          {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
-          <BurgerConstructor openOrder={handleOpenOrder} />
-        </DndProvider>
-      </main>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/" exact>
+            <main className={appStyle.content}>
+              <DndProvider backend={HTML5Backend}>
+                {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
+                <BurgerConstructor openOrder={handleOpenOrder} />
+              </DndProvider>
+            </main>
+          </Route>
+          <Route>
+            <NotFound404 />
+          </Route>
+        </Switch>
+      </BrowserRouter>
 
       {isOpen && modal}
     </div >
