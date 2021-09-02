@@ -64,26 +64,26 @@ function App() {
   return (
     <div className={appStyle.page}>
       <AppHeader />
+      <main className={appStyle.content}>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/" exact>
 
-      <BrowserRouter>
-        <Switch>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/" exact>
-            <main className={appStyle.content}>
               <DndProvider backend={HTML5Backend}>
                 {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
                 <BurgerConstructor openOrder={handleOpenOrder} />
               </DndProvider>
-            </main>
-          </Route>
-          <Route>
-            <NotFound404 />
-          </Route>
-        </Switch>
-      </BrowserRouter>
 
+            </Route>
+            <Route>
+              <NotFound404 />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </main>
       {isOpen && modal}
     </div >
   );

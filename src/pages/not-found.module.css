@@ -1,6 +1,6 @@
 .wrapper {
   width: 100vw;
-  height: calc(100vh -100px);
+  height: calc(100vh -88px);
 }
 
 .container {
@@ -12,6 +12,7 @@
 
 .title {
   color: #2f2f37;
+  margin-bottom: 40px;
 }
 
 .content {
