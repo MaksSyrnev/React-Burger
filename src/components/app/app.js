@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import { orderPost } from '../../services/actions/order-details';
-import { LoginPage, NotFound404 } from '../../pages';
+import { LoginPage, NotFound404, RegisterPage, ResetPasswordPage, ForgotPasswordPage } from '../../pages';
 
 function App() {
 
@@ -70,17 +70,26 @@ function App() {
             <Route path="/login">
               <LoginPage />
             </Route>
+            <Route path="/register" exact>
+              <RegisterPage />
+            </Route>
+            <Route path="/reset-password" exact>
+              <ResetPasswordPage />
+            </Route>
+            <Route path="/forgot-password">
+              <ForgotPasswordPage />
+            </Route>
             <Route path="/" exact>
-
               <DndProvider backend={HTML5Backend}>
                 {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
                 <BurgerConstructor openOrder={handleOpenOrder} />
               </DndProvider>
-
             </Route>
+
             <Route>
               <NotFound404 />
             </Route>
+
           </Switch>
         </BrowserRouter>
       </main>

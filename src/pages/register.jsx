@@ -1,17 +1,23 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
-export function LoginPage() {
+export function RegisterPage() {
+  const [form, setValue] = useState({ email: '', password: '', name: '' })
 
-  const [value, setValue] = useState('value')
-  const inputRef = useRef(null)
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
     alert('Icon Click Callback');
   }
 
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const onClick = (e) => {
+    e.preventDefault();
+    console.log(form);
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -20,14 +26,24 @@ export function LoginPage() {
         <form className={styles.form}>
 
           <h1 className={`${styles.title} text text_type_main-medium`}>
-            Вход
+            Регистрация
           </h1>
 
           <div className={`${styles.box} mt-6 mb-6`}>
             <Input
               type={'text'}
+              placeholder={'Имя'}
+              onChange={onChange}
+              name={'name'}
+              errorText={'Ошибка'}
+            />
+          </div>
+
+          <div className={`${styles.box} mb-6`}>
+            <Input
+              type={'text'}
               placeholder={'E-mail'}
-              onChange={e => setValue(e.target.value)}
+              onChange={onChange}
               name={'email'}
               errorText={'Ошибка'}
 
@@ -36,11 +52,11 @@ export function LoginPage() {
 
           <div className={`${styles.box} mb-6`}>
             <Input
-              type={'text'}
+              type={'password'}
               placeholder={'Пароль'}
-              onChange={e => setValue(e.target.value)}
+              onChange={onChange}
               icon={'ShowIcon'}
-              name={'pwd'}
+              name={'password'}
               error={false}
               onIconClick={onIconClick}
               errorText={'Ошибка'}
@@ -48,22 +64,17 @@ export function LoginPage() {
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium">
-              Войти
+            <Button type="primary" size="medium" onClick={onClick}>
+              Зарегистрироваться
             </Button>
           </div>
 
           <p className={`${styles.text} text text_type_main-default`}>
-            Вы — новый пользователь?
-            <Link to="/register">
-              <span className={styles.link}>Зарегистрироваться</span>
-            </Link>
-          </p>
-
-          <p className={`${styles.text} text text_type_main-default`}>
-            Забыли пароль?
-            <Link to="/forgot-password">
-              <span className={styles.link}> Восстановить пароль</span>
+            Уже зарегистрированы?
+            <Link to="/login">
+              <span className={styles.link}>
+                Войти
+              </span>
             </Link>
           </p>
 

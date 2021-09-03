@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 
-export function LoginPage() {
+export function ForgotPasswordPage() {
 
   const [value, setValue] = useState('value')
   const inputRef = useRef(null)
@@ -20,13 +20,13 @@ export function LoginPage() {
         <form className={styles.form}>
 
           <h1 className={`${styles.title} text text_type_main-medium`}>
-            Вход
+            Восстановление пароля
           </h1>
 
           <div className={`${styles.box} mt-6 mb-6`}>
             <Input
               type={'text'}
-              placeholder={'E-mail'}
+              placeholder={'Укажите e-mail'}
               onChange={e => setValue(e.target.value)}
               name={'email'}
               errorText={'Ошибка'}
@@ -34,36 +34,18 @@ export function LoginPage() {
             />
           </div>
 
-          <div className={`${styles.box} mb-6`}>
-            <Input
-              type={'text'}
-              placeholder={'Пароль'}
-              onChange={e => setValue(e.target.value)}
-              icon={'ShowIcon'}
-              name={'pwd'}
-              error={false}
-              onIconClick={onIconClick}
-              errorText={'Ошибка'}
-            />
-          </div>
-
           <div className={`${styles.box} mb-20`}>
             <Button type="primary" size="medium">
-              Войти
+              Восстановить
             </Button>
           </div>
 
           <p className={`${styles.text} text text_type_main-default`}>
-            Вы — новый пользователь?
-            <Link to="/register">
-              <span className={styles.link}>Зарегистрироваться</span>
-            </Link>
-          </p>
-
-          <p className={`${styles.text} text text_type_main-default`}>
-            Забыли пароль?
-            <Link to="/forgot-password">
-              <span className={styles.link}> Восстановить пароль</span>
+            Вспомнили пароль?
+            <Link to="/login">
+              <span className={styles.link}>
+                Войти
+              </span>
             </Link>
           </p>
 
