@@ -21,6 +21,7 @@
 .button {
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 
 .button:hover {
@@ -38,4 +39,8 @@
   align-self: center;
   margin: 40%;
   position: absolute;
+}
+
+a {
+  text-decoration: none;
 }

@@ -1,17 +1,36 @@
-import { useRef, useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../services/actions/auth';
+import { Redirect } from 'react-router-dom';
 
 export function LoginPage() {
-
-  const [value, setValue] = useState('value')
-  const inputRef = useRef(null)
+  const [form, setValue] = useState({ email: '', password: '' });
+  const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
     alert('Icon Click Callback');
-  }
+  };
 
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(loginUser(form));
+    },
+    [dispatch, form]
+  );
+
+  if (user.name) {
+    return (
+      <Redirect to={'/'} />
+    );
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -27,7 +46,7 @@ export function LoginPage() {
             <Input
               type={'text'}
               placeholder={'E-mail'}
-              onChange={e => setValue(e.target.value)}
+              onChange={onChange}
               name={'email'}
               errorText={'Ошибка'}
 
@@ -38,9 +57,9 @@ export function LoginPage() {
             <Input
               type={'text'}
               placeholder={'Пароль'}
-              onChange={e => setValue(e.target.value)}
+              onChange={onChange}
               icon={'ShowIcon'}
-              name={'pwd'}
+              name={'password'}
               error={false}
               onIconClick={onIconClick}
               errorText={'Ошибка'}
@@ -48,7 +67,7 @@ export function LoginPage() {
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium">
+            <Button type="primary" size="medium" onClick={handleLogin}>
               Войти
             </Button>
           </div>

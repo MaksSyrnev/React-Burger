@@ -1,5 +1,6 @@
 import React from 'react';
 import appHeaderStyle from './app-header.module.css';
+import { Link } from 'react-router-dom';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -28,7 +29,10 @@ const AppHeader = () => {
         </div>
         <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
           <ProfileIcon type="secondary" />
-          <div className={`${appHeaderStyle.active_button} pl-2 text text_type_main-default text_color_inactive`}>Личный кабинет</div>
+          <Link to="/profile" className="appHeaderStyle.link">
+            <div className={`${appHeaderStyle.button} pl-2 text text_type_main-default text_color_inactive`}>
+              Личный кабинет
+            </div></Link>
         </div>
       </nav>
     </header >

@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
   const item = useSelector(store => store.current.ingredientDetails);
-  //const item = props.current;
-  console.log(item);
 
   return (
     <div className={`${ingredientDetailsStyle.box}`}>

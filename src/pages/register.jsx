@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useCallback } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { registerUser } from '../services/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function RegisterPage() {
   const [form, setValue] = useState({ email: '', password: '', name: '' })
-
+  const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
   const onIconClick = () => {
     alert('Icon Click Callback');
   }
@@ -14,9 +17,18 @@ export function RegisterPage() {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onClick = (e) => {
-    e.preventDefault();
-    console.log(form);
+  const handleRegister = useCallback(
+    e => {
+      e.preventDefault();
+      dispatch(registerUser(form));
+    },
+    [dispatch, form]
+  );
+
+  if (user.name) {
+    return (
+      <Redirect to={'/'} />
+    );
   }
 
   return (
@@ -64,7 +76,7 @@ export function RegisterPage() {
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium" onClick={onClick}>
+            <Button type="primary" size="medium" onClick={handleRegister}>
               Зарегистрироваться
             </Button>
           </div>

@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import { orderPost } from '../../services/actions/order-details';
-import { LoginPage, NotFound404, RegisterPage, ResetPasswordPage, ForgotPasswordPage } from '../../pages';
+import { LoginPage, NotFound404, RegisterPage, ResetPasswordPage, ForgotPasswordPage, ProfilePage } from '../../pages';
 
 function App() {
 
@@ -63,9 +63,10 @@ function App() {
 
   return (
     <div className={appStyle.page}>
-      <AppHeader />
-      <main className={appStyle.content}>
-        <BrowserRouter>
+      <BrowserRouter>
+        <AppHeader />
+        <main className={appStyle.content}>
+
           <Switch>
             <Route path="/login">
               <LoginPage />
@@ -79,6 +80,9 @@ function App() {
             <Route path="/forgot-password">
               <ForgotPasswordPage />
             </Route>
+            <Route path="/profile">
+              <ProfilePage />
+            </Route>
             <Route path="/" exact>
               <DndProvider backend={HTML5Backend}>
                 {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
@@ -91,8 +95,9 @@ function App() {
             </Route>
 
           </Switch>
-        </BrowserRouter>
-      </main>
+
+        </main>
+      </BrowserRouter>
       {isOpen && modal}
     </div >
   );
