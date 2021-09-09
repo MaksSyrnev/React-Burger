@@ -2,7 +2,7 @@ import { setCookie } from '../utils';
 import { signUpRequest, signInRequest } from '../api';
 
 export const ADD_USER_INFO = 'ADD_USER_INFO';
-//export const LOGIN_USER = 'ADD_USER_INFO';
+export const EDIT_USER = 'EDIT_USER';
 
 export function registerUser(form) {
   return function (dispatch) {

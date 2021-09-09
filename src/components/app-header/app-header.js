@@ -1,22 +1,39 @@
 import React from 'react';
 import appHeaderStyle from './app-header.module.css';
-import { Link } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const AppHeader = () => {
+  const { pathname } = useLocation();
+  const history = useHistory();
+
+  const activeConstructor = pathname === '/' ? '' : 'text_color_inactive';
+  const activeProfile = pathname === '/profile' ? '' : 'text_color_inactive';
+
+  const goToHome = () => {
+    history.replace({ pathname: '/' });
+  };
+
+  const goToPropfile = () => {
+    history.replace({ pathname: '/profile' });
+  };
+
   return (
     <header className={appHeaderStyle.header}>
       <nav className={appHeaderStyle.nav_panel}>
         <ul className={appHeaderStyle.button_list}>
           <li className="mr-2">
-            <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
-              <BurgerIcon type="primary" />
-              <div className="pl-2 text text_type_main-default">Конструктор</div>
-            </div>
+            <button className={appHeaderStyle.button_menu} onClick={goToHome}>
+              <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
+                <BurgerIcon type={pathname === '/' ? "primary" : "secondary"} />
+                <div className={`pl-2 text text_type_main-default ${activeConstructor}`}>Конструктор</div>
+              </div>
+            </button>
           </li>
+
           <li>
             <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
               <ListIcon type="secondary" />
@@ -24,16 +41,19 @@ const AppHeader = () => {
             </div>
           </li>
         </ul>
+
         <div className={appHeaderStyle.logo}>
           <Logo />
         </div>
-        <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
-          <ProfileIcon type="secondary" />
-          <Link to="/profile" className="appHeaderStyle.link">
-            <div className={`${appHeaderStyle.button} pl-2 text text_type_main-default text_color_inactive`}>
+
+        <button className={appHeaderStyle.button_menu} onClick={goToPropfile}>
+          <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
+            <ProfileIcon type={pathname === '/profile' ? "primary" : "secondary"} />
+            <div className={`${appHeaderStyle.button} pl-2 text text_type_main-default ${activeProfile}`}>
               Личный кабинет
-            </div></Link>
-        </div>
+            </div>
+          </div>
+        </button>
       </nav>
     </header >
   )

@@ -79,3 +79,18 @@
 .link {
   color: #4c4cff;
 }
+
+.button_menu {
+  background-color: transparent;
+  border: 0;
+  transition: .4s;
+}
+
+.button_menu:hover{
+  cursor: pointer;
+  opacity: .8;
+}
+
+.button_menu_active {
+  color: #f2f2f3;
+}

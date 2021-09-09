@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import { orderPost } from '../../services/actions/order-details';
-import { LoginPage, NotFound404, RegisterPage, ResetPasswordPage, ForgotPasswordPage, ProfilePage } from '../../pages';
+import { LoginPage, NotFound404, RegisterPage, ResetPasswordPage, ForgotPasswordPage, ProfilePage, IngredientPage } from '../../pages';
 
 function App() {
 
@@ -89,7 +89,9 @@ function App() {
                 <BurgerConstructor openOrder={handleOpenOrder} />
               </DndProvider>
             </Route>
-
+            <Route path={`/ingredients/:id`} exact>
+              <IngredientPage />
+            </Route>
             <Route>
               <NotFound404 />
             </Route>
