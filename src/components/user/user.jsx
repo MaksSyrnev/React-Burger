@@ -35,36 +35,6 @@ export function UserInfo() {
         }
       });
 
-    /* getUserInfoRequest()
-      .then(data => {
-
-        return data;
-      })
-      .then((data) => {
-
-        if (data.success) {
-
-          console.log('здесь диспатчим данные пользователя');
-
-        } else {
-
-          console.log('не в этот раз');
-
-          tokenRequest('refreshToken')
-            .then((res) => {
-              let authToken;
-              if (res.success) {
-                authToken = res.accessToken.split('Bearer ')[1];
-                setCookie('token', authToken);
-                setCookie('refreshToken', res.refreshToken);
-                getUserInfoRequest();
-              });
-        }
-      }); */
-
-    /*  }
-         }); */
-
   }, []);
 
   useEffect(() => {
