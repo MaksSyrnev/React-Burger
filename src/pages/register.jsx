@@ -4,14 +4,17 @@ import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { registerUser } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
+import { getCookie } from '../services/utils';
 
 export function RegisterPage() {
+  const isToken = getCookie('refreshToken');
   const [form, setValue] = useState({ email: '', password: '', name: '' })
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
+
   const onIconClick = () => {
     alert('Icon Click Callback');
-  }
+  };
 
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -25,7 +28,7 @@ export function RegisterPage() {
     [dispatch, form]
   );
 
-  if (user.name) {
+  if (user.name || isToken) {
     return (
       <Redirect to={'/'} />
     );

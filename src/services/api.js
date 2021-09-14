@@ -3,9 +3,10 @@ import { url, getCookie } from './utils';
 // POST https://norma.nomoreparties.space/api/auth/register - эндпоинт для регистрации пользователя.
 // POST https://norma.nomoreparties.space/api/auth/logout - эндпоинт для выхода из системы.
 // POST https://norma.nomoreparties.space/api/auth/token - эндпоинт обновления токена.
-// GET https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.
+// GET  https://norma.nomoreparties.space/api/auth/user - эндпоинт получения данных о пользователе.
 // PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
-
+// POST https://norma.nomoreparties.space/api/password-reset - эндпоинт забыл пароль
+// POST https://norma.nomoreparties.space/api/password-reset/reset -эндпоинт установить новый пароль
 
 export const signUpRequest = async form => {
   return await fetch(`${url}auth/register`, {
@@ -59,7 +60,7 @@ export const tokenRequest = async nameToken => {
     })
   })
     .then((res) => {
-      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+      return res.json();
     });
 };
 
@@ -75,7 +76,7 @@ export const logoutRequest = async nameToken => {
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
     body: JSON.stringify({
-      "token": nameToken
+      "token": getCookie(nameToken)
     })
   })
     .then((res) => {
@@ -101,9 +102,28 @@ export const getUserInfoRequest = async () => {
     });
 };
 
-export const userInfoUpdateRequest = async refreshToken => {
+export const userInfoUpdateRequest = async form => {
   return await fetch(`${url}auth/user`, {
     method: 'PATCH',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('token')
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(form)
+  })
+    .then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    });
+};
+
+export const forgotPasswordtRequest = async value => {
+  return await fetch(`${url}password-reset`, {
+    method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
     credentials: 'same-origin',
@@ -113,8 +133,26 @@ export const userInfoUpdateRequest = async refreshToken => {
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
     body: JSON.stringify({
-      "token": refreshToken
+      "email": value
     })
+  })
+    .then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    });
+};
+
+export const updatePasswordtRequest = async form => {
+  return await fetch(`${url}password-reset/reset`, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(form)
   })
     .then((res) => {
       return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import appStyle from './app.module.css';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -9,11 +9,20 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import { ProtectedRoute } from '../protected-route';
 import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import { orderPost } from '../../services/actions/order-details';
-import { LoginPage, NotFound404, RegisterPage, ResetPasswordPage, ForgotPasswordPage, ProfilePage, IngredientPage } from '../../pages';
+import {
+  LoginPage,
+  NotFound404,
+  RegisterPage,
+  ResetPasswordPage,
+  ForgotPasswordPage,
+  ProfilePage,
+  IngredientPage
+} from '../../pages';
 
 function App() {
 
@@ -27,12 +36,6 @@ function App() {
     dispatch(getBurgerIngredients());
   }, []);
 
-  const handleOpenOrder = (order) => {
-    setTitleModal('');
-    dispatch(orderPost(order));
-    setIsOpen(true);
-  };
-
   const handleOpenIngredient = (idIngridient) => {
     const currentIngredients = dataIngredients.filter(
       (item) => item._id === idIngridient
@@ -43,53 +46,70 @@ function App() {
       type: OPEN_ITEM,
       item: current
     });
+  };
+
+  const handleOpenOrder = (order) => {
+    setTitleModal('');
+    dispatch(orderPost(order));
     setIsOpen(true);
   };
 
   const closePopup = () => {
-    if (titleModal) {
-      dispatch({
-        type: CLOSE_ITEM
-      });
-    }
     setIsOpen(false);
-  };
+  }
 
-  const modal = (
-    <Modal onClose={closePopup} title={titleModal}>
-      {titleModal ? <IngredientDetails /> : <OrderDetails orderNumber={order.number} />}
-    </Modal >
-  );
 
-  return (
-    <div className={appStyle.page}>
-      <BrowserRouter>
+  const ModalSwitch = () => {
+    const location = useLocation();
+    const history = useHistory();
+    let background = location.state && location.state.background;
+
+    const closeModal = () => {
+      history.replace({ pathname: '/' });
+      if (titleModal) {
+        dispatch({
+          type: CLOSE_ITEM
+        });
+      }
+    };
+
+    return (
+      <>
         <AppHeader />
         <main className={appStyle.content}>
 
-          <Switch>
+          <Switch location={background || location}>
             <Route path="/login">
               <LoginPage />
             </Route>
             <Route path="/register" exact>
               <RegisterPage />
             </Route>
-            <Route path="/reset-password" exact>
-              <ResetPasswordPage />
-            </Route>
             <Route path="/forgot-password">
               <ForgotPasswordPage />
             </Route>
-            <Route path="/profile">
-              <ProfilePage />
+            <Route path="/reset-password" exact>
+              <ResetPasswordPage />
             </Route>
+
+            <ProtectedRoute path="/profile">
+              <ProfilePage />
+            </ProtectedRoute>
+
             <Route path="/" exact>
               <DndProvider backend={HTML5Backend}>
                 {dataIngredients && <BurgerIngredients openIngredient={handleOpenIngredient} />}
                 <BurgerConstructor openOrder={handleOpenOrder} />
               </DndProvider>
             </Route>
-            <Route path={`/ingredients/:id`} exact>
+
+            <ProtectedRoute
+              path='/profile/orders/'
+              children={<OrderDetails />}
+              exact
+            />
+
+            <Route path={`/ingredients/:ingredientId`} exact>
               <IngredientPage />
             </Route>
             <Route>
@@ -97,8 +117,34 @@ function App() {
             </Route>
 
           </Switch>
-
         </main>
+
+        {background && (
+          <Route
+            path='/ingredients/:ingredientId'
+            children={
+              <Modal onClose={closeModal} title={titleModal} >
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        )}
+
+      </>
+    );
+
+  }
+
+  const modal = (
+    <Modal onClose={closePopup} >
+      <OrderDetails orderNumber={order.number} />
+    </Modal >
+  );
+
+  return (
+    <div className={appStyle.page}>
+      <BrowserRouter>
+        <ModalSwitch />
       </BrowserRouter>
       {isOpen && modal}
     </div >
@@ -106,3 +152,12 @@ function App() {
 }
 
 export default App;
+
+// {
+//   background && (
+//     <Modal onClose={closePopup}>
+//       <OrderDetails />
+//     </Modal>
+//     }
+// />
+// )}

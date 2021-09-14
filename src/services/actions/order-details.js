@@ -1,4 +1,4 @@
-import { url } from '../../utils/data';
+import { url, getCookie } from '../utils';
 export const ADD_LIST_ORDER = 'ADD_LIST_ORDER';
 export const ADD_NUMBER_ORDER = 'ADD_NUMBER_ORDER';
 
@@ -14,6 +14,7 @@ export function orderPost(order) {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
+        Authorization: 'Bearer ' + getCookie('token')
       },
       body: JSON.stringify({
         "ingredients": order

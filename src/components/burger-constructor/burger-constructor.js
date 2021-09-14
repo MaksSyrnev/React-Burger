@@ -10,11 +10,18 @@ import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
 import { ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN } from '../../services/actions/burger-ingredients';
 import { useDrop } from "react-dnd";
 import Main from './main/main';
+import { useHistory, useLocation } from 'react-router-dom';
+import { getUser } from '../../services/actions/auth';
+import { getCookie, setCookie, deleteCookie } from '../../services/utils';
+import { tokenRequest } from '../../services/api';
 
 function BurgerConstructor(props) {
   const dataIngredients = useSelector(store => store.ingredients.items);
   const burger = useSelector(store => store.burger);
+  const user = useSelector(store => store.user);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
 
   //принятие дропа элемента булка
   const [{ isBunHover }, DropBunTarget] = useDrop({
@@ -140,18 +147,41 @@ function BurgerConstructor(props) {
     }, [burger]);
 
   //обработчик кнопки отправки заказа (начальный)
-  function orderHandle() {
-    const order = [];
-    if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
-      order.push(burger.top._id);
+  const orderHandle = async () => {
+    const token = getCookie('token');
+    if (!token) {
+      history.replace({ pathname: '/login' });
     }
-    if ((burger.main !== undefined) && (burger.main.length !== 0)) {
-      burger.main.forEach(function (item) {
-        order.push(item._id);
-      });
+    await getUser();
+    if (user.name.length == 0) {
+      console.log('надо обновить токен');
+      let authToken;
+      tokenRequest('refreshToken')
+        .then((res) => {
+          if (res.success) {
+            authToken = res.accessToken.split('Bearer ')[1];
+            setCookie('token', authToken);
+            setCookie('refreshToken', res.refreshToken);
+          }
+          if (!res.success) {
+            deleteCookie('token');
+            deleteCookie('refreshToken');
+            history.replace({ pathname: '/login' });
+          }
+        });
+    } else {
+      const order = [];
+      if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
+        order.push(burger.top._id);
+      }
+      if ((burger.main !== undefined) && (burger.main.length !== 0)) {
+        burger.main.forEach(function (item) {
+          order.push(item._id);
+        });
+      }
+      props.openOrder(order);
     }
-    props.openOrder(order);
-  }
+  };
 
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`} >
@@ -179,9 +209,11 @@ function BurgerConstructor(props) {
           <TotalPrice />
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium" onClick={orderHandle}>
-          Оформить заказ
-        </Button>
+        {(burger.top._id !== undefined) && (
+          <Button type="primary" size="medium" onClick={orderHandle}>
+            Оформить заказ
+          </Button>
+        )}
       </div>
 
     </div >

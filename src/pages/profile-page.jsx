@@ -1,13 +1,15 @@
 import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import styles from './page.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUserInfo } from '../services/actions/auth';
 import { UserInfo } from '../components/user/user';
+import { logoutRequest } from '../services/api';
+import { deleteCookie } from '../services/utils';
+import { useDispatch } from 'react-redux';
+import { DEL_USER_INFO } from '../services/actions/auth';
 
 export function ProfilePage() {
   const { path } = useRouteMatch();
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const activeProfile = path === '/profile' ? styles.button_menu_active : '';
 
   const goUserInfo = () => {
@@ -17,6 +19,24 @@ export function ProfilePage() {
   const goOrders = () => {
     history.replace({ pathname: '/profile/orders' });
   };
+
+  const logoutUserHandeler = () => {
+    logoutRequest('refreshToken')
+      .then(res => {
+        if (res.success) {
+          deleteCookie('refreshToken');
+          deleteCookie('token');
+          dispatch({
+            type: DEL_USER_INFO
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    history.replace({ pathname: '/login' });
+  };
+
 
   return (
     <div className={styles.wrapper_profile}>
@@ -35,7 +55,7 @@ export function ProfilePage() {
               </button>
             </li>
             <li className={styles.menu_link} >
-              <button className={`${styles.button_menu} text text_type_main-medium text_color_inactive`}>
+              <button className={`${styles.button_menu} text text_type_main-medium text_color_inactive`} onClick={logoutUserHandeler}>
                 Выход
               </button>
             </li>

@@ -1,17 +1,49 @@
-import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef, useState, useCallback, useEffect } from 'react';
+import { Link, useHistory, Redirect, useLocation } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { updatePasswordtRequest } from '../services/api';
+import { getCookie } from '../services/utils';
 
 export function ResetPasswordPage() {
+  const isToken = getCookie('refreshToken');
+  const [form, setValue] = useState({ password: '', token: '' });
+  const history = useHistory();
+  const { state } = useLocation();
 
-  const [value, setValue] = useState('value')
-  const inputRef = useRef(null)
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
-    alert('Icon Click Callback');
+
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSavePassword = useCallback(
+    e => {
+      e.preventDefault();
+      updatePasswordtRequest(form)
+        .then((res) => {
+          if (res.success) {
+            history.replace({ pathname: '/login' });
+          }
+        });
+    }
+  );
+
+  useEffect(
+    () => {
+      if (!state) {
+        history.replace({ pathname: '/forgot-password' })
+      }
+    },
+    /* eslint-disable-next-line */
+    []
+  );
+
+
+  if (isToken) {
+    return (
+      <Redirect to={'/'} />
+    );
   }
-
 
   return (
     <div className={styles.wrapper}>
@@ -27,11 +59,10 @@ export function ResetPasswordPage() {
             <Input
               type={'text'}
               placeholder={'Введите новый пароль'}
-              onChange={e => setValue(e.target.value)}
+              onChange={onChange}
               icon={'ShowIcon'}
-              name={'pwd'}
+              name={'password'}
               error={false}
-              onIconClick={onIconClick}
               errorText={'Ошибка'}
             />
           </div>
@@ -40,15 +71,14 @@ export function ResetPasswordPage() {
             <Input
               type={'text'}
               placeholder={'Введите код из письма'}
-              onChange={e => setValue(e.target.value)}
-              name={'codResetPass'}
+              onChange={onChange}
+              name={'token'}
               errorText={'Ошибка'}
-
             />
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium">
+            <Button type="primary" size="medium" onClick={handleSavePassword}>
               Сохранить
             </Button>
           </div>

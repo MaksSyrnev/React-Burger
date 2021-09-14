@@ -1,64 +1,53 @@
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './user.module.css';
 import { useState, useCallback, useEffect } from 'react';
 import { EDIT_USER, ADD_USER_INFO } from '../../services/actions/auth';
-import { getUserInfoRequest, tokenRequest } from '../../services/api';
-import { setCookie } from '../../services/utils';
-
+import { getUserInfoRequest, tokenRequest, userInfoUpdateRequest } from '../../services/api';
+import { setCookie, deleteCookie } from '../../services/utils';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export function UserInfo() {
   const [auth, setAuth] = useState(null);
   const dataUser = useSelector(store => store.user);
   const dispatch = useDispatch();
-
+  const history = useHistory();
   useEffect(() => {
     getUserInfoRequest()
       .then(data => {
-        console.log('дождался?');
-        console.log(data);
         return data;
       })
       .then((data) => {
-
         if (data.success) {
-
-          console.log('здесь диспатчим данные пользователя');
           dispatch({
             type: ADD_USER_INFO,
             user: data.user
           });
-
         } else {
-          console.log('не в этот раз');
           setAuth('false');
         }
       });
-
   }, []);
 
   useEffect(() => {
-    console.log(auth);
+    let authToken;
     if (auth === 'false') {
-      console.log('запросим обновление токена и установен потом переменную в тру');
       tokenRequest('refreshToken')
         .then((res) => {
-          let authToken;
           if (res.success) {
             authToken = res.accessToken.split('Bearer ')[1];
             setCookie('token', authToken);
             setCookie('refreshToken', res.refreshToken);
             setAuth('true');
           }
+          if (!res.success) {
+            deleteCookie('token');
+            deleteCookie('refreshToken');
+            history.replace({ pathname: '/login' });
+          }
         });
-
-    } else if (auth === 'true') {
-      console.log('если ауф тру повторим запрос данных и будем диспатчить');
-
     }
-
   }, [auth]);
-
 
   const onChange = e => {
     dispatch({
@@ -66,6 +55,25 @@ export function UserInfo() {
       [e.target.name]: e.target.value
     });
   };
+
+  const saveUserInfo = useCallback(
+    e => {
+      e.preventDefault();
+      userInfoUpdateRequest(dataUser)
+        .then(res => {
+          if (res.success) {
+            console.log('все получилось');
+            dispatch({
+              type: ADD_USER_INFO,
+              user: res.user
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  );
 
   return (
     <form className={styles.form}>
@@ -101,7 +109,15 @@ export function UserInfo() {
           name={'password'}
           error={false}
           errorText={'Ошибка'}
+          value={dataUser.password}
+          onChange={onChange}
         />
+      </div>
+
+      <div className={`${styles.box} mb-20`}>
+        <Button type="primary" size="medium" onClick={saveUserInfo}>
+          Сохранить
+        </Button>
       </div>
     </form>
   );

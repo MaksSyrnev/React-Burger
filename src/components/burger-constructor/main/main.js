@@ -31,7 +31,6 @@ export default function Main(props) {
   };
 
   const renderElementBurger = (item, index) => {
-    // console.log(`${item._id}_${index}`);
     return (
       <ElementBurger
         key={`${item._id}_${index}`}
