@@ -44,8 +44,8 @@ export const signInRequest = async form => {
     });
 };
 
-export const tokenRequest = async nameToken => {
-  return await fetch(`${url}auth/token`, {
+export const logoutRequest = async nameToken => {
+  return await fetch(`${url}auth/logout`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -60,12 +60,12 @@ export const tokenRequest = async nameToken => {
     })
   })
     .then((res) => {
-      return res.json();
+      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     });
 };
 
-export const logoutRequest = async nameToken => {
-  return await fetch(`${url}auth/logout`, {
+export const tokenRequest = async nameToken => {
+  return await fetch(`${url}auth/token`, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -98,7 +98,7 @@ export const getUserInfoRequest = async () => {
     referrerPolicy: 'no-referrer',
   })
     .then((res) => {
-      return res.json();
+      return res.ok ? res.json() : ((res.status === 401) || (res.status === 403) ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
     });
 };
 
@@ -121,7 +121,7 @@ export const userInfoUpdateRequest = async form => {
     });
 };
 
-export const forgotPasswordtRequest = async value => {
+export const forgotPasswordRequest = async value => {
   return await fetch(`${url}password-reset`, {
     method: 'POST',
     mode: 'cors',

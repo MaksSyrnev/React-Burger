@@ -1,11 +1,48 @@
-import { ADD_USER_INFO } from '../actions/auth';
-import { EDIT_USER } from '../actions/auth';
-import { DEL_USER_INFO } from '../actions/auth';
+import {
+  ADD_USER_INFO,
+  EDIT_USER,
+  DEL_USER_INFO,
+  GET_FORGOT_PASS,
+  GET_FORGOT_PASS_SUCCESS,
+  GET_FORGOT_PASS_FAIL,
+  SEND_LOGOUT,
+  SEND_LOGOUT_FAIL,
+  GET_USER_INFO,
+  NEED_REFRESH_TOKEN,
+  GET_TOKEN,
+  TOKEN_REFRESH_SUCCESS,
+  PASS_UPDATE_SUCCESS
+} from '../actions/auth';
 
 const initialState = {
-  email: '',
-  name: '',
-  password: ''
+  userInfo: {
+    email: '',
+    name: '',
+    password: '',
+  },
+  passwordReset: {
+    feedRequest: false,
+    feedFailed: false,
+    feedStatus: false,
+    errMessage: '',
+    passwordUpdate: false
+  },
+  logout: {
+    feedRequest: false,
+    feedFailed: false,
+    feedStatus: false,
+    errMessage: '',
+  },
+  getUser: {
+    feedRequest: false,
+    feedFailed: false,
+    needRefresh: false,
+    errMessage: '',
+  },
+  getToken: {
+    refreshSuccess: false,
+    refreshFail: false
+  }
 };
 
 export const authReducer = (store = initialState, action) => {
@@ -13,25 +50,140 @@ export const authReducer = (store = initialState, action) => {
     case ADD_USER_INFO: {
       return {
         ...store,
-        email: action.user.email,
-        name: action.user.name
+        userInfo: {
+          ...store.userInfo,
+          email: action.user.email,
+          name: action.user.name
+        },
+        getUser: {
+          ...store.getUser,
+          feedRequest: false,
+          needRefresh: false,
+          feedFailed: false,
+          errMessage: ''
+        }
       };
     }
     case EDIT_USER: {
       return {
         ...store,
-        email: action.email ? action.email : store.email,
-        name: action.name ? action.name : store.name,
-        password: action.password ? action.password : store.password
+        userInfo: {
+          email: action.email ? action.email : store.userInfo.email,
+          name: action.name ? action.name : store.userInfo.name,
+          password: action.password ? action.password : store.userInfo.password
+        }
       };
     }
     case DEL_USER_INFO: {
       return {
         ...store,
-        email: '',
-        name: '',
-        password: ''
-      };
+        userInfo: {
+          email: '',
+          name: '',
+          password: '',
+        },
+        logout: {
+          ...store.logout,
+          feedRequest: false,
+          feedStatus: true,
+        }
+      }
+    }
+    case GET_FORGOT_PASS: {
+      return {
+        ...store,
+        passwordReset: {
+          ...store.passwordReset,
+          feedRequest: true
+        }
+      }
+    }
+    case GET_FORGOT_PASS_SUCCESS: {
+      return {
+        ...store,
+        passwordReset: {
+          ...store.passwordReset,
+          feedRequest: false,
+          feedStatus: true,
+        }
+      }
+    }
+    case GET_FORGOT_PASS_FAIL: {
+      return {
+        ...store,
+        passwordReset: {
+          ...store.passwordReset,
+          feedRequest: false,
+          feedStatus: false,
+          errMessage: action.message
+        }
+      }
+    }
+    case SEND_LOGOUT: {
+      return {
+        ...store,
+        logout: {
+          ...store.logout,
+          feedRequest: true,
+          feedStatus: false,
+          errMessage: ''
+        }
+      }
+    }
+    case SEND_LOGOUT_FAIL: {
+      return {
+        ...store,
+        logout: {
+          ...store.logout,
+          feedRequest: false,
+          feedStatus: false,
+          errMessage: action.message
+        }
+      }
+    }
+    case GET_USER_INFO: {
+      return {
+        ...store,
+        getUser: {
+          ...store.getUser,
+          feedRequest: true,
+          needRefresh: false,
+          errMessage: ''
+        }
+      }
+    }
+    case NEED_REFRESH_TOKEN: {
+      return {
+        ...store,
+        getUser: {
+          ...store.getUser,
+          feedRequest: false,
+          needRefresh: true,
+          errMessage: ''
+        }
+      }
+    }
+    case TOKEN_REFRESH_SUCCESS: {
+      return {
+        ...store,
+        getUser: {
+          ...store.getUser,
+          needRefresh: false,
+        },
+        getToken: {
+          refreshSuccess: true,
+          refreshFail: false
+        }
+      }
+    }
+    case PASS_UPDATE_SUCCESS: {
+      return {
+        ...store,
+        passwordReset: {
+          ...store.passwordReset,
+          passwordUpdate: true
+        }
+      }
     }
     default: {
       return store;

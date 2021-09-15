@@ -3,7 +3,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Ingredient(props) {
   const item = props.item;
@@ -37,7 +37,6 @@ export default function Ingredient(props) {
       }}
       className={ingredientStyle.link}
     >
-
       <li className={`${ingredientStyle.product_item} ml-4 pr-2`} >
         <div className={ingredientStyle.product_card} onClick={handleClickIngredient} ref={dragRef} >
           <img src={item.image} alt={item.name} className="pl-4 pr-4" />

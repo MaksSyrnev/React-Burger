@@ -20,7 +20,6 @@ function BurgerConstructor(props) {
   const burger = useSelector(store => store.burger);
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
-  const location = useLocation();
   const history = useHistory();
 
   //принятие дропа элемента булка

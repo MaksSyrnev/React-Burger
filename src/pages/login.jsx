@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -12,8 +12,9 @@ export function LoginPage() {
   const [form, setValue] = useState({ email: '', password: '' });
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
+
   const onIconClick = () => {
-    alert('Icon Click Callback');
+    alert('пока не готово, но в будущем ...');
   };
 
   const onChange = e => {
@@ -28,7 +29,7 @@ export function LoginPage() {
     [dispatch, form]
   );
 
-  if (user.name || isToken) {
+  if (user.userInfo.name || isToken) {
     return (
       <Redirect to={'/'} />
     );
@@ -38,7 +39,7 @@ export function LoginPage() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleLogin}>
 
           <h1 className={`${styles.title} text text_type_main-medium`}>
             Вход
@@ -51,7 +52,7 @@ export function LoginPage() {
               onChange={onChange}
               name={'email'}
               errorText={'Ошибка'}
-
+              value={form.email}
             />
           </div>
 
@@ -65,11 +66,12 @@ export function LoginPage() {
               error={false}
               onIconClick={onIconClick}
               errorText={'Ошибка'}
+              value={form.password}
             />
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium" onClick={handleLogin}>
+            <Button type="primary" size="medium">
               Войти
             </Button>
           </div>

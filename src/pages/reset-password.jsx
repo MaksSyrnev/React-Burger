@@ -1,16 +1,19 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link, useHistory, Redirect, useLocation } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { updatePasswordtRequest } from '../services/api';
+import { updatePassword } from '../services/actions/auth';
 import { getCookie } from '../services/utils';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function ResetPasswordPage() {
   const isToken = getCookie('refreshToken');
   const [form, setValue] = useState({ password: '', token: '' });
   const history = useHistory();
   const { state } = useLocation();
-
+  const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
+  const updateStatus = user.passwordReset.passwordUpdate;
 
   const onChange = e => {
     setValue({ ...form, [e.target.name]: e.target.value });
@@ -19,13 +22,14 @@ export function ResetPasswordPage() {
   const handleSavePassword = useCallback(
     e => {
       e.preventDefault();
-      updatePasswordtRequest(form)
+      dispatch(updatePassword(form));
+      /* updatePasswordtRequest(form)
         .then((res) => {
           if (res.success) {
             history.replace({ pathname: '/login' });
           }
-        });
-    }
+        }); */
+    }, [dispatch, form]
   );
 
   useEffect(
@@ -38,6 +42,11 @@ export function ResetPasswordPage() {
     []
   );
 
+  useEffect(() => {
+    if (updateStatus) {
+      history.replace({ pathname: '/login' });
+    }
+  }, [history, updateStatus]);
 
   if (isToken) {
     return (
@@ -49,7 +58,7 @@ export function ResetPasswordPage() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSavePassword}>
 
           <h1 className={`${styles.title} text text_type_main-medium`}>
             Восстановление пароля
@@ -64,6 +73,7 @@ export function ResetPasswordPage() {
               name={'password'}
               error={false}
               errorText={'Ошибка'}
+              value={form.password}
             />
           </div>
 
@@ -74,11 +84,12 @@ export function ResetPasswordPage() {
               onChange={onChange}
               name={'token'}
               errorText={'Ошибка'}
+              value={form.token}
             />
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium" onClick={handleSavePassword}>
+            <Button type="primary" size="medium">
               Сохранить
             </Button>
           </div>

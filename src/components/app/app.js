@@ -25,7 +25,6 @@ import {
 } from '../../pages';
 
 function App() {
-
   const [isOpen, setIsOpen] = useState(false);
   const [titleModal, setTitleModal] = useState('');
   const dispatch = useDispatch();
@@ -58,11 +57,10 @@ function App() {
     setIsOpen(false);
   }
 
-
   const ModalSwitch = () => {
     const location = useLocation();
     const history = useHistory();
-    let background = location.state && location.state.background;
+    let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 
     const closeModal = () => {
       history.replace({ pathname: '/' });
@@ -133,7 +131,7 @@ function App() {
       </>
     );
 
-  }
+  };
 
   const modal = (
     <Modal onClose={closePopup} >
@@ -152,12 +150,3 @@ function App() {
 }
 
 export default App;
-
-// {
-//   background && (
-//     <Modal onClose={closePopup}>
-//       <OrderDetails />
-//     </Modal>
-//     }
-// />
-// )}

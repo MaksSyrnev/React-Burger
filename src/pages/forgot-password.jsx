@@ -1,30 +1,34 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { forgotPasswordtRequest } from '../services/api';
 import { getCookie } from '../services/utils';
+import { forgotPassword } from '../services/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function ForgotPasswordPage() {
   const isToken = getCookie('refreshToken');
-  const [value, setValue] = useState('value')
+  const [value, setValue] = useState('')
   const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
+  const status = user.passwordReset.feedStatus;
 
-
-
-  const handForgotPassword = useCallback(
+  const handleForgotPassword = useCallback(
     e => {
       e.preventDefault();
-      if (value !== 'value') {
-        forgotPasswordtRequest(value)
-          .then((res) => {
-            if (res.success) {
-              const firstCrumb = [{ path: '/forgot-password', url: '/forgot-password', title: 'ForgotPassword' }];
-              history.replace({ pathname: '/reset-password', state: firstCrumb });
-            }
-          });
+      if (value !== '') {
+        dispatch(forgotPassword(value));
       }
-    });
+    }, [dispatch, value]
+  );
+
+  useEffect(() => {
+    if (status) {
+      const firstCrumb = [{ path: '/forgot-password', url: '/forgot-password', title: 'ForgotPassword' }];
+      history.replace({ pathname: '/reset-password', state: firstCrumb });
+    }
+  }, [history, status]);
 
   if (isToken) {
     return (
@@ -36,7 +40,7 @@ export function ForgotPasswordPage() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleForgotPassword}>
 
           <h1 className={`${styles.title} text text_type_main-medium`}>
             Восстановление пароля
@@ -49,11 +53,12 @@ export function ForgotPasswordPage() {
               onChange={e => setValue(e.target.value)}
               name={'email'}
               errorText={'Ошибка'}
+              value={value}
             />
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium" onClick={handForgotPassword}>
+            <Button type="primary" size="medium">
               Восстановить
             </Button>
           </div>
@@ -68,7 +73,6 @@ export function ForgotPasswordPage() {
           </p>
 
         </form>
-
 
       </div>
     </div>

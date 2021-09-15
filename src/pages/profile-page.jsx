@@ -1,16 +1,18 @@
 import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { useCallback, useEffect } from 'react';
 import styles from './page.module.css';
-import { UserInfo } from '../components/user/user';
-import { logoutRequest } from '../services/api';
+import { UserInfo } from '../components/user-info/user-info';
+import { logoutUser } from '../services/actions/auth';
 import { deleteCookie } from '../services/utils';
-import { useDispatch } from 'react-redux';
-import { DEL_USER_INFO } from '../services/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 export function ProfilePage() {
   const { path } = useRouteMatch();
   const history = useHistory();
+  const user = useSelector(store => store.user);
   const dispatch = useDispatch();
   const activeProfile = path === '/profile' ? styles.button_menu_active : '';
+  const logoutStatus = user.logout.feedStatus;
 
   const goUserInfo = () => {
     history.replace({ pathname: '/profile' });
@@ -20,23 +22,19 @@ export function ProfilePage() {
     history.replace({ pathname: '/profile/orders' });
   };
 
-  const logoutUserHandeler = () => {
-    logoutRequest('refreshToken')
-      .then(res => {
-        if (res.success) {
-          deleteCookie('refreshToken');
-          deleteCookie('token');
-          dispatch({
-            type: DEL_USER_INFO
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    history.replace({ pathname: '/login' });
-  };
+  const logoutUserHandeler = useCallback(
+    () => {
+      dispatch(logoutUser());
+    }, [dispatch]
+  );
 
+  useEffect(() => {
+    if (logoutStatus) {
+      deleteCookie('refreshToken');
+      deleteCookie('token');
+      history.replace({ pathname: '/login' });
+    }
+  }, [history, logoutStatus]);
 
   return (
     <div className={styles.wrapper_profile}>

@@ -28,7 +28,7 @@ export function RegisterPage() {
     [dispatch, form]
   );
 
-  if (user.name || isToken) {
+  if (user.userInfo.name || isToken) {
     return (
       <Redirect to={'/'} />
     );
@@ -38,7 +38,7 @@ export function RegisterPage() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
 
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleRegister}>
 
           <h1 className={`${styles.title} text text_type_main-medium`}>
             Регистрация
@@ -51,6 +51,7 @@ export function RegisterPage() {
               onChange={onChange}
               name={'name'}
               errorText={'Ошибка'}
+              value={form.name}
             />
           </div>
 
@@ -61,7 +62,7 @@ export function RegisterPage() {
               onChange={onChange}
               name={'email'}
               errorText={'Ошибка'}
-
+              value={form.email}
             />
           </div>
 
@@ -75,11 +76,12 @@ export function RegisterPage() {
               error={false}
               onIconClick={onIconClick}
               errorText={'Ошибка'}
+              value={form.password}
             />
           </div>
 
           <div className={`${styles.box} mb-20`}>
-            <Button type="primary" size="medium" onClick={handleRegister}>
+            <Button type="primary" size="medium">
               Зарегистрироваться
             </Button>
           </div>
