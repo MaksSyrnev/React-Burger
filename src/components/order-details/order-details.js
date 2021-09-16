@@ -7,7 +7,15 @@ const OrderDetails = (props) => {
 
   return (
     <div className={orderDetailsStyle.box}>
-      <p className={`${orderDetailsStyle.title} text text_type_digits-large`}>{props.orderNumber}</p>
+      <p className={`${orderDetailsStyle.title} text text_type_digits-large`}>
+        {props.orderNumber ?
+          props.orderNumber : (
+            <p className="mt-8 mb-15 text text_type_main-medium">
+              Обрабатываем заказ ...
+            </p>
+          )
+        }
+      </p>
       <p className="mt-8 mb-15 text text_type_main-medium">идентификатор заказа</p>
       <img src={pathDone} alt="готово" />
       <p className="mt-15 mb-2 text text_type_main-default">Ваш заказ начали готовить</p>

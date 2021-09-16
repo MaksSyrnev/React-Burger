@@ -23,12 +23,6 @@ export function ResetPasswordPage() {
     e => {
       e.preventDefault();
       dispatch(updatePassword(form));
-      /* updatePasswordtRequest(form)
-        .then((res) => {
-          if (res.success) {
-            history.replace({ pathname: '/login' });
-          }
-        }); */
     }, [dispatch, form]
   );
 

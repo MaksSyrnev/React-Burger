@@ -158,3 +158,19 @@ export const updatePasswordtRequest = async form => {
       return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
     });
 };
+
+export const orderPostRequest = async (order) => {
+  return await fetch(`${url}orders`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: 'Bearer ' + getCookie('token')
+    },
+    body: JSON.stringify({
+      "ingredients": order
+    })
+  })
+    .then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    })
+};

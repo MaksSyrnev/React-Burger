@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,17 +10,22 @@ import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
 import { ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN } from '../../services/actions/burger-ingredients';
 import { useDrop } from "react-dnd";
 import Main from './main/main';
-import { useHistory, useLocation } from 'react-router-dom';
-import { getUser } from '../../services/actions/auth';
-import { getCookie, setCookie, deleteCookie } from '../../services/utils';
-import { tokenRequest } from '../../services/api';
+import { useHistory } from 'react-router-dom';
+import { getUser, refreshToken } from '../../services/actions/auth';
+import { deleteCookie } from '../../services/utils';
 
 function BurgerConstructor(props) {
   const dataIngredients = useSelector(store => store.ingredients.items);
   const burger = useSelector(store => store.burger);
   const user = useSelector(store => store.user);
+  const order = useSelector(store => store.order);
   const dispatch = useDispatch();
   const history = useHistory();
+  const userStatus = user.getUser.getStatus;
+  const needRefresh = user.getUser.needRefresh;
+  const logoutStatus = user.logout.logoutStatus;
+  const oderStatus = order.orderPush;
+  const oderHandleFail = order.orderHandleFail;
 
   //принятие дропа элемента булка
   const [{ isBunHover }, DropBunTarget] = useDrop({
@@ -87,7 +92,6 @@ function BurgerConstructor(props) {
 
   const deleteCountElement = (id) => {
     const element = dataIngredients.filter(item => item._id === id);
-    console.log(element);
     dispatch({
       type: ADD_COUNT_INGRIDIENT,
       id: id,
@@ -146,29 +150,13 @@ function BurgerConstructor(props) {
     }, [burger]);
 
   //обработчик кнопки отправки заказа (начальный)
-  const orderHandle = async () => {
-    const token = getCookie('token');
-    if (!token) {
+  const orderHandle = () => {
+    if (logoutStatus) {
+      deleteCookie('refreshToken');
+      deleteCookie('token');
       history.replace({ pathname: '/login' });
     }
-    await getUser();
-    if (user.name.length == 0) {
-      console.log('надо обновить токен');
-      let authToken;
-      tokenRequest('refreshToken')
-        .then((res) => {
-          if (res.success) {
-            authToken = res.accessToken.split('Bearer ')[1];
-            setCookie('token', authToken);
-            setCookie('refreshToken', res.refreshToken);
-          }
-          if (!res.success) {
-            deleteCookie('token');
-            deleteCookie('refreshToken');
-            history.replace({ pathname: '/login' });
-          }
-        });
-    } else {
+    if (!logoutStatus) {
       const order = [];
       if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
         order.push(burger.top._id);
@@ -181,6 +169,28 @@ function BurgerConstructor(props) {
       props.openOrder(order);
     }
   };
+
+  useEffect(() => {
+    if (needRefresh) {
+      dispatch(refreshToken());
+    }
+    if (user.getToken.refreshSuccess) {
+      dispatch(getUser());
+    }
+
+  }, [dispatch, needRefresh, user.getToken.refreshSuccess]);
+
+  useEffect(() => {
+    if (oderStatus && oderHandleFail) {
+      if (!user.getToken.refreshSuccess) {
+        dispatch(getUser());
+      }
+    }
+    if (oderStatus && user.getToken.refreshSuccess && oderHandleFail) {
+      props.openOrder(order);
+    }
+
+  }, [oderStatus, oderHandleFail, user.getToken.refreshSuccess]);
 
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`} >
