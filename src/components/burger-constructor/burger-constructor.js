@@ -12,7 +12,7 @@ import { useDrop } from "react-dnd";
 import Main from './main/main';
 import { useHistory } from 'react-router-dom';
 import { getUser, refreshToken } from '../../services/actions/auth';
-import { deleteCookie } from '../../services/utils';
+import { deleteCookie, getCookie } from '../../services/utils';
 
 function BurgerConstructor(props) {
   const dataIngredients = useSelector(store => store.ingredients.items);
@@ -26,6 +26,7 @@ function BurgerConstructor(props) {
   const logoutStatus = user.logout.logoutStatus;
   const oderStatus = order.orderPush;
   const oderHandleFail = order.orderHandleFail;
+  const isToken = getCookie('refreshToken');
 
   //принятие дропа элемента булка
   const [{ isBunHover }, DropBunTarget] = useDrop({
@@ -151,12 +152,12 @@ function BurgerConstructor(props) {
 
   //обработчик кнопки отправки заказа (начальный)
   const orderHandle = () => {
-    if (logoutStatus) {
-      deleteCookie('refreshToken');
-      deleteCookie('token');
+    if (!isToken) {
+      /* deleteCookie('refreshToken');
+      deleteCookie('token'); */
       history.replace({ pathname: '/login' });
     }
-    if (!logoutStatus) {
+    if (userStatus) {
       const order = [];
       if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
         order.push(burger.top._id);
