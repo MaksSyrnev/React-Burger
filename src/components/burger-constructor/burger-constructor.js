@@ -193,6 +193,10 @@ function BurgerConstructor(props) {
 
   }, [oderStatus, oderHandleFail, user.getToken.refreshSuccess]);
 
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`} >
 
