@@ -85,12 +85,6 @@ export function getUser() {
             type: NEED_REFRESH_TOKEN,
           });
         }
-        if (res.message === 'jwt malformed') {
-          console.log('нет токена или неправильный запрос- на повторный логин');
-          dispatch({
-            type: DEL_USER_INFO,
-          });
-        }
       })
       .catch((err) => {
         console.log(err, err.message);

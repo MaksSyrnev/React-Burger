@@ -12,7 +12,7 @@ export function ProfilePage() {
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
   const activeProfile = path === '/profile' ? styles.button_menu_active : '';
-  const logoutStatus = user.logout.logoutStatus;
+  const logoutStatus = user.logout.feedStatus;
 
   const goUserInfo = () => {
     history.replace({ pathname: '/profile' });

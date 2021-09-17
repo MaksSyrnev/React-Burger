@@ -11,7 +11,7 @@ import {
   NEED_REFRESH_TOKEN,
   GET_TOKEN,
   TOKEN_REFRESH_SUCCESS,
-  PASS_UPDATE_SUCCESS,
+  PASS_UPDATE_SUCCESS
 } from '../actions/auth';
 
 const initialState = {
@@ -30,7 +30,7 @@ const initialState = {
   logout: {
     feedRequest: false,
     feedFailed: false,
-    logoutStatus: false,
+    feedStatus: false,
     errMessage: '',
   },
   getUser: {
@@ -38,7 +38,6 @@ const initialState = {
     feedFailed: false,
     needRefresh: false,
     errMessage: '',
-    getStatus: false
   },
   getToken: {
     refreshSuccess: false,
@@ -61,13 +60,6 @@ export const authReducer = (store = initialState, action) => {
           feedRequest: false,
           needRefresh: false,
           feedFailed: false,
-          errMessage: '',
-          getStatus: true
-        },
-        logout: {
-          ...store.logout,
-          feedRequest: false,
-          logoutStatus: false,
           errMessage: ''
         }
       };
@@ -93,14 +85,7 @@ export const authReducer = (store = initialState, action) => {
         logout: {
           ...store.logout,
           feedRequest: false,
-          logoutStatus: true,
-        },
-        getUser: {
-          ...store.getUser,
-          feedRequest: false,
-          needRefresh: false,
-          errMessage: '',
-          getStatus: false
+          feedStatus: true,
         }
       }
     }
@@ -140,7 +125,7 @@ export const authReducer = (store = initialState, action) => {
         logout: {
           ...store.logout,
           feedRequest: true,
-          logoutStatus: false,
+          feedStatus: false,
           errMessage: ''
         }
       }
@@ -163,8 +148,7 @@ export const authReducer = (store = initialState, action) => {
           ...store.getUser,
           feedRequest: true,
           needRefresh: false,
-          errMessage: '',
-          getStatus: false
+          errMessage: ''
         }
       }
     }
@@ -175,12 +159,7 @@ export const authReducer = (store = initialState, action) => {
           ...store.getUser,
           feedRequest: false,
           needRefresh: true,
-          errMessage: '',
-          getStatus: false
-        },
-        getToken: {
-          refreshSuccess: false,
-          refreshFail: false
+          errMessage: ''
         }
       }
     }

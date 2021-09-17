@@ -1,12 +1,17 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './user-info.module.css';
-import { useCallback, useEffect } from 'react';
-import { EDIT_USER, getUser, refreshToken, saveUserEdit } from '../../services/actions/auth';
+import { useState, useCallback, useEffect } from 'react';
+import { EDIT_USER, ADD_USER_INFO, getUser, refreshToken } from '../../services/actions/auth';
+import { tokenRequest, userInfoUpdateRequest } from '../../services/api';
+import { setCookie, deleteCookie } from '../../services/utils';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export function UserInfo() {
+  const [auth, setAuth] = useState(null);
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
+  const history = useHistory();
   const userInfo = user.userInfo;
   const refreshStatus = user.getUser.needRefresh;
 
@@ -33,7 +38,6 @@ export function UserInfo() {
   const handleSaveUserInfo = useCallback(
     e => {
       e.preventDefault();
-      dispatch(saveUserEdit(userInfo));
     }
   );
 
