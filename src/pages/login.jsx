@@ -29,7 +29,7 @@ export function LoginPage() {
     [dispatch, form]
   );
 
-  if (user.userInfo.name || isToken) {
+  if (isToken) {
     return (
       <Redirect to={'/'} />
     );

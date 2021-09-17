@@ -13,7 +13,7 @@ import { ProtectedRoute } from '../protected-route';
 import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
-import { orderPost } from '../../services/actions/order-details';
+import { getUser } from '../../services/actions/auth';
 import {
   LoginPage,
   NotFound404,
@@ -33,6 +33,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getBurgerIngredients());
+    dispatch(getUser());
   }, []);
 
   const handleOpenIngredient = (idIngridient) => {
@@ -47,9 +48,8 @@ function App() {
     });
   };
 
-  const handleOpenOrder = (order) => {
+  const handleOpenOrder = () => {
     setTitleModal('');
-    dispatch(orderPost(order));
     setIsOpen(true);
   };
 

@@ -36,7 +36,7 @@ const initialState = {
   getUser: {
     feedRequest: false,
     feedFailed: false,
-    needRefresh: false,
+    needRefresh: true,
     errMessage: '',
   },
   getToken: {
@@ -61,6 +61,15 @@ export const authReducer = (store = initialState, action) => {
           needRefresh: false,
           feedFailed: false,
           errMessage: ''
+        },
+        logout: {
+          ...store.logout,
+          feedRequest: false,
+          feedStatus: false,
+        },
+        getToken: {
+          refreshSuccess: true,
+          refreshFail: false
         }
       };
     }
@@ -86,6 +95,17 @@ export const authReducer = (store = initialState, action) => {
           ...store.logout,
           feedRequest: false,
           feedStatus: true,
+        },
+        getToken: {
+          refreshSuccess: false,
+          refreshFail: false
+        },
+        getUser: {
+          ...store.getUser,
+          feedRequest: false,
+          needRefresh: true,
+          feedFailed: false,
+          errMessage: ''
         }
       }
     }
@@ -160,6 +180,23 @@ export const authReducer = (store = initialState, action) => {
           feedRequest: false,
           needRefresh: true,
           errMessage: ''
+        },
+        getToken: {
+          refreshSuccess: false,
+          refreshFail: false
+        }
+      }
+    }
+    case GET_TOKEN: {
+      return {
+        ...store,
+        getUser: {
+          ...store.getUser,
+          needRefresh: true,
+        },
+        getToken: {
+          refreshSuccess: false,
+          refreshFail: false
         }
       }
     }

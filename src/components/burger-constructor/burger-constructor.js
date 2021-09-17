@@ -10,15 +10,15 @@ import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
 import { ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN } from '../../services/actions/burger-ingredients';
 import { useDrop } from "react-dnd";
 import Main from './main/main';
-import { useHistory, useLocation } from 'react-router-dom';
-import { getUser } from '../../services/actions/auth';
-import { getCookie, setCookie, deleteCookie } from '../../services/utils';
-import { tokenRequest } from '../../services/api';
+import { useHistory } from 'react-router-dom';
+import { getCookie } from '../../services/utils';
+import { orderPost } from '../../services/actions/order-details';
 
 function BurgerConstructor(props) {
   const dataIngredients = useSelector(store => store.ingredients.items);
   const burger = useSelector(store => store.burger);
   const user = useSelector(store => store.user);
+  const order = useSelector(store => store.order);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -145,40 +145,25 @@ function BurgerConstructor(props) {
 
     }, [burger]);
 
-  //обработчик кнопки отправки заказа (начальный)
-  const orderHandle = async () => {
+  //обработчик кнопки отправки заказа
+  const orderHandle = () => {
     const token = getCookie('token');
     if (!token) {
       history.replace({ pathname: '/login' });
-    }
-    await getUser();
-    if (user.name.length == 0) {
-      console.log('надо обновить токен');
-      let authToken;
-      tokenRequest('refreshToken')
-        .then((res) => {
-          if (res.success) {
-            authToken = res.accessToken.split('Bearer ')[1];
-            setCookie('token', authToken);
-            setCookie('refreshToken', res.refreshToken);
-          }
-          if (!res.success) {
-            deleteCookie('token');
-            deleteCookie('refreshToken');
-            history.replace({ pathname: '/login' });
-          }
-        });
     } else {
-      const order = [];
+      //вариант когда есть токен
+      //собираем заказ
+      const orderList = [];
       if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
-        order.push(burger.top._id);
+        orderList.push(burger.top._id);
       }
       if ((burger.main !== undefined) && (burger.main.length !== 0)) {
         burger.main.forEach(function (item) {
-          order.push(item._id);
+          orderList.push(item._id);
         });
       }
-      props.openOrder(order);
+      dispatch(orderPost(orderList));
+      props.openOrder();
     }
   };
 
