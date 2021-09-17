@@ -1,4 +1,4 @@
-import { setCookie } from '../utils';
+import { setCookie, deleteCookie } from '../utils';
 import {
   signUpRequest,
   signInRequest,
@@ -122,6 +122,8 @@ export function logoutUser() {
     logoutRequest('refreshToken')
       .then(res => {
         if (res.success) {
+          deleteCookie('refreshToken');
+          deleteCookie('token');
           dispatch({
             type: DEL_USER_INFO
           });
