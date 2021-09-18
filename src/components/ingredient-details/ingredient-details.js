@@ -1,13 +1,9 @@
 import React from 'react';
 import ingredientDetailsStyle from './ingredient-details.module.css';
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-//import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
   const item = useSelector(store => store.current.ingredientDetails);
-  //const item = props.current;
-  console.log(item);
 
   return (
     <div className={`${ingredientDetailsStyle.box}`}>

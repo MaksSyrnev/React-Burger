@@ -10,11 +10,17 @@ import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
 import { ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN } from '../../services/actions/burger-ingredients';
 import { useDrop } from "react-dnd";
 import Main from './main/main';
+import { useHistory } from 'react-router-dom';
+import { getCookie } from '../../services/utils';
+import { orderPost } from '../../services/actions/order-details';
 
 function BurgerConstructor(props) {
   const dataIngredients = useSelector(store => store.ingredients.items);
   const burger = useSelector(store => store.burger);
+  const user = useSelector(store => store.user);
+  const order = useSelector(store => store.order);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //принятие дропа элемента булка
   const [{ isBunHover }, DropBunTarget] = useDrop({
@@ -139,19 +145,27 @@ function BurgerConstructor(props) {
 
     }, [burger]);
 
-  //обработчик кнопки отправки заказа (начальный)
-  function orderHandle() {
-    const order = [];
-    if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
-      order.push(burger.top._id);
+  //обработчик кнопки отправки заказа
+  const orderHandle = () => {
+    const token = getCookie('token');
+    if (!token) {
+      history.replace({ pathname: '/login' });
+    } else {
+      //вариант когда есть токен
+      //собираем заказ
+      const orderList = [];
+      if ((burger.top !== undefined) && (burger.top._id !== undefined)) {
+        orderList.push(burger.top._id);
+      }
+      if ((burger.main !== undefined) && (burger.main.length !== 0)) {
+        burger.main.forEach(function (item) {
+          orderList.push(item._id);
+        });
+      }
+      dispatch(orderPost(orderList));
+      props.openOrder();
     }
-    if ((burger.main !== undefined) && (burger.main.length !== 0)) {
-      burger.main.forEach(function (item) {
-        order.push(item._id);
-      });
-    }
-    props.openOrder(order);
-  }
+  };
 
   return (
     <div className={`${burgerConstructorStyle.box} pl-4 pt-25`} >
@@ -179,9 +193,11 @@ function BurgerConstructor(props) {
           <TotalPrice />
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium" onClick={orderHandle}>
-          Оформить заказ
-        </Button>
+        {(burger.top._id !== undefined) && (
+          <Button type="primary" size="medium" onClick={orderHandle}>
+            Оформить заказ
+          </Button>
+        )}
       </div>
 
     </div >

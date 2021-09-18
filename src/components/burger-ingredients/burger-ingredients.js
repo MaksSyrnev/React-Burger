@@ -14,7 +14,6 @@ function BurgerIngredients(props) {
   const sauceRef = useRef(null);
   const mainRef = useRef(null);
 
-
   const handleClickTab = (e) => {
     setCurrentTab(e);
   };

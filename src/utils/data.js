@@ -1,6 +1,5 @@
+//отстатки от первого спринта
 export const url = 'https://norma.nomoreparties.space/api/';
-
-
 export const data = [
   {
     "_id": "60666c42cc7b410027a1a9b1",
@@ -213,7 +212,6 @@ export const data = [
     "__v": 0
   }
 ];
-
 export const stateBurger = {
   top: {
     "_id": "60666c42cc7b410027a1a9b1",

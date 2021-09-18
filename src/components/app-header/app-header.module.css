@@ -21,10 +21,14 @@
 .button {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  color: #f2f2f3;
+  transition: .4s;
 }
 
 .button:hover {
   cursor: pointer;
+  opacity: 0.8;
 }
 
 .button_list {
@@ -38,4 +42,9 @@
   align-self: center;
   margin: 40%;
   position: absolute;
+}
+
+.button_menu {
+  background-color: transparent;
+  border: 0;
 }
