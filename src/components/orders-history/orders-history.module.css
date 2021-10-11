@@ -1,0 +1,29 @@
+.orders_list_box {
+  margin: 20px 0 40px 0;
+  padding: 0px 8px 0 0;
+  width: 844px;
+  max-height: 686px;
+  overflow-y: auto;
+	overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.orders_list_box::-webkit-scrollbar {
+  width: 8px;
+  height: 368px;
+}
+
+.orders_list_box::-webkit-scrollbar-track {
+  background: #2f2f37;
+}
+
+.orders_list_box::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+  border: 3px solid #8585ad;
+}
+
+.orders_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

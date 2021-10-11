@@ -21,7 +21,8 @@ import {
   ResetPasswordPage,
   ForgotPasswordPage,
   ProfilePage,
-  IngredientPage
+  IngredientPage,
+  FeedPage
 } from '../../pages';
 
 function App() {
@@ -89,6 +90,9 @@ function App() {
             <Route path="/reset-password" exact>
               <ResetPasswordPage />
             </Route>
+            <Route path="/feed" exact>
+              <FeedPage />
+            </Route>
 
             <ProtectedRoute path="/profile">
               <ProfilePage />
@@ -102,7 +106,7 @@ function App() {
             </Route>
 
             <ProtectedRoute
-              path='/profile/orders/'
+              path='/profile/orders/:id'
               children={<OrderDetails />}
               exact
             />
@@ -110,6 +114,7 @@ function App() {
             <Route path={`/ingredients/:ingredientId`} exact>
               <IngredientPage />
             </Route>
+
             <Route>
               <NotFound404 />
             </Route>

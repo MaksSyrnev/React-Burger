@@ -9,12 +9,16 @@ import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 const AppHeader = () => {
   const { pathname } = useLocation();
   const history = useHistory();
-
   const activeConstructor = pathname === '/' ? '' : 'text_color_inactive';
   const activeProfile = pathname === '/profile' ? '' : 'text_color_inactive';
+  const activeFeed = pathname === '/feed' ? '' : 'text_color_inactive';
 
   const goToHome = () => {
     history.replace({ pathname: '/' });
+  };
+
+  const goToFeed = () => {
+    history.replace({ pathname: '/feed' });
   };
 
   const goToPropfile = () => {
@@ -35,10 +39,12 @@ const AppHeader = () => {
           </li>
 
           <li>
-            <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
-              <ListIcon type="secondary" />
-              <div className="pl-2 text text_type_main-default text_color_inactive">Лента заказов</div>
-            </div>
+            <button className={appHeaderStyle.button_menu} onClick={goToFeed}>
+              <div className={`${appHeaderStyle.button} pl-5 pr-5 pb-4 pt-4`}>
+                <ListIcon type={pathname === '/feed' ? "primary" : "secondary"} />
+                <div className={`pl-2 text text_type_main-default ${activeFeed}`}>Лента заказов</div>
+              </div>
+            </button>
           </li>
         </ul>
 

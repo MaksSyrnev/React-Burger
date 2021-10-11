@@ -1,0 +1,120 @@
+.order_content_list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position:relative;
+  justify-content: start;
+}
+
+.img_container_bun {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border: solid;
+  border-color: #801AB2;
+  border-radius:  100px;
+  border-width: 2px;
+  overflow: hidden;
+  background-color: #131316;
+  z-index: 6;
+}
+
+.img_container_main_first {
+  position: relative;
+  transform: translate(-16px);
+  width: 64px;
+  height: 64px;
+  border: solid;
+  border-color: #801AB2;
+  border-radius:  100px;
+  border-width: 2px;
+  overflow: hidden;
+  background-color: #131316;
+  z-index: 5;
+}
+
+.img_container_main_second {
+  position: relative;
+  transform: translate(-32px);
+  width: 64px;
+  height: 64px;
+  border: solid;
+  border-color: #801AB2;
+  border-radius:  100px;
+  border-width: 2px;
+  overflow: hidden;
+  background-color: #131316;
+  z-index: 4;
+}
+
+.img_container_main_tree {
+  position: relative;
+  transform: translate(-48px);
+  width: 64px;
+  height: 64px;
+  border: solid;
+  border-color: #801AB2;
+  border-radius:  100px;
+  border-width: 2px;
+  overflow: hidden;
+  background-color: #131316;
+  z-index: 3;
+}
+
+.img_container_main_for {
+  position: relative;
+  transform: translate(-64px);
+  width: 64px;
+  height: 64px;
+  border: solid;
+  border-color: #801AB2;
+  border-radius:  100px;
+  border-width: 2px;
+  overflow: hidden;
+  background-color: #131316;
+  z-index: 2;
+}
+
+.img_container_main_more {
+  position: relative;
+  transform: translate(-80px);
+  width: 64px;
+  height: 64px;
+  border: solid;
+  border-color: #801AB2;
+  border-radius:  100px;
+  border-width: 2px;
+  overflow: hidden;
+  background-color: #131316;
+  z-index: 1;
+}
+
+.ingredient_img {
+  position: absolute;
+  left: -48%;
+  height: 64px;
+}
+
+.count {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.count::before {
+  content: '';
+  position: absolute;
+  top:-50%;
+  left: -65%;
+  width: 64px;
+  height: 64px;
+  background-color: #131316;
+  opacity: 1;
+  z-index: -1;
+  opacity: 0.6;
+}

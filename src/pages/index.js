@@ -5,5 +5,6 @@ import { ResetPasswordPage } from './reset-password';
 import { ForgotPasswordPage } from './forgot-password';
 import { ProfilePage } from './profile-page';
 import { IngredientPage } from './ingredient-page';
+import { FeedPage } from './feed';
 
-export { NotFound404, LoginPage, RegisterPage, ResetPasswordPage, ForgotPasswordPage, ProfilePage, IngredientPage };
+export { NotFound404, LoginPage, RegisterPage, ResetPasswordPage, ForgotPasswordPage, ProfilePage, IngredientPage, FeedPage };

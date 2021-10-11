@@ -1,17 +1,21 @@
-import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, useHistory, useLocation } from 'react-router-dom';
 import { useCallback, useEffect } from 'react';
 import styles from './page.module.css';
 import { UserInfo } from '../components/user-info/user-info';
 import { logoutUser } from '../services/actions/auth';
 import { deleteCookie } from '../services/utils';
 import { useDispatch, useSelector } from 'react-redux';
+import OrdersHistory from '../components/orders-history/orders-history';
+import ItemOrdersHistory from '../components/item-orders-history/item-orders-history';
 
 export function ProfilePage() {
+  const { pathname } = useLocation();
   const { path } = useRouteMatch();
   const history = useHistory();
   const user = useSelector(store => store.user);
   const dispatch = useDispatch();
-  const activeProfile = path === '/profile' ? styles.button_menu_active : '';
+  const activeProfile = pathname === '/profile' ? styles.button_menu_active : '';
+  const activeOrders = pathname === '/profile/orders' ? styles.button_menu_active : '';
   const logoutStatus = user.logout.feedStatus;
 
   const goUserInfo = () => {
@@ -48,7 +52,7 @@ export function ProfilePage() {
               </button>
             </li>
             <li className={styles.menu_link} >
-              <button className={`${styles.button_menu} text text_type_main-medium text_color_inactive `} onClick={goOrders}>
+              <button className={`${styles.button_menu} text text_type_main-medium text_color_inactive ${activeOrders} `} onClick={goOrders}>
                 История заказов
               </button>
             </li>
@@ -67,11 +71,11 @@ export function ProfilePage() {
 
         <div>
           <Switch>
-            <Route path={`${path}/orders`} >
-              <p>Здесь будут заказы</p>
+            <Route path={`${path}/orders`} exact>
+              <OrdersHistory />
             </Route>
             <Route path={`${path}/orders/:id`}>
-              <p>информация про заказ</p>
+              <ItemOrdersHistory />
             </Route>
             <Route path={path}>
               <UserInfo />
