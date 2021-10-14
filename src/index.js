@@ -14,9 +14,7 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const wsURL = 'ws://norma.nomoreparties.space/api/orders/all';
-
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsURL)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware()));
 
 const store = createStore(rootReducer, enhancer);
 

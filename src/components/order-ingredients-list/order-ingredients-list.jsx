@@ -1,6 +1,7 @@
 import style from './order-ingredients-list.module.css';
 
-export const OrderIngredientsList = () => {
+export const OrderIngredientsList = ({ dataIngredients }) => {
+
   return (
     <ul className={style.order_content_list}>
       <li className={style.img_container_bun}>

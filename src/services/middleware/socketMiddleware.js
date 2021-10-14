@@ -1,4 +1,4 @@
-export const socketMiddleware = (wsUrl) => {
+export const socketMiddleware = () => {
   return store => {
     let socket = null;
 
@@ -7,35 +7,39 @@ export const socketMiddleware = (wsUrl) => {
       const { type, payload } = action;
 
       if (type === 'WS_CONNECTION_START') {
-        // объект класса WebSocket
-        socket = new WebSocket(wsUrl);
+        socket = new WebSocket(payload);
       }
-      if (socket) {
 
-        // функция, которая вызывается при открытии сокета
+      if (socket) {
         socket.onopen = event => {
           dispatch({ type: 'WS_CONNECTION_SUCCESS', payload: event });
         };
 
-        // функция, которая вызывается при ошибке соединения
         socket.onerror = event => {
           dispatch({ type: 'WS_CONNECTION_ERROR', payload: event });
         };
 
-        // функция, которая вызывается при получения события от сервера
-        socket.onmessage = event => {
-          const { data } = event;
-          const parsedData = JSON.parse(data);
-          dispatch({ type: 'WS_GET_MESSAGE', payload: parsedData });
-        };
-        // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {
           dispatch({ type: 'WS_CONNECTION_CLOSED', payload: event });
         };
 
+        socket.onmessage = event => {
+          const { data } = event;
+          const parsedData = JSON.parse(data);
+          console.log(parsedData);
+          const { success, ...restParsedData } = parsedData;
+          if (success) {
+            dispatch({ type: 'WS_GET_MESSAGE', payload: restParsedData });
+          }
+
+        };
+
+        if (type === 'WS_CONNECTION_CLOSE') {
+          socket.close();
+        }
+
         if (type === 'WS_SEND_MESSAGE') {
           const message = payload;
-          // функция для отправки сообщения на сервер
           socket.send(JSON.stringify(message));
         }
       }

@@ -6,11 +6,6 @@ import { OrdersListItem } from '../orders-list-item/orders-list-item';
 
 const OrdersHistory = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: 'WS_CONNECTION_START' });
-
-  }, [dispatch]);
-
   return (
     <div className={style.orders_list_box}>
       <ul className={style.orders_list}>
