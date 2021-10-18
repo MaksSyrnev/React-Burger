@@ -2,20 +2,39 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './orders-history.module.css';
 import { OrdersListItem } from '../orders-list-item/orders-list-item';
-
+import { getCookie } from '../../services/utils';
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../../services/actions/ws-action-type';
 
 const OrdersHistory = () => {
+  const wsURL2 = 'wss://norma.nomoreparties.space/orders?token=';
   const dispatch = useDispatch();
+  const ordersHistory = useSelector(store => store.ws.orders);
+
+  useEffect(() => {
+    dispatch({
+      type: WS_CONNECTION_START,
+      payload: wsURL2 + getCookie("token")
+    });
+
+    return () => {
+      dispatch({
+        type: WS_CONNECTION_CLOSE
+      });
+    }
+  }, [dispatch]);
+
   return (
     <div className={style.orders_list_box}>
       <ul className={style.orders_list}>
-        <li className="pb-6"><OrdersListItem /></li>
-        <li className="pb-6"><OrdersListItem /></li>
-        <li className="pb-6"><OrdersListItem /></li>
-        <li className="pb-6"><OrdersListItem /></li>
-        <li className="pb-6"><OrdersListItem /></li>
-        <li className="pb-6"><OrdersListItem /></li>
-        <li className="pb-6"><OrdersListItem /></li>
+        {ordersHistory.orders !== undefined
+          ? ordersHistory.orders.map(function (item) {
+            return (
+              <li className="pb-6" key={item._id}>
+                <OrdersListItem dataItem={item} />
+              </li>);
+          })
+          : null
+        }
       </ul>
     </div >
   );

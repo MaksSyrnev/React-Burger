@@ -70,17 +70,20 @@ export function ProfilePage() {
         </div>
 
         <div>
-          <Switch>
+          {(pathname === '/profile') && <UserInfo />}
+          {(pathname === '/profile/orders') && <OrdersHistory />}
+
+          {/* <Switch>
             <Route path={`${path}/orders`} exact>
               <OrdersHistory />
             </Route>
             <Route path={`${path}/orders/:id`}>
               <ItemOrdersHistory />
             </Route>
-            <Route path={path}>
+            <Route path="/profile" exact>
               <UserInfo />
             </Route>
-          </Switch>
+          </Switch> */}
         </div>
 
       </div >

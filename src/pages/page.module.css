@@ -21,6 +21,13 @@
   padding: 0;
 }
 
+.wrapper_feed_item {
+  width: 100vw;
+  height: calc(100vh -88px);
+  margin: 0;
+  padding-top: 120px;
+  display: flex;
+}
 .container {
   margin: 0 auto;
   padding: 0;

@@ -4,20 +4,12 @@ import { ListOrdersCards } from '../components/list-orders-cards/list-orders-car
 import { OrdersCount } from '../components/orders-count/orders-count';
 import { useDispatch, useSelector } from 'react-redux';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../services/actions/ws-action-type';
-import { getCookie } from '../services/utils';
 
 export function FeedPage() {
   const dispatch = useDispatch();
   const feedOrders = useSelector(store => store.ws.orders);
   const wsURL = 'wss://norma.nomoreparties.space/orders/all';
-  const wsURL2 = 'wss://norma.nomoreparties.space/orders?token=';
 
-  /* useEffect(() => {
-    dispatch({
-      type: WS_CONNECTION_START,
-      payload: wsURL2 + getCookie("token")
-    });
-  }, []); */
 
   useEffect(() => {
     dispatch({

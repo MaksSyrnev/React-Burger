@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import { getUser } from '../../services/actions/auth';
+import ItemOrdersHistory from '../item-orders-history/item-orders-history';
 import {
   LoginPage,
   NotFound404,
@@ -22,7 +23,9 @@ import {
   ForgotPasswordPage,
   ProfilePage,
   IngredientPage,
-  FeedPage
+  FeedPage,
+  FeedItemPage,
+  OrdersHistoryItemPage
 } from '../../pages';
 
 function App() {
@@ -72,6 +75,14 @@ function App() {
       }
     };
 
+    const closeModalOrderFeed = () => {
+      history.replace({ pathname: '/feed' });
+    };
+
+    const closeModalOrderHistory = () => {
+      history.replace({ pathname: '/profile/orders' });
+    };
+
     return (
       <>
         <AppHeader />
@@ -93,9 +104,18 @@ function App() {
             <Route path="/feed" exact>
               <FeedPage />
             </Route>
+            <Route path={`/feed/:id`} exact>
+              <FeedItemPage />
+            </Route>
 
-            <ProtectedRoute path="/profile">
+            <ProtectedRoute path="/profile" exact >
               <ProfilePage />
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile/orders" exact>
+              <ProfilePage />
+            </ProtectedRoute>
+            <ProtectedRoute path={`/profile/orders/:id`} exact>
+              <OrdersHistoryItemPage />
             </ProtectedRoute>
 
             <Route path="/" exact>
@@ -104,12 +124,6 @@ function App() {
                 <BurgerConstructor openOrder={handleOpenOrder} />
               </DndProvider>
             </Route>
-
-            <ProtectedRoute
-              path='/profile/orders/:id'
-              children={<OrderDetails />}
-              exact
-            />
 
             <Route path={`/ingredients/:ingredientId`} exact>
               <IngredientPage />
@@ -128,6 +142,28 @@ function App() {
             children={
               <Modal onClose={closeModal} title={titleModal} >
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+        )}
+
+        {background && (
+          <Route
+            path='/feed/:id'
+            children={
+              <Modal onClose={closeModalOrderFeed}>
+                <ItemOrdersHistory />
+              </Modal>
+            }
+          />
+        )}
+
+        {background && (
+          <Route
+            path='/profile/orders/:id'
+            children={
+              <Modal onClose={closeModalOrderHistory}>
+                <ItemOrdersHistory />
               </Modal>
             }
           />

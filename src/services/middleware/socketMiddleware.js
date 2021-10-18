@@ -26,12 +26,10 @@ export const socketMiddleware = () => {
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          console.log(parsedData);
           const { success, ...restParsedData } = parsedData;
           if (success) {
             dispatch({ type: 'WS_GET_MESSAGE', payload: restParsedData });
           }
-
         };
 
         if (type === 'WS_CONNECTION_CLOSE') {

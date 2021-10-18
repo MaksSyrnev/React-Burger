@@ -1,0 +1,2 @@
+export const OPEN_ITEM_FEED = 'OPEN_ITEM_FEED';
+export const CLOSE_ITEM_FEED = 'CLOSE_ITEM_FEED';

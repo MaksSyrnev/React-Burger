@@ -10,21 +10,12 @@ export function ListOrdersCards({ dataOrders }) {
         {orders !== undefined
           ? orders.map(function (item) {
             return (<li className="pb-4" key={item._id}>
-              <OrdersListItem dateItem={item} />
+              <OrdersListItem dataItem={item} />
             </li>);
           })
           : null
         }
-
-        {/* <li className="pb-4"><OrdersListItem /></li>
-        <li className="pb-4"><OrdersListItem /></li>
-        <li className="pb-4"><OrdersListItem /></li>
-        <li className="pb-4"><OrdersListItem /></li>
-        <li className="pb-4"><OrdersListItem /></li>
-        <li className="pb-4"><OrdersListItem /></li>
-        <li className="pb-4"><OrdersListItem /></li> */}
       </ul>
     </div>
-
   );
 }
