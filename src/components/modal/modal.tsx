@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 import modalStyle from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types';
+import { IModal } from '../../services/types';
+//import PropTypes from 'prop-types';
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot: any = document.getElementById("react-modals");
 
-const Modal = (props) => {
+const Modal: FC<IModal> = (props) => {
 
   return ReactDOM.createPortal(
     (
@@ -26,10 +27,10 @@ const Modal = (props) => {
     modalRoot);
 };
 
-Modal.propTypes = {
-  title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
-};
+// Modal.propTypes = {
+//   title: PropTypes.string,
+//   onClose: PropTypes.func.isRequired,
+//   children: PropTypes.element.isRequired
+// };
 
 export default Modal;

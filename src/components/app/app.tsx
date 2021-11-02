@@ -28,23 +28,25 @@ import {
   OrdersHistoryItemPage
 } from '../../pages';
 
-function App() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [titleModal, setTitleModal] = useState('');
+import { TEmptyFunc, TBurgerItem, TLocataionState } from '../../services/types';
+
+function App(): JSX.Element {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [titleModal, setTitleModal] = useState<string>('');
   const dispatch = useDispatch();
-  const dataIngredients = useSelector(store => store.ingredients.items);
-  const order = useSelector(store => store.order);
+  const dataIngredients = useSelector((store: any) => store.ingredients.items);
+  const order = useSelector((store: any) => store.order);
 
   useEffect(() => {
     dispatch(getBurgerIngredients());
     dispatch(getUser());
   }, []);
 
-  const handleOpenIngredient = (idIngridient) => {
-    const currentIngredients = dataIngredients.filter(
-      (item) => item._id === idIngridient
+  const handleOpenIngredient = (idIngridient: string): void => {
+    const currentIngredients: Array<TBurgerItem> = dataIngredients.filter(
+      (item: TBurgerItem) => item._id === idIngridient
     );
-    const current = currentIngredients[0];
+    const current: TBurgerItem = currentIngredients[0];
     setTitleModal('Детали ингредиента');
     dispatch({
       type: OPEN_ITEM,
@@ -52,21 +54,21 @@ function App() {
     });
   };
 
-  const handleOpenOrder = () => {
+  const handleOpenOrder: TEmptyFunc = () => {
     setTitleModal('');
     setIsOpen(true);
   };
 
-  const closePopup = () => {
+  const closePopup: TEmptyFunc = () => {
     setIsOpen(false);
   }
 
   const ModalSwitch = () => {
-    const location = useLocation();
-    const history = useHistory();
+    const location = useLocation<TLocataionState>();
+    const history = useHistory<TLocataionState>();
     let background = (history.action === 'PUSH' || history.action === 'REPLACE') && location.state && location.state.background;
 
-    const closeModal = () => {
+    const closeModal: TEmptyFunc = () => {
       history.replace({ pathname: '/' });
       if (titleModal) {
         dispatch({
@@ -75,11 +77,11 @@ function App() {
       }
     };
 
-    const closeModalOrderFeed = () => {
+    const closeModalOrderFeed: TEmptyFunc = () => {
       history.replace({ pathname: '/feed' });
     };
 
-    const closeModalOrderHistory = () => {
+    const closeModalOrderHistory: TEmptyFunc = () => {
       history.replace({ pathname: '/profile/orders' });
     };
 

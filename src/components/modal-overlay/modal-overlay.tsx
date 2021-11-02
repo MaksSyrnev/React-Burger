@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import modalOverlayStyle from './modal-overlay.module.css';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 
-const ModalOverlay = (props) => {
+export interface IModalOverlay {
+  onClose: () => void;
+  children: ReactNode;
+}
 
-  const handleClick = (e) => {
+const ModalOverlay: FC<IModalOverlay> = (props) => {
+
+  const handleClick = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       props.onClose();
     }
@@ -28,9 +33,9 @@ const ModalOverlay = (props) => {
 
 };
 
-ModalOverlay.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
-}
+// ModalOverlay.propTypes = {
+//   onClose: PropTypes.func.isRequired,
+//   children: PropTypes.element.isRequired
+// }
 
 export default ModalOverlay;
