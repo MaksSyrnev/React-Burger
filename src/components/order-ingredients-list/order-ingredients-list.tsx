@@ -1,9 +1,15 @@
+import { FC } from 'react';
 import style from './order-ingredients-list.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
+import { TItemIngridient } from '../../services/types';
 
-export const OrderIngredientsList = ({ dataIngredients }) => {
-  const data = useSelector(store => store.ingredients.items);
+interface IIngredientsList {
+  dataIngredients: string[];
+}
+
+export const OrderIngredientsList: FC<IIngredientsList> = ({ dataIngredients }) => {
+  const data: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
 
   const oneElement = data.filter(element => element._id === dataIngredients[0]);
   const twoElement = dataIngredients.length > 1 ?
@@ -22,7 +28,7 @@ export const OrderIngredientsList = ({ dataIngredients }) => {
     data.filter(element => element._id === dataIngredients[5])
     : null;
 
-  let total = 0;
+  let total: number = 0;
   dataIngredients.forEach(function (item) {
     const ingredientData = data.filter(element => element._id === item);
     if (ingredientData[0] !== undefined) {

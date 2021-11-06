@@ -3,14 +3,13 @@ import styles from './user-info.module.css';
 import { useCallback, useEffect } from 'react';
 import { EDIT_USER, getUser, refreshToken, saveUserEdit } from '../../services/actions/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { TUserInfo, THandleInput, THandleE } from '../../services/types';
 
 export function UserInfo() {
-  const user = useSelector(store => store.user);
+  const user = useSelector((store: any) => store.user);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const userInfo = user.userInfo;
-  const refreshStatus = user.getUser.needRefresh;
+  const userInfo: TUserInfo = user.userInfo;
+  const refreshStatus: boolean = user.getUser.needRefresh;
 
   useEffect(() => {
     dispatch(getUser());
@@ -23,20 +22,19 @@ export function UserInfo() {
     if (user.getToken.refreshSuccess) {
       dispatch(getUser());
     }
-  }, [refreshStatus]);
+  }, [dispatch, refreshStatus, user.getToken.refreshSuccess]);
 
-  const onChange = e => {
+  const onChange: THandleInput = (e) => {
     dispatch({
       type: EDIT_USER,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSaveUserInfo = useCallback(
-    e => {
-      e.preventDefault();
-      dispatch(saveUserEdit(userInfo));
-    }, [dispatch, userInfo]
+  const handleSaveUserInfo = useCallback<THandleE>((e) => {
+    e.preventDefault();
+    dispatch(saveUserEdit(userInfo));
+  }, [dispatch, userInfo]
   );
 
   return (

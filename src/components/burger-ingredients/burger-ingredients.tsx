@@ -2,38 +2,41 @@ import React, { useRef } from 'react';
 import burgerIngredientsStyle from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import Ingredient from '../ingredient/ingredient';
+import { Ingredient } from '../ingredient/ingredient';
 import { useSelector } from 'react-redux';
+import { TPropsBurgerIngridients, TItemIngridient } from '../../services/types';
 
-function BurgerIngredients(props) {
+function BurgerIngredients(props: TPropsBurgerIngridients) {
 
-  const [currentTab, setCurrentTab] = React.useState('one');
-  const data = useSelector(store => store.ingredients.items);
-  const ingredientsBoxRef = useRef(null);
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const [currentTab, setCurrentTab] = React.useState<string>('one');
+  const data: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
+  const ingredientsBoxRef = useRef<HTMLDivElement>(null);
+  const bunRef = useRef<HTMLHeadingElement>(null);
+  const sauceRef = useRef<HTMLHeadingElement>(null);
+  const mainRef = useRef<HTMLHeadingElement>(null);
 
-  const handleClickTab = (e) => {
+  const handleClickTab = (e: string) => {
     setCurrentTab(e);
   };
 
   const handleScroll = () => {
-    const ingredientsBoxRefPosition = ingredientsBoxRef.current.getBoundingClientRect().top;
-    const bunRefPosition = bunRef.current.getBoundingClientRect().top;
-    const sauceRefPosition = sauceRef.current.getBoundingClientRect().top;
-    const mainRefPosition = mainRef.current.getBoundingClientRect().top;
+    if (ingredientsBoxRef.current && bunRef.current && sauceRef.current && mainRef.current) {
+      const ingredientsBoxRefPosition: number = ingredientsBoxRef.current.getBoundingClientRect().top;
+      const bunRefPosition: number = bunRef.current.getBoundingClientRect().top;
+      const sauceRefPosition: number = sauceRef.current.getBoundingClientRect().top;
+      const mainRefPosition: number = mainRef.current.getBoundingClientRect().top;
 
-    const bunDiff = Math.abs(ingredientsBoxRefPosition - bunRefPosition);
-    const sauceDiff = Math.abs(ingredientsBoxRefPosition - sauceRefPosition);
-    const mainDiff = Math.abs(ingredientsBoxRefPosition - mainRefPosition);
+      const bunDiff: number = Math.abs(ingredientsBoxRefPosition - bunRefPosition);
+      const sauceDiff: number = Math.abs(ingredientsBoxRefPosition - sauceRefPosition);
+      const mainDiff: number = Math.abs(ingredientsBoxRefPosition - mainRefPosition);
 
-    if (bunDiff < sauceDiff) {
-      setCurrentTab("one");
-    } else if (sauceDiff < mainDiff) {
-      setCurrentTab("two");
-    } else {
-      setCurrentTab("three");
+      if (bunDiff < sauceDiff) {
+        setCurrentTab("one");
+      } else if (sauceDiff < mainDiff) {
+        setCurrentTab("two");
+      } else {
+        setCurrentTab("three");
+      }
     }
   };
 

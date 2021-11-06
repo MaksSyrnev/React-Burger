@@ -2,34 +2,34 @@ import { useState, useCallback } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { registerUser } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../services/actions/auth';
 import { getCookie } from '../services/utils';
+import { TRegisterForm } from '../services/types';
 
-
-export function LoginPage() {
+export function RegisterPage() {
   const isToken = getCookie('refreshToken');
-  const [form, setValue] = useState({ email: '', password: '' });
+  const [form, setValue] = useState<TRegisterForm>({ email: '', password: '', name: '' })
   const dispatch = useDispatch();
-  const user = useSelector(store => store.user);
+  const user = useSelector((store: any) => store.user);
 
   const onIconClick = () => {
-    alert('пока не готово, но в будущем ...');
+    alert('Icon Click Callback');
   };
 
-  const onChange = e => {
+  const onChange = (e: any) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLogin = useCallback(
+  const handleRegister = useCallback(
     e => {
       e.preventDefault();
-      dispatch(loginUser(form));
+      dispatch(registerUser(form));
     },
     [dispatch, form]
   );
 
-  if (isToken) {
+  if (user.userInfo.name || isToken) {
     return (
       <Redirect to={'/'} />
     );
@@ -39,13 +39,24 @@ export function LoginPage() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
 
-        <form className={styles.form} onSubmit={handleLogin}>
+        <form className={styles.form} onSubmit={handleRegister}>
 
           <h1 className={`${styles.title} text text_type_main-medium`}>
-            Вход
+            Регистрация
           </h1>
 
           <div className={`${styles.box} mt-6 mb-6`}>
+            <Input
+              type={'text'}
+              placeholder={'Имя'}
+              onChange={onChange}
+              name={'name'}
+              errorText={'Ошибка'}
+              value={form.name}
+            />
+          </div>
+
+          <div className={`${styles.box} mb-6`}>
             <Input
               type={'text'}
               placeholder={'E-mail'}
@@ -58,7 +69,7 @@ export function LoginPage() {
 
           <div className={`${styles.box} mb-6`}>
             <Input
-              type={'text'}
+              type={'password'}
               placeholder={'Пароль'}
               onChange={onChange}
               icon={'ShowIcon'}
@@ -72,21 +83,16 @@ export function LoginPage() {
 
           <div className={`${styles.box} mb-20`}>
             <Button type="primary" size="medium">
-              Войти
+              Зарегистрироваться
             </Button>
           </div>
 
           <p className={`${styles.text} text text_type_main-default`}>
-            Вы — новый пользователь?
-            <Link to="/register">
-              <span className={styles.link}>Зарегистрироваться</span>
-            </Link>
-          </p>
-
-          <p className={`${styles.text} text text_type_main-default`}>
-            Забыли пароль?
-            <Link to="/forgot-password">
-              <span className={styles.link}> Восстановить пароль</span>
+            Уже зарегистрированы?
+            <Link to="/login">
+              <span className={styles.link}>
+                Войти
+              </span>
             </Link>
           </p>
 

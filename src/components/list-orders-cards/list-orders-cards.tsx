@@ -1,7 +1,13 @@
+import { FC } from 'react';
 import style from './list-orders-cards.module.css';
 import { OrdersListItem } from '../orders-list-item/orders-list-item';
+import { TWSOrders } from '../../services/types';
 
-export function ListOrdersCards({ dataOrders }) {
+interface IListOrdersCards {
+  dataOrders: TWSOrders;
+}
+
+export const ListOrdersCards: FC<IListOrdersCards> = ({ dataOrders }) => {
   const { orders } = dataOrders;
 
   return (

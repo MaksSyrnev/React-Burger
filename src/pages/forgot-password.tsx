@@ -8,14 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export function ForgotPasswordPage() {
   const isToken = getCookie('refreshToken');
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState<string>('')
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector(store => store.user);
-  const status = user.passwordReset.feedStatus;
+  const user = useSelector((store: any) => store.user);
+  const status: boolean = user.passwordReset.feedStatus;
 
   const handleForgotPassword = useCallback(
-    e => {
+    (e) => {
       e.preventDefault();
       if (value !== '') {
         dispatch(forgotPassword(value));

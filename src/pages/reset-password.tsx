@@ -5,6 +5,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { updatePassword } from '../services/actions/auth';
 import { getCookie } from '../services/utils';
 import { useDispatch, useSelector } from 'react-redux';
+import { } from '../services/types';
 
 export function ResetPasswordPage() {
   const isToken = getCookie('refreshToken');
@@ -12,10 +13,10 @@ export function ResetPasswordPage() {
   const history = useHistory();
   const { state } = useLocation();
   const dispatch = useDispatch();
-  const user = useSelector(store => store.user);
+  const user = useSelector((store: any) => store.user);
   const updateStatus = user.passwordReset.passwordUpdate;
 
-  const onChange = e => {
+  const onChange = (e: any) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -23,12 +24,6 @@ export function ResetPasswordPage() {
     e => {
       e.preventDefault();
       dispatch(updatePassword(form));
-      /* updatePasswordtRequest(form)
-        .then((res) => {
-          if (res.success) {
-            history.replace({ pathname: '/login' });
-          }
-        }); */
     }, [dispatch, form]
   );
 

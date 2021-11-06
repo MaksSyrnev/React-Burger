@@ -1,5 +1,5 @@
 //компонента отображения подробностей заказа - модальное или простая страница
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import style from './item-orders-history.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_ITEM_FEED, CLOSE_ITEM_FEED } from '../../services/actions/order-feed';
@@ -7,18 +7,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/ru';
+import { TWSOrders, TItemFeed, TItemIngridient } from '../../services/types';
 
-const ItemOrdersHistory = () => {
+const ItemOrdersHistory: FC = () => {
   const dispatch = useDispatch();
-  const orderId = useParams();
-  const data = useSelector(store => store.ingredients.items);
-  const orderData = useSelector(store => store.itemFeed);
-  const feedOrders = useSelector(store => store.ws.orders);
+  const orderId: string = useParams<string>();
+  const data: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
+  const orderData: TItemFeed = useSelector((store: any) => store.itemFeed);
+  const feedOrders: TWSOrders = useSelector((store: any) => store.ws.orders);
   const ordersData = feedOrders.orders;
 
   const init = () => {
     const currentOrder = ordersData.filter(
-      (item) => item._id === orderId.id
+      (item) => item._id === orderId
     );
 
     if (currentOrder.length > 0) {
@@ -39,7 +40,7 @@ const ItemOrdersHistory = () => {
 
 
 
-  let total = 0;
+  let total: number = 0;
   orderData.list.forEach(function (item) {
     const ingredientData = data.filter(element => element._id === item);
     if (ingredientData[0] !== undefined) {

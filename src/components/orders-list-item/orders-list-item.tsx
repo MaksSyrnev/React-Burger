@@ -1,15 +1,21 @@
+import React from 'react';
 import style from './orders-list-item.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import { OrderIngredientsList } from '../order-ingredients-list/order-ingredients-list';
 import moment from 'moment';
 import 'moment/locale/ru';
+import { TLocataionState, TItemOrder } from '../../services/types';
 
-export const OrdersListItem = ({ dataItem }) => {
-  const { pathname } = useLocation();
-  const location = useLocation();
+interface IOrdersListItem {
+  dataItem: TItemOrder;
+}
+
+export const OrdersListItem: React.FC<IOrdersListItem> = ({ dataItem }) => {
+  const { pathname }: TLocataionState = useLocation();
+  const location: TLocataionState = useLocation();
   const feedId = dataItem._id;
-  const activeStatus = pathname === '/feed' ? '' : 'true';
-  console.log(pathname);
+  const activeStatus: boolean | string = pathname === '/feed' ? '' : 'true';
+
   return (
     <Link
       key={feedId}

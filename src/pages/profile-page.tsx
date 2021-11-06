@@ -1,4 +1,4 @@
-import { Switch, Route, useRouteMatch, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useCallback, useEffect } from 'react';
 import styles from './page.module.css';
 import { UserInfo } from '../components/user-info/user-info';
@@ -6,17 +6,19 @@ import { logoutUser } from '../services/actions/auth';
 import { deleteCookie } from '../services/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import OrdersHistory from '../components/orders-history/orders-history';
-import ItemOrdersHistory from '../components/item-orders-history/item-orders-history';
+//import ItemOrdersHistory from '../components/item-orders-history/item-orders-history';
+type TPathname = {
+  pathname: string;
+};
 
 export function ProfilePage() {
-  const { pathname } = useLocation();
-  const { path } = useRouteMatch();
-  const history = useHistory();
-  const user = useSelector(store => store.user);
+  const { pathname } = useLocation<TPathname>();
+  const history = useHistory<TPathname>();
+  const user = useSelector((store: any) => store.user);
   const dispatch = useDispatch();
   const activeProfile = pathname === '/profile' ? styles.button_menu_active : '';
   const activeOrders = pathname === '/profile/orders' ? styles.button_menu_active : '';
-  const logoutStatus = user.logout.feedStatus;
+  const logoutStatus: boolean = user.logout.feedStatus;
 
   const goUserInfo = () => {
     history.replace({ pathname: '/profile' });

@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { getCookie } from '../services/utils';
+import { TEmptyFunc, THaveToken, THaveUser, TProtectedRoute } from '../services/types';
 
-export function ProtectedRoute({ children, ...rest }) {
-  const [isUserLogined, setIsUserLogined] = useState(false);
-  const [haveUser, setHaveUser] = useState(null);
+export const ProtectedRoute: FC<TProtectedRoute> = ({ children, ...rest }) => {
+  const [isUserLogined, setIsUserLogined] = useState<boolean>(false);
+  const [haveUser, setHaveUser] = useState<THaveUser>(null);
 
-  const init = () => {
-    const token = getCookie('refreshToken');
+  const init: TEmptyFunc = () => {
+    const token: THaveToken = getCookie('refreshToken');
     if (token) {
       setHaveUser(true);
     } else {
@@ -39,4 +40,4 @@ export function ProtectedRoute({ children, ...rest }) {
       )}
     />
   );
-}
+};

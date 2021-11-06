@@ -1,7 +1,13 @@
 import style from './orders-count.module.css';
+import { FC } from 'react';
+import { TOrdersCount, TWSOrders } from '../../services/types';
 
-export function OrdersCount({ dataOrders }) {
-  const { orders, total, totalToday } = dataOrders;
+interface IOrdersCount {
+  dataOrders: TWSOrders;
+}
+
+export const OrdersCount: FC<IOrdersCount> = ({ dataOrders }) => {
+  const { orders, total, totalToday }: TOrdersCount = dataOrders;
 
   return (
     <div className={` ${style.box} pl-15`}>
@@ -19,11 +25,6 @@ export function OrdersCount({ dataOrders }) {
               })
               : null
             }
-            {/* <li className="text text_type_digits-default">034533</li>
-            <li className="text text_type_digits-default">034532</li>
-            <li className="text text_type_digits-default">034530</li>
-            <li className="text text_type_digits-default">034527</li>
-            <li className="text text_type_digits-default">034525</li> */}
           </ul>
         </div>
         <div className={style.box_list}>
@@ -39,9 +40,6 @@ export function OrdersCount({ dataOrders }) {
               })
               : null
             }
-            {/* <li className="text text_type_digits-default">034538</li>
-            <li className="text text_type_digits-default">034541</li>
-            <li className="text text_type_digits-default">034542</li> */}
           </ul>
         </div>
       </div>

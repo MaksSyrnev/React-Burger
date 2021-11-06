@@ -5,23 +5,24 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TLocataionState, TEmptyFunc } from '../../services/types';
 
 const AppHeader = () => {
-  const { pathname } = useLocation();
-  const history = useHistory();
-  const activeConstructor = pathname === '/' ? '' : 'text_color_inactive';
-  const activeProfile = pathname === '/profile' ? '' : 'text_color_inactive';
-  const activeFeed = pathname === '/feed' ? '' : 'text_color_inactive';
+  const { pathname } = useLocation<TLocataionState>();
+  const history = useHistory<TLocataionState>();
+  const activeConstructor: string = pathname === '/' ? '' : 'text_color_inactive';
+  const activeProfile: string = pathname === '/profile' ? '' : 'text_color_inactive';
+  const activeFeed: string = pathname === '/feed' ? '' : 'text_color_inactive';
 
-  const goToHome = () => {
+  const goToHome: TEmptyFunc = () => {
     history.replace({ pathname: '/' });
   };
 
-  const goToFeed = () => {
+  const goToFeed: TEmptyFunc = () => {
     history.replace({ pathname: '/feed' });
   };
 
-  const goToPropfile = () => {
+  const goToPropfile: TEmptyFunc = () => {
     history.replace({ pathname: '/profile' });
   };
 

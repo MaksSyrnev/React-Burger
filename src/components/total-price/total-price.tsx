@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { TBurgerItem } from '../../services/types';
 
-export const TotalPrice: FunctionComponent = () => {
+export const TotalPrice: React.FC = () => {
   const stateBurger: any = useSelector<any>(store => store.burger);
 
   let total: number = 0;

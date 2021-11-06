@@ -4,10 +4,11 @@ import { ListOrdersCards } from '../components/list-orders-cards/list-orders-car
 import { OrdersCount } from '../components/orders-count/orders-count';
 import { useDispatch, useSelector } from 'react-redux';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../services/actions/ws-action-type';
+import { TWSOrders } from '../services/types';
 
 export function FeedPage() {
   const dispatch = useDispatch();
-  const feedOrders = useSelector(store => store.ws.orders);
+  const feedOrders: TWSOrders = useSelector((store: any) => store.ws.orders);
   const wsURL = 'wss://norma.nomoreparties.space/orders/all';
 
 

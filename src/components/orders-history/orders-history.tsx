@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './orders-history.module.css';
 import { OrdersListItem } from '../orders-list-item/orders-list-item';
 import { getCookie } from '../../services/utils';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../../services/actions/ws-action-type';
+import { TItemOrder } from '../../services/types';
 
-const OrdersHistory = () => {
+const OrdersHistory: FC = () => {
   const wsURL2 = 'wss://norma.nomoreparties.space/orders?token=';
   const dispatch = useDispatch();
-  const ordersHistory = useSelector(store => store.ws.orders);
+  const ordersHistory = useSelector((store: any) => store.ws.orders);
 
   useEffect(() => {
     dispatch({
@@ -27,7 +28,7 @@ const OrdersHistory = () => {
     <div className={style.orders_list_box}>
       <ul className={style.orders_list}>
         {ordersHistory.orders !== undefined
-          ? ordersHistory.orders.map(function (item) {
+          ? ordersHistory.orders.map(function (item: TItemOrder) {
             return (
               <li className="pb-6" key={item._id}>
                 <OrdersListItem dataItem={item} />

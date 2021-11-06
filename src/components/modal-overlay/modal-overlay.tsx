@@ -1,13 +1,9 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import modalOverlayStyle from './modal-overlay.module.css';
+import { IModalOverlay } from '../../services/types';
 //import PropTypes from 'prop-types';
 
-export interface IModalOverlay {
-  onClose: () => void;
-  children: ReactNode;
-}
-
-const ModalOverlay: FC<IModalOverlay> = (props) => {
+const ModalOverlay: FC<IModalOverlay> = (props: IModalOverlay) => {
 
   const handleClick = (e: KeyboardEvent) => {
     if (e.key === "Escape") {

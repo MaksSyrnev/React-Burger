@@ -7,9 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import ItemOrdersHistory from '../components/item-orders-history/item-orders-history';
 import { NotFound404 } from './not-found';
 
+type TOrderData = {
+  number: string | null;
+  name: string;
+  list: Array<string>;
+  status: string;
+  data: string | null;
+};
+
 export function FeedItemPage() {
   const dispatch = useDispatch();
-  const orderData = useSelector(store => store.itemFeed);
+  const orderData: TOrderData = useSelector((store: any) => store.itemFeed);
   const [isReal, setIsReal] = useState(false);
 
   const wsURL = 'wss://norma.nomoreparties.space/orders/all';

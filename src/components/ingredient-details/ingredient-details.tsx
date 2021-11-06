@@ -1,9 +1,10 @@
 import React from 'react';
 import ingredientDetailsStyle from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
+import { TIngridientDetail } from '../../services/types';
 
 const IngredientDetails = () => {
-  const item = useSelector(store => store.current.ingredientDetails);
+  const item: TIngridientDetail = useSelector((store: any) => store.current.ingredientDetails);
 
   return (
     <div className={`${ingredientDetailsStyle.box}`}>

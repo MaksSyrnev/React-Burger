@@ -30,7 +30,7 @@ import {
 
 import { TEmptyFunc, TBurgerItem, TLocataionState } from '../../services/types';
 
-function App(): JSX.Element {
+function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [titleModal, setTitleModal] = useState<string>('');
   const dispatch = useDispatch();

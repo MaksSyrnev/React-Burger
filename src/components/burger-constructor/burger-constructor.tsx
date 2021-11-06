@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,20 +13,29 @@ import Main from './main/main';
 import { useHistory } from 'react-router-dom';
 import { getCookie } from '../../services/utils';
 import { orderPost } from '../../services/actions/order-details';
+import { TItemIngridient, TLocataionState, TBurgerState } from '../../services/types';
 
-function BurgerConstructor(props) {
-  const dataIngredients = useSelector(store => store.ingredients.items);
-  const burger = useSelector(store => store.burger);
-  const user = useSelector(store => store.user);
-  const order = useSelector(store => store.order);
+type TDropOdject = {
+  itemId: string;
+};
+
+type TPropsBurgerConstructor = {
+  openOrder: () => void;
+};
+
+function BurgerConstructor(props: TPropsBurgerConstructor) {
+  const dataIngredients: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
+  const burger: TBurgerState = useSelector((store: any) => store.burger);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistory<TLocataionState>();
+  //const user = useSelector((store: any) => store.user);
+  //const order = useSelector((store: any) => store.order);
 
   //принятие дропа элемента булка
   const [{ isBunHover }, DropBunTarget] = useDrop({
     accept: "bun",
-    drop(itemId) {
-      onDropHandler(itemId);
+    drop(itemObj: TDropOdject) {
+      onDropHandler(itemObj);
     },
     collect: monitor => ({
       isBunHover: monitor.isOver()
@@ -36,8 +45,8 @@ function BurgerConstructor(props) {
   //принятие дропа эелементов начинки
   const [{ isMainHover, }, DropMainTarget] = useDrop({
     accept: 'main',
-    drop(itemId) {
-      onDropMainHandler(itemId);
+    drop(itemObj: TDropOdject) {
+      onDropMainHandler(itemObj);
     },
     collect: monitor => ({
       isMainHover: monitor.isOver()
@@ -45,7 +54,7 @@ function BurgerConstructor(props) {
   });
 
   //обработчик события дропа для булки (логика)
-  const onDropHandler = (id) => {
+  const onDropHandler = (id: TDropOdject) => {
     const elementId = id.itemId;
     const element = dataIngredients.filter(item => item._id === elementId);
     if (element[0].type === "bun") {
@@ -67,7 +76,7 @@ function BurgerConstructor(props) {
   };
 
   //обработчик события дропа для начинки (логика)
-  const onDropMainHandler = (id) => {
+  const onDropMainHandler = (id: TDropOdject) => {
     const elementId = id.itemId;
     if (elementId !== undefined) {
       const element = dataIngredients.filter(item => item._id === elementId);
@@ -85,9 +94,8 @@ function BurgerConstructor(props) {
     }
   };
 
-  const deleteCountElement = (id) => {
+  const deleteCountElement = (id: string): void => {
     const element = dataIngredients.filter(item => item._id === id);
-    console.log(element);
     dispatch({
       type: ADD_COUNT_INGRIDIENT,
       id: id,
@@ -205,9 +213,9 @@ function BurgerConstructor(props) {
 
 }
 
-BurgerConstructor.propTypes = {
-  openOrder: PropTypes.func.isRequired
-  //   stateBurger: PropTypes.arrayOf(ingredientPropTypes).isRequired
-};
+// BurgerConstructor.propTypes = {
+//   openOrder: PropTypes.func.isRequired
+//   //   stateBurger: PropTypes.arrayOf(ingredientPropTypes).isRequired
+// };
 
 export default BurgerConstructor;

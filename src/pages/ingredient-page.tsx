@@ -5,11 +5,16 @@ import styles from './page.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import IngredientDetails from '../components/ingredient-details/ingredient-details'
 import { NotFound404 } from './not-found';
+import { TItemIngridient } from '../services/types';
+
+type TIngridientParam = {
+  ingredientId: string;
+};
 
 export function IngredientPage() {
   const dispatch = useDispatch();
-  const { ingredientId } = useParams();
-  const dataIngredients = useSelector(store => store.ingredients.items);
+  const { ingredientId } = useParams<TIngridientParam>();
+  const dataIngredients: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
   const [isReal, setIsReal] = useState(false);
 
   const init = () => {
