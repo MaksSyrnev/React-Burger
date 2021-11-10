@@ -7,13 +7,14 @@ import { Provider } from 'react-redux';
 import { rootReducer } from './services/reducers';
 import reportWebVitals from './reportWebVitals';
 import thunk from 'redux-thunk';
+import { socketMiddleware } from './services/middleware/socketMiddleware.js';
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware()));
 
 const store = createStore(rootReducer, enhancer);
 

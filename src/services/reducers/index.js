@@ -4,11 +4,15 @@ import { burgerIngredientsReducer } from './burger-ingredients';
 import { burgerConstructorReducer } from './burger-constructor';
 import { orderReducer } from './order-details';
 import { authReducer } from './auth';
+import { wsReducer } from './ws-reducer';
+import { orderFeedReducer } from './order-feed';
 
 export const rootReducer = combineReducers({
   current: ingredientDetailsReducer,
   ingredients: burgerIngredientsReducer,
   burger: burgerConstructorReducer,
   order: orderReducer,
-  user: authReducer
+  user: authReducer,
+  ws: wsReducer,
+  itemFeed: orderFeedReducer
 });

@@ -10,6 +10,21 @@
   width: 100vw;
   height: calc(100vh -88px);
   margin: 0;
+  padding: 20px 0 0 0;
+  display: flex;
+}
+
+.wrapper_feed {
+  width: 100vw;
+  height: calc(100vh -88px);
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper_feed_item {
+  width: 100vw;
+  height: calc(100vh -88px);
+  margin: 0;
   padding-top: 120px;
   display: flex;
 }
@@ -22,10 +37,19 @@
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: space-between;
+}
+
+.container_feed {
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  box-sizing: border-box;
 }
 
 .nav_box {
   padding: 0;
+  padding-top: 100px;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 0;

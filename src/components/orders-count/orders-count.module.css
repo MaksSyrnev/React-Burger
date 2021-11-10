@@ -1,0 +1,36 @@
+.box {
+  margin: 0;
+  width: 640px;
+  /*max-height: 686px;*/
+  overflow-y: auto;
+	overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.box_orders {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.box_list {
+  padding-right: 6px;
+  width: 280px;
+}
+
+.orders_list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 8px;
+  overflow: hidden;
+
+}
+
+.status_ready {
+  color: #00cccc;
+}
