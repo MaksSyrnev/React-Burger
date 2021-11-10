@@ -1,8 +1,14 @@
 import { postOrderRequest, tokenRequest } from '../api';
 import { setCookie } from '../utils';
-export const ADD_LIST_ORDER = 'ADD_LIST_ORDER';
-export const ADD_NUMBER_ORDER = 'ADD_NUMBER_ORDER';
-export const ADD_LIST_ORDER_FAIL = 'ADD_LIST_ORDER_FAIL';
+import {
+  ADD_LIST_ORDER,
+  ADD_NUMBER_ORDER,
+  ADD_LIST_ORDER_FAIL
+} from '../constants/action';
+
+// export const ADD_LIST_ORDER = 'ADD_LIST_ORDER';
+// export const ADD_NUMBER_ORDER = 'ADD_NUMBER_ORDER';
+// export const ADD_LIST_ORDER_FAIL = 'ADD_LIST_ORDER_FAIL';
 
 export function orderPost(order) {
   return function (dispatch) {

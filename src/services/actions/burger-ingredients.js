@@ -1,7 +1,13 @@
 import { url } from '../utils';
-export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
-export const ADD_COUNT_INGRIDIENT = 'ADD_COUNT_INGRIDIENT';
-export const DELETE_COUNT_BUN = 'DELETE_COUNT_BUN';
+import {
+  GET_ITEMS_SUCCESS,
+  ADD_COUNT_INGRIDIENT,
+  DELETE_COUNT_BUN
+} from '../constants/action';
+
+// export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
+// export const ADD_COUNT_INGRIDIENT = 'ADD_COUNT_INGRIDIENT';
+// export const DELETE_COUNT_BUN = 'DELETE_COUNT_BUN';
 
 export function getBurgerIngredients() {
   return function (dispatch) {

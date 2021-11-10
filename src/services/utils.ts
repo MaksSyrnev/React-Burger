@@ -1,5 +1,3 @@
-//import { TStringFunc } from '../services/types';
-
 export const url = 'https://norma.nomoreparties.space/api/';
 
 export function getCookie(name: string): string | undefined {

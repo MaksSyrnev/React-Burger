@@ -10,19 +10,35 @@ import {
   updatePasswordtRequest
 } from '../api';
 
-export const ADD_USER_INFO = 'ADD_USER_INFO';
-export const EDIT_USER = 'EDIT_USER';
-export const DEL_USER_INFO = 'DEL_USER_INFO';
-export const GET_FORGOT_PASS = 'GET_FORGOT_PASS';
-export const GET_FORGOT_PASS_SUCCESS = 'GET_FORGOT_PASS_SUCCESS';
-export const GET_FORGOT_PASS_FAIL = 'GET_FORGOT_PASS_FAIL';
-export const SEND_LOGOUT = 'SEND_LOGOUT';
-export const SEND_LOGOUT_FAIL = 'SEND_LOGOUT_FAIL';
-export const GET_USER_INFO = 'GET_USER_INFO';
-export const NEED_REFRESH_TOKEN = 'NEED_REFRESH_TOKEN';
-export const GET_TOKEN = 'GET_TOKEN';
-export const TOKEN_REFRESH_SUCCESS = 'TOKEN_REFRESH_SUCCESS';
-export const PASS_UPDATE_SUCCESS = 'PASS_UPDATE_SUCCESS';
+import {
+  ADD_USER_INFO,
+  EDIT_USER,
+  DEL_USER_INFO,
+  GET_FORGOT_PASS,
+  GET_FORGOT_PASS_SUCCESS,
+  GET_FORGOT_PASS_FAIL,
+  SEND_LOGOUT,
+  SEND_LOGOUT_FAIL,
+  GET_USER_INFO,
+  NEED_REFRESH_TOKEN,
+  GET_TOKEN,
+  TOKEN_REFRESH_SUCCESS,
+  PASS_UPDATE_SUCCESS
+} from '../constants/action';
+
+// export const ADD_USER_INFO = 'ADD_USER_INFO';
+// export const EDIT_USER = 'EDIT_USER';
+// export const DEL_USER_INFO = 'DEL_USER_INFO';
+// export const GET_FORGOT_PASS = 'GET_FORGOT_PASS';
+// export const GET_FORGOT_PASS_SUCCESS = 'GET_FORGOT_PASS_SUCCESS';
+// export const GET_FORGOT_PASS_FAIL = 'GET_FORGOT_PASS_FAIL';
+// export const SEND_LOGOUT = 'SEND_LOGOUT';
+// export const SEND_LOGOUT_FAIL = 'SEND_LOGOUT_FAIL';
+// export const GET_USER_INFO = 'GET_USER_INFO';
+// export const NEED_REFRESH_TOKEN = 'NEED_REFRESH_TOKEN';
+// export const GET_TOKEN = 'GET_TOKEN';
+// export const TOKEN_REFRESH_SUCCESS = 'TOKEN_REFRESH_SUCCESS';
+// export const PASS_UPDATE_SUCCESS = 'PASS_UPDATE_SUCCESS';
 
 export function registerUser(form) {
   return function (dispatch) {
