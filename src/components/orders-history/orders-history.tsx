@@ -4,7 +4,7 @@ import style from './orders-history.module.css';
 import { OrdersListItem } from '../orders-list-item/orders-list-item';
 import { getCookie } from '../../services/utils';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../../services/actions/ws-action-type';
-import { TItemOrder } from '../../services/types';
+import { TItemOrder } from '../../services/types/types';
 
 const OrdersHistory: FC = () => {
   const wsURL2 = 'wss://norma.nomoreparties.space/orders?token=';

@@ -13,7 +13,7 @@ import Main from './main/main';
 import { useHistory } from 'react-router-dom';
 import { getCookie } from '../../services/utils';
 import { orderPost } from '../../services/actions/order-details';
-import { TItemIngridient, TLocataionState, TBurgerState } from '../../services/types';
+import { TItemIngridient, TLocataionState, TBurgerState } from '../../services/types/types';
 
 type TDropOdject = {
   itemId: string;

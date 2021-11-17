@@ -11,7 +11,8 @@ import {
   NEED_REFRESH_TOKEN,
   GET_TOKEN,
   TOKEN_REFRESH_SUCCESS,
-  PASS_UPDATE_SUCCESS
+  PASS_UPDATE_SUCCESS,
+  TUserActions
 } from '../actions/auth';
 
 const initialState = {

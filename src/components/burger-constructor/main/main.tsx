@@ -4,7 +4,7 @@ import mainStyle from './main.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { REORDER_MAIN_ELEMENTS, DELETE_MAIN_ELEMENT } from '../../../services/actions/burger-constructor';
 import ElementBurger from './element-burger';
-import { TItemIngridient } from '../../../services/types';
+import { TItemIngridient } from '../../../services/types/types';
 type TMainProps = {
   deleteCountElement: (id: string) => void;
 };

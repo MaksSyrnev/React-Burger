@@ -5,7 +5,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { updatePassword } from '../services/actions/auth';
 import { getCookie } from '../services/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { } from '../services/types';
+import { TUserForm } from '../services/types/types';
 
 export function ResetPasswordPage() {
   const isToken = getCookie('refreshToken');

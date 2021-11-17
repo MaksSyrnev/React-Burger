@@ -2,7 +2,7 @@ import { FC } from 'react';
 import style from './order-ingredients-list.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
-import { TItemIngridient } from '../../services/types';
+import { TItemIngridient } from '../../services/types/types';
 
 interface IIngredientsList {
   dataIngredients: string[];

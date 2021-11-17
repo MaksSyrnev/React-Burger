@@ -28,7 +28,7 @@ import {
   OrdersHistoryItemPage
 } from '../../pages';
 
-import { TEmptyFunc, TBurgerItem, TLocataionState } from '../../services/types';
+import { TEmptyFunc, TBurgerItem, TLocataionState } from '../../services/types/types';
 
 function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);

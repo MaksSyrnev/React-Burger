@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { TBurgerItem } from '../../services/types';
+import { TBurgerItem } from '../../services/types/types';
 
 export const TotalPrice: React.FC = () => {
   const stateBurger: any = useSelector<any>(store => store.burger);

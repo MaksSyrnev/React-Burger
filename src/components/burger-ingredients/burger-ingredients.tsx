@@ -4,7 +4,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { Ingredient } from '../ingredient/ingredient';
 import { useSelector } from 'react-redux';
-import { TPropsBurgerIngridients, TItemIngridient } from '../../services/types';
+import { TPropsBurgerIngridients, TItemIngridient } from '../../services/types/types';
 
 function BurgerIngredients(props: TPropsBurgerIngridients) {
 

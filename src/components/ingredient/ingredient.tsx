@@ -5,7 +5,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 //import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom';
-import { TIngridientCard } from '../../services/types';
+import { TIngridientCard } from '../../services/types/types';
 
 
 

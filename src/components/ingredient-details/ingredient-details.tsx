@@ -1,7 +1,7 @@
 import React from 'react';
 import ingredientDetailsStyle from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
-import { TIngridientDetail } from '../../services/types';
+import { TIngridientDetail } from '../../services/types/types';
 
 const IngredientDetails = () => {
   const item: TIngridientDetail = useSelector((store: any) => store.current.ingredientDetails);

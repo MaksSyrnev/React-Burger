@@ -76,7 +76,6 @@ export type TItemOrder = {
   number: number;
   createdAt: string;
   updatedAt: string;
-
   name?: string;
 };
 
@@ -134,8 +133,7 @@ export type TBurgerState = {
 };
 
 export type TUserForm = {
-  email: string;
-
+  email?: string;
   name?: string;
   password?: string;
   token?: string;
@@ -152,15 +150,27 @@ export type TAuthResponse = {
   message?: string;
 };
 
-export type TOrderResponse = {
+export type TLoginResponse = {
   success: boolean;
+  user: TUserForm;
+  accessToken: string;
+  refreshToken: string;
 
   ok?: boolean;
   status?: number;
+  message?: string;
+};
+
+
+export type TOrderResponse = {
+  success: boolean;
+  message?: string;
+  ok?: boolean;
+  status?: number;
   name?: string;
-  order?: {
+  order: {
     number: number;
-  };
+  }
 };
 
 export type THistory = {
@@ -183,4 +193,10 @@ export type TRegisterForm = {
   name: string;
   email: string;
   password: string;
+};
+
+export type TRefreshToken = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
 };

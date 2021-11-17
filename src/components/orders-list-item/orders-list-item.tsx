@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { OrderIngredientsList } from '../order-ingredients-list/order-ingredients-list';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { TLocataionState, TItemOrder } from '../../services/types';
+import { TLocataionState, TItemOrder } from '../../services/types/types';
 
 interface IOrdersListItem {
   dataItem: TItemOrder;

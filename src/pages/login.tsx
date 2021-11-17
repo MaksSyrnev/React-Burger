@@ -5,7 +5,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../services/actions/auth';
 import { getCookie } from '../services/utils';
-import { TLoginForm } from '../services/types';
+import { TLoginForm } from '../services/types/types';
 
 export function LoginPage() {
   const isToken = getCookie('refreshToken');

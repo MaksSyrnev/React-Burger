@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { TWSOrders, TItemFeed, TItemIngridient } from '../../services/types';
+import { TWSOrders, TItemFeed, TItemIngridient } from '../../services/types/types';
 
 const ItemOrdersHistory: FC = () => {
   const dispatch = useDispatch();

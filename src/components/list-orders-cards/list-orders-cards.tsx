@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import style from './list-orders-cards.module.css';
 import { OrdersListItem } from '../orders-list-item/orders-list-item';
-import { TWSOrders } from '../../services/types';
+import { TWSOrders } from '../../services/types/types';
 
 interface IListOrdersCards {
   dataOrders: TWSOrders;

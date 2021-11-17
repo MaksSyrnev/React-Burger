@@ -1,23 +1,32 @@
 import {
   ADD_LIST_ORDER,
   ADD_NUMBER_ORDER,
-  ADD_LIST_ORDER_FAIL
+  ADD_LIST_ORDER_FAIL,
+  TOrderActions
 } from '../actions/order-details';
 
-const initialState = {
+export type TOrderState = {
+  list: ReadonlyArray<string>;
+  number: number | null;
+  post: boolean;
+  fail: boolean;
+};
+
+const initialState: TOrderState = {
   list: [],
   number: null,
   post: false,
   fail: false
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
   switch (action.type) {
     case ADD_LIST_ORDER: {
       return {
         number: null,
         post: true,
-        fail: false
+        fail: false,
+        list: []
       };
     }
     case ADD_NUMBER_ORDER: {

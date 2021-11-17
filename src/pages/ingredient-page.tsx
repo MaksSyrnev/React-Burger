@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import IngredientDetails from '../components/ingredient-details/ingredient-details'
 import { NotFound404 } from './not-found';
-import { TItemIngridient } from '../services/types';
+import { TItemIngridient } from '../services/types/types';
 
 type TIngridientParam = {
   ingredientId: string;

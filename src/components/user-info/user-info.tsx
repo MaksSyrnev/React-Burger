@@ -3,7 +3,7 @@ import styles from './user-info.module.css';
 import { useCallback, useEffect } from 'react';
 import { EDIT_USER, getUser, refreshToken, saveUserEdit } from '../../services/actions/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import { TUserInfo, THandleInput, THandleE } from '../../services/types';
+import { TUserInfo, THandleInput, THandleE } from '../../services/types/types';
 
 export function UserInfo() {
   const user = useSelector((store: any) => store.user);
