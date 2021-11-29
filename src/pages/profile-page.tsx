@@ -4,7 +4,7 @@ import styles from './page.module.css';
 import { UserInfo } from '../components/user-info/user-info';
 import { logoutUser } from '../services/actions/auth';
 import { deleteCookie } from '../services/utils';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/types/hooks';
 import OrdersHistory from '../components/orders-history/orders-history';
 //import ItemOrdersHistory from '../components/item-orders-history/item-orders-history';
 type TPathname = {
@@ -14,7 +14,7 @@ type TPathname = {
 export function ProfilePage() {
   const { pathname } = useLocation<TPathname>();
   const history = useHistory<TPathname>();
-  const user = useSelector((store: any) => store.user);
+  const user = useSelector(store => store.user);
   const dispatch = useDispatch();
   const activeProfile = pathname === '/profile' ? styles.button_menu_active : '';
   const activeOrders = pathname === '/profile/orders' ? styles.button_menu_active : '';

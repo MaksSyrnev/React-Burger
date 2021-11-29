@@ -11,10 +11,21 @@ import {
   NEED_REFRESH_TOKEN,
   GET_TOKEN,
   TOKEN_REFRESH_SUCCESS,
-  PASS_UPDATE_SUCCESS
+  PASS_UPDATE_SUCCESS,
+  TUserActions
 } from '../actions/auth';
 
-const initialState = {
+import { TUserInfo, TFeedRequestState, TTokenRefreshState, TGetUserState } from '../types/types';
+
+type TUserState = {
+  userInfo: TUserInfo;
+  passwordReset: TFeedRequestState;
+  logout: TFeedRequestState;
+  getUser: TGetUserState;
+  getToken: TTokenRefreshState;
+};
+
+const initialState: TUserState = {
   userInfo: {
     email: '',
     name: '',
@@ -45,7 +56,7 @@ const initialState = {
   }
 };
 
-export const authReducer = (store = initialState, action) => {
+export const authReducer = (store = initialState, action: TUserActions): TUserState => {
   switch (action.type) {
     case ADD_USER_INFO: {
       return {

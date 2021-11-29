@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import modalOverlayStyle from './modal-overlay.module.css';
-import { IModalOverlay } from '../../services/types';
+import { IModalOverlay } from '../../services/types/types';
 //import PropTypes from 'prop-types';
 
 const ModalOverlay: FC<IModalOverlay> = (props: IModalOverlay) => {

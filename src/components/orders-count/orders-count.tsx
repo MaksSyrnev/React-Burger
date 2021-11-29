@@ -1,6 +1,6 @@
 import style from './orders-count.module.css';
 import { FC } from 'react';
-import { TOrdersCount, TWSOrders } from '../../services/types';
+import { TOrdersCount, TWSOrders } from '../../services/types/types';
 
 interface IOrdersCount {
   dataOrders: TWSOrders;

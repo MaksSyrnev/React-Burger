@@ -1,15 +1,15 @@
 import { FC } from 'react';
 import style from './order-ingredients-list.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
-import { TItemIngridient } from '../../services/types';
+import { useSelector } from '../../services/types/hooks';
+import { TItemIngridient } from '../../services/types/types';
 
 interface IIngredientsList {
   dataIngredients: string[];
 }
 
 export const OrderIngredientsList: FC<IIngredientsList> = ({ dataIngredients }) => {
-  const data: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
+  const data: Array<TItemIngridient> = useSelector(store => store.ingredients.items);
 
   const oneElement = data.filter(element => element._id === dataIngredients[0]);
   const twoElement = dataIngredients.length > 1 ?

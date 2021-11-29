@@ -1,15 +1,15 @@
 import { useEffect, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import style from './orders-history.module.css';
 import { OrdersListItem } from '../orders-list-item/orders-list-item';
 import { getCookie } from '../../services/utils';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../../services/actions/ws-action-type';
-import { TItemOrder } from '../../services/types';
+import { TItemOrder } from '../../services/types/types';
 
 const OrdersHistory: FC = () => {
   const wsURL2 = 'wss://norma.nomoreparties.space/orders?token=';
   const dispatch = useDispatch();
-  const ordersHistory = useSelector((store: any) => store.ws.orders);
+  const ordersHistory = useSelector(store => store.ws.orders);
 
   useEffect(() => {
     dispatch({

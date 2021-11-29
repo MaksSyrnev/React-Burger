@@ -3,13 +3,13 @@ import burgerIngredientsStyle from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { Ingredient } from '../ingredient/ingredient';
-import { useSelector } from 'react-redux';
-import { TPropsBurgerIngridients, TItemIngridient } from '../../services/types';
+import { useSelector } from '../../services/types/hooks';
+import { TPropsBurgerIngridients } from '../../services/types/types';
 
 function BurgerIngredients(props: TPropsBurgerIngridients) {
 
   const [currentTab, setCurrentTab] = React.useState<string>('one');
-  const data: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
+  const data = useSelector(store => store.ingredients.items);
   const ingredientsBoxRef = useRef<HTMLDivElement>(null);
   const bunRef = useRef<HTMLHeadingElement>(null);
   const sauceRef = useRef<HTMLHeadingElement>(null);

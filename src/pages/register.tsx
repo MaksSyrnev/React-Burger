@@ -3,15 +3,15 @@ import { Link, Redirect } from 'react-router-dom';
 import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { registerUser } from '../services/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/types/hooks';
 import { getCookie } from '../services/utils';
-import { TRegisterForm } from '../services/types';
+import { TRegisterForm } from '../services/types/types';
 
 export function RegisterPage() {
   const isToken = getCookie('refreshToken');
   const [form, setValue] = useState<TRegisterForm>({ email: '', password: '', name: '' })
   const dispatch = useDispatch();
-  const user = useSelector((store: any) => store.user);
+  const user = useSelector(store => store.user);
 
   const onIconClick = () => {
     alert('Icon Click Callback');

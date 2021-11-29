@@ -3,7 +3,7 @@ import { CLOSE_ITEM_FEED } from '../services/actions/order-feed';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../services/actions/ws-action-type';
 import { getCookie } from '../services/utils';
 import styles from './page.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from '../services/types/hooks';
 import ItemOrdersHistory from '../components/item-orders-history/item-orders-history';
 import { NotFound404 } from './not-found';
 

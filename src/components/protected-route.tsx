@@ -1,7 +1,7 @@
 import { useEffect, useState, FC } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { getCookie } from '../services/utils';
-import { TEmptyFunc, THaveToken, THaveUser, TProtectedRoute } from '../services/types';
+import { TEmptyFunc, THaveToken, THaveUser, TProtectedRoute } from '../services/types/types';
 
 export const ProtectedRoute: FC<TProtectedRoute> = ({ children, ...rest }) => {
   const [isUserLogined, setIsUserLogined] = useState<boolean>(false);

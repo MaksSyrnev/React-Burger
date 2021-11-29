@@ -2,11 +2,10 @@ import { FC } from 'react';
 import ingredientStyle from './ingredient.module.css';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-//import PropTypes from 'prop-types';
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom';
-import { TIngridientCard } from '../../services/types';
-
+import { TIngridientCard } from '../../services/types/types';
+//import PropTypes from 'prop-types';
 
 
 export const Ingredient: FC<TIngridientCard> = (props) => {

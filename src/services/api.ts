@@ -7,11 +7,11 @@ import { url, getCookie } from './utils';
 // PATCH https://norma.nomoreparties.space/api/auth/user - эндпоинт обновления данных о пользователе.
 // POST https://norma.nomoreparties.space/api/password-reset - эндпоинт забыл пароль
 // POST https://norma.nomoreparties.space/api/password-reset/reset -эндпоинт установить новый пароль
-import { TUserForm, TAuthResponse, TOrderResponse } from '../services/types';
+import { TUserForm, TAuthResponse, TOrderResponse, TLoginResponse, TRefreshToken } from '../services/types/types';
 
 
 
-export const signUpRequest = async (form: TUserForm): Promise<TAuthResponse> => {
+export const signUpRequest = async (form: TUserForm): Promise<TLoginResponse> => {
   return await fetch(`${url}auth/register`, {
     method: 'POST',
     mode: 'cors',
@@ -29,7 +29,7 @@ export const signUpRequest = async (form: TUserForm): Promise<TAuthResponse> => 
     });
 };
 
-export const signInRequest = async (form: TUserForm): Promise<TAuthResponse> => {
+export const signInRequest = async (form: TUserForm): Promise<TLoginResponse> => {
   return await fetch(`${url}auth/login`, {
     method: 'POST',
     mode: 'cors',
@@ -67,7 +67,7 @@ export const logoutRequest = async (nameToken: 'refreshToken'): Promise<TAuthRes
     });
 };
 
-export const tokenRequest = async (nameToken: 'refreshToken'): Promise<TAuthResponse> => {
+export const tokenRequest = async (nameToken: 'refreshToken'): Promise<TRefreshToken> => {
   return await fetch(`${url}auth/token`, {
     method: 'POST',
     mode: 'cors',
@@ -87,7 +87,7 @@ export const tokenRequest = async (nameToken: 'refreshToken'): Promise<TAuthResp
     });
 };
 
-export const getUserInfoRequest = async (): Promise<TAuthResponse> => {
+export const getUserInfoRequest = async (): Promise<TLoginResponse> => {
   return await fetch(`${url}auth/user`, {
     method: 'GET',
     mode: 'cors',
@@ -105,7 +105,7 @@ export const getUserInfoRequest = async (): Promise<TAuthResponse> => {
     });
 };
 
-export const userInfoUpdateRequest = async (form: TUserForm): Promise<TAuthResponse> => {
+export const userInfoUpdateRequest = async (form: TUserForm): Promise<TLoginResponse> => {
   return await fetch(`${url}auth/user`, {
     method: 'PATCH',
     mode: 'cors',

@@ -3,23 +3,24 @@ import { useEffect, FC } from 'react';
 import style from './item-orders-history.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OPEN_ITEM_FEED, CLOSE_ITEM_FEED } from '../../services/actions/order-feed';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/ru';
-import { TWSOrders, TItemFeed, TItemIngridient } from '../../services/types';
+import { TWSOrders, TItemFeed, TItemIngridient, TOrderId } from '../../services/types/types';
 
 const ItemOrdersHistory: FC = () => {
   const dispatch = useDispatch();
-  const orderId: string = useParams<string>();
-  const data: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
+  const orderId = useParams<TOrderId>();
+  const data: Array<TItemIngridient> = useSelector(store => store.ingredients.items);
   const orderData: TItemFeed = useSelector((store: any) => store.itemFeed);
   const feedOrders: TWSOrders = useSelector((store: any) => store.ws.orders);
   const ordersData = feedOrders.orders;
 
   const init = () => {
+    console.log(orderId);
     const currentOrder = ordersData.filter(
-      (item) => item._id === orderId
+      (item) => item._id === orderId.id
     );
 
     if (currentOrder.length > 0) {

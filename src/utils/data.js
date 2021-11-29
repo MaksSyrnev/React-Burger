@@ -1,3 +1,5 @@
+//wss://norma.nomoreparties.space/orders?token= -- история заказов (нужен токен)
+//wss://norma.nomoreparties.space/orders/all -- лента
 //отстатки от первого спринта
 export const url = 'https://norma.nomoreparties.space/api/';
 export const data = [

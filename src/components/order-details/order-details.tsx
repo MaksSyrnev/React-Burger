@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 //import PropTypes from 'prop-types';
 import orderDetailsStyle from './order-details.module.css';
 import pathDone from '../../images/done.svg';
-import { TOrder } from '../../services/types';
+import { TOrder } from '../../services/types/types';
 
 const OrderDetails: FC<TOrder> = ({ orderNumber }) => {
 

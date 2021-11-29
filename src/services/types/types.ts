@@ -15,7 +15,7 @@ export type TBurgerItem = {
   image: string;
   image_mobile: string;
   image_large: string;
-  __v: number;
+  //__v: number;
 };
 
 export type TLocataionState = {
@@ -61,6 +61,11 @@ export type TUserInfo = {
   password: string;
 };
 
+export type TAddUser = {
+  email: string;
+  name: string;
+};
+
 export type THandleE = (e: any) => void;
 
 export type THandleInput = (e: any) => void;
@@ -76,7 +81,6 @@ export type TItemOrder = {
   number: number;
   createdAt: string;
   updatedAt: string;
-
   name?: string;
 };
 
@@ -108,19 +112,36 @@ export type TItemIngridient = {
   count: number;
 };
 
+export type TIngridientModal = Omit<TItemIngridient, 'count'>;
+
 export type TItemFeed = {
   number: number | null;
   name: string;
-  list: string[];
   status: 'created' | 'pending' | 'done';
   data: string;
+  list: string[];
+  ingredients?: string[];
+  createdAt?: string;
+};
+
+export type TOrderId = {
+  id: string;
+};
+
+export type TWSOrder = {
+  _id: string;
+  number: number;
+  name: string;
+  status: 'created' | 'pending' | 'done';
+  ingredients: string[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TIngridientCard = {
   item: TItemIngridient;
   openIngredient: (i: string) => void;
   key: string;
-
   children?: React.ReactNode | null;
 };
 
@@ -134,8 +155,7 @@ export type TBurgerState = {
 };
 
 export type TUserForm = {
-  email: string;
-
+  email?: string;
   name?: string;
   password?: string;
   token?: string;
@@ -143,7 +163,6 @@ export type TUserForm = {
 
 export type TAuthResponse = {
   success: boolean;
-
   ok?: boolean;
   status?: number;
   user?: TUserForm;
@@ -152,15 +171,26 @@ export type TAuthResponse = {
   message?: string;
 };
 
+export type TLoginResponse = {
+  success: boolean;
+  user: TAddUser;
+  accessToken: string;
+  refreshToken: string;
+  ok?: boolean;
+  status?: number;
+  message?: string;
+};
+
+
 export type TOrderResponse = {
   success: boolean;
-
+  message?: string;
   ok?: boolean;
   status?: number;
   name?: string;
-  order?: {
+  order: {
     number: number;
-  };
+  }
 };
 
 export type THistory = {
@@ -183,4 +213,31 @@ export type TRegisterForm = {
   name: string;
   email: string;
   password: string;
+};
+
+export type TRefreshToken = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type TFeedRequestState = {
+  feedRequest: boolean;
+  feedFailed: boolean;
+  errMessage: string;
+  feedStatus: boolean;
+  passwordUpdate?: boolean;
+  needRefresh?: boolean;
+};
+
+export type TGetUserState = {
+  feedRequest: boolean;
+  feedFailed: boolean;
+  errMessage: string;
+  needRefresh: boolean;
+};
+
+export type TTokenRefreshState = {
+  refreshSuccess: boolean;
+  refreshFail: boolean;
 };

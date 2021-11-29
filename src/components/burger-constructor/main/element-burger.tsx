@@ -4,7 +4,7 @@ import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import elementBurgerStyle from './element-burger.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TItemIngridient } from '../../../services/types';
+import { TItemIngridient } from '../../../services/types/types';
 
 
 type TElementBurger = {
