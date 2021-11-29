@@ -12,7 +12,7 @@ export interface IAddListOrderAction {
 
 export interface IAddNumberOrderAction {
   readonly type: typeof ADD_NUMBER_ORDER;
-  readonly number: number | null;
+  readonly number: number;
 }
 
 export interface IAddListOrderFailAction {

@@ -2,21 +2,33 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
-  WS_GET_MESSAGE
+  WS_GET_MESSAGE,
+  TWSActions,
+  TWSOrdersFeed
 } from '../actions/ws-action-type';
 
-const initialState = {
-  wsConnected: false,
-  orders: [],
-  error: ''
+export type TWSState = {
+  wsConnected: boolean;
+  orders: TWSOrdersFeed;
+  error?: string;
 };
 
-export const wsReducer = (state = initialState, action) => {
+const initialState: TWSState = {
+  wsConnected: false,
+  orders: {
+    orders: [],
+    total: 0,
+    totalToday: 0,
+    success: false
+  },
+};
+
+export const wsReducer = (state = initialState, action: TWSActions): TWSState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
-        error: null,
+        error: undefined,
         wsConnected: true
       };
     case WS_CONNECTION_ERROR:
@@ -34,8 +46,8 @@ export const wsReducer = (state = initialState, action) => {
     case WS_GET_MESSAGE:
       return {
         ...state,
-        error: null,
-        orders: action.payload
+        error: undefined,
+        orders: JSON.parse(action.payload)
       };
     default:
       return state;

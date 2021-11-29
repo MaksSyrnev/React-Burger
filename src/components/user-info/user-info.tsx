@@ -2,11 +2,11 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from './user-info.module.css';
 import { useCallback, useEffect } from 'react';
 import { EDIT_USER, getUser, refreshToken, saveUserEdit } from '../../services/actions/auth';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { TUserInfo, THandleInput, THandleE } from '../../services/types/types';
 
 export function UserInfo() {
-  const user = useSelector((store: any) => store.user);
+  const user = useSelector(store => store.user);
   const dispatch = useDispatch();
   const userInfo: TUserInfo = user.userInfo;
   const refreshStatus: boolean = user.getUser.needRefresh;

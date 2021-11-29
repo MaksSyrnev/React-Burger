@@ -10,8 +10,9 @@ import {
   updatePasswordtRequest
 } from '../api';
 
-import { TRegisterForm, TUserForm, TLoginForm } from '../types/types';
+import { TRegisterForm, TUserForm, TLoginForm, TAddUser } from '../types/types';
 import { AppDispatch, AppThunk } from '../types/index';
+
 //авторизация
 export const ADD_USER_INFO: 'ADD_USER_INFO' = 'ADD_USER_INFO';
 export const EDIT_USER: 'EDIT_USER' = 'EDIT_USER';
@@ -29,10 +30,13 @@ export const PASS_UPDATE_SUCCESS: 'PASS_UPDATE_SUCCESS' = 'PASS_UPDATE_SUCCESS';
 
 export interface IAddUserInfo {
   readonly type: typeof ADD_USER_INFO;
-  readonly user: TUserForm;
+  readonly user: TAddUser;
 }
 export interface IEditUser {
   readonly type: typeof EDIT_USER;
+  readonly email: string;
+  readonly name: string;
+  readonly password: string;
 }
 export interface IDelUserInfo {
   readonly type: typeof DEL_USER_INFO;
@@ -45,14 +49,14 @@ export interface IGetForgotPassSuccess {
 }
 export interface IGetForgotPassFail {
   readonly type: typeof GET_FORGOT_PASS_FAIL;
-  message: string;
+  readonly message: string;
 }
 export interface ISendLogout {
   readonly type: typeof SEND_LOGOUT;
 }
 export interface ISendLogoutFail {
   readonly type: typeof SEND_LOGOUT_FAIL;
-  message: string;
+  readonly message: string;
 }
 export interface IGetUserInfo {
   readonly type: typeof GET_USER_INFO;
@@ -71,7 +75,7 @@ export interface IPassUpdateSuccess {
 }
 
 // Генераторы экшенов
-export const addUserInfo = (user: TUserForm): IAddUserInfo => ({
+export const addUserInfo = (user: TAddUser): IAddUserInfo => ({
   type: ADD_USER_INFO,
   user
 });

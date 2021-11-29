@@ -10,7 +10,7 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ProtectedRoute } from '../protected-route';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { OPEN_ITEM, CLOSE_ITEM } from '../../services/actions/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import { getUser } from '../../services/actions/auth';
@@ -34,8 +34,8 @@ function App() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [titleModal, setTitleModal] = useState<string>('');
   const dispatch = useDispatch();
-  const dataIngredients = useSelector((store: any) => store.ingredients.items);
-  const order = useSelector((store: any) => store.order);
+  const dataIngredients = useSelector(store => store.ingredients.items);
+  const order = useSelector(store => store.order);
 
   useEffect(() => {
     dispatch(getBurgerIngredients());
@@ -43,10 +43,10 @@ function App() {
   }, []);
 
   const handleOpenIngredient = (idIngridient: string): void => {
-    const currentIngredients: Array<TBurgerItem> = dataIngredients.filter(
-      (item: TBurgerItem) => item._id === idIngridient
+    const currentIngredients = dataIngredients.filter(
+      (item) => item._id === idIngridient
     );
-    const current: TBurgerItem = currentIngredients[0];
+    const current = currentIngredients[0];
     setTitleModal('Детали ингредиента');
     dispatch({
       type: OPEN_ITEM,

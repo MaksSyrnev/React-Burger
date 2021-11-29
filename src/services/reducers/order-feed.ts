@@ -1,9 +1,20 @@
 import {
   OPEN_ITEM_FEED,
-  CLOSE_ITEM_FEED
+  CLOSE_ITEM_FEED,
+  TOrderFeed
 } from '../actions/order-feed';
 
-const initialState = {
+export type TOrderStatus = 'created' | 'pending' | 'done' | '';
+
+type TOrderFeedState = {
+  number: number | null;
+  name: string;
+  list: string[] | undefined;
+  status: TOrderStatus;
+  data: string | null | undefined;
+};
+
+const initialState: TOrderFeedState = {
   number: null,
   name: '',
   list: [],
@@ -11,7 +22,7 @@ const initialState = {
   data: null
 };
 
-export const orderFeedReducer = (state = initialState, action) => {
+export const orderFeedReducer = (state = initialState, action: TOrderFeed): TOrderFeedState => {
   switch (action.type) {
     case OPEN_ITEM_FEED: {
       return {
@@ -24,7 +35,7 @@ export const orderFeedReducer = (state = initialState, action) => {
     }
     case CLOSE_ITEM_FEED: {
       return {
-        number: '',
+        number: null,
         name: '',
         list: [],
         status: '',

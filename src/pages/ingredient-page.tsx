@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { OPEN_ITEM } from '../services/actions/ingredient-details';
 import { useParams } from 'react-router-dom';
 import styles from './page.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/types/hooks';
 import IngredientDetails from '../components/ingredient-details/ingredient-details'
 import { NotFound404 } from './not-found';
 import { TItemIngridient } from '../services/types/types';
@@ -14,7 +14,7 @@ type TIngridientParam = {
 export function IngredientPage() {
   const dispatch = useDispatch();
   const { ingredientId } = useParams<TIngridientParam>();
-  const dataIngredients: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
+  const dataIngredients: Array<TItemIngridient> = useSelector(store => store.ingredients.items);
   const [isReal, setIsReal] = useState(false);
 
   const init = () => {

@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import styles from './page.module.css';
 import { ListOrdersCards } from '../components/list-orders-cards/list-orders-cards';
 import { OrdersCount } from '../components/orders-count/orders-count';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/types/hooks';
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSE } from '../services/actions/ws-action-type';
 import { TWSOrders } from '../services/types/types';
 
 export function FeedPage() {
   const dispatch = useDispatch();
-  const feedOrders: TWSOrders = useSelector((store: any) => store.ws.orders);
-  const wsURL = 'wss://norma.nomoreparties.space/orders/all';
+  const feedOrders: TWSOrders = useSelector(store => store.ws.orders);
+  const wsURL: string = 'wss://norma.nomoreparties.space/orders/all';
 
 
   useEffect(() => {

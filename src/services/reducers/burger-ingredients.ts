@@ -1,10 +1,15 @@
-import { GET_ITEMS_SUCCESS, ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN } from '../actions/burger-ingredients';
+import { GET_ITEMS_SUCCESS, ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN, TBurgerIngridients } from '../actions/burger-ingredients';
+import { TItemIngridient } from '../types/types';
 
-const initialState = {
+export type TIngridientsState = {
+  items: TItemIngridient[];
+};
+
+const initialState: TIngridientsState = {
   items: []
 };
 
-export const burgerIngredientsReducer = (store = initialState, action) => {
+export const burgerIngredientsReducer = (store = initialState, action: TBurgerIngridients): TIngridientsState => {
   switch (action.type) {
     case GET_ITEMS_SUCCESS: {
       return {

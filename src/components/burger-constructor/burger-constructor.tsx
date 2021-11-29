@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
-//import PropTypes from 'prop-types';
 import burgerConstructorStyle from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TotalPrice } from '../total-price/total-price';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/types/hooks';
 import { ADD_BUN, ADD_MAIN } from '../../services/actions/burger-constructor';
 import { ADD_COUNT_INGRIDIENT, DELETE_COUNT_BUN } from '../../services/actions/burger-ingredients';
 import { useDrop } from "react-dnd";
@@ -13,7 +12,8 @@ import Main from './main/main';
 import { useHistory } from 'react-router-dom';
 import { getCookie } from '../../services/utils';
 import { orderPost } from '../../services/actions/order-details';
-import { TItemIngridient, TLocataionState, TBurgerState } from '../../services/types/types';
+import { TLocataionState } from '../../services/types/types';
+//import PropTypes from 'prop-types';
 
 type TDropOdject = {
   itemId: string;
@@ -24,8 +24,8 @@ type TPropsBurgerConstructor = {
 };
 
 function BurgerConstructor(props: TPropsBurgerConstructor) {
-  const dataIngredients: Array<TItemIngridient> = useSelector((store: any) => store.ingredients.items);
-  const burger: TBurgerState = useSelector((store: any) => store.burger);
+  const dataIngredients = useSelector(store => store.ingredients.items);
+  const burger = useSelector(store => store.burger);
   const dispatch = useDispatch();
   const history = useHistory<TLocataionState>();
   //const user = useSelector((store: any) => store.user);
@@ -119,7 +119,7 @@ function BurgerConstructor(props: TPropsBurgerConstructor) {
 
   const bunTop = useMemo(
     () => {
-      return (burger.top !== undefined) && (burger.top._id !== undefined) ? (
+      return (burger.top !== undefined) && (burger.top._id !== '') ? (
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -139,7 +139,7 @@ function BurgerConstructor(props: TPropsBurgerConstructor) {
 
   const bunBottom = useMemo(
     () => {
-      return (burger.top !== undefined) && (burger.top._id !== undefined) ? (
+      return (burger.top !== undefined) && (burger.top._id !== '') ? (
         <div className="ml-8 mr-4 mt-4">
           <ConstructorElement
             type="bottom"

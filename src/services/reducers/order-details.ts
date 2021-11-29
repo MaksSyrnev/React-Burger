@@ -7,14 +7,14 @@ import {
 
 export type TOrderState = {
   list: ReadonlyArray<string>;
-  number: number | null;
+  number: number;
   post: boolean;
   fail: boolean;
 };
 
 const initialState: TOrderState = {
   list: [],
-  number: null,
+  number: 0,
   post: false,
   fail: false
 };
@@ -23,7 +23,7 @@ export const orderReducer = (state = initialState, action: TOrderActions): TOrde
   switch (action.type) {
     case ADD_LIST_ORDER: {
       return {
-        number: null,
+        number: 0,
         post: true,
         fail: false,
         list: []

@@ -4,14 +4,14 @@ import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { getCookie } from '../services/utils';
 import { forgotPassword } from '../services/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/types/hooks';
 
 export function ForgotPasswordPage() {
   const isToken = getCookie('refreshToken');
   const [value, setValue] = useState<string>('')
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((store: any) => store.user);
+  const user = useSelector(store => store.user);
   const status: boolean = user.passwordReset.feedStatus;
 
   const handleForgotPassword = useCallback(

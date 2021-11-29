@@ -4,8 +4,8 @@ import styles from './page.module.css';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { updatePassword } from '../services/actions/auth';
 import { getCookie } from '../services/utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { TUserForm } from '../services/types/types';
+import { useDispatch, useSelector } from '../services/types/hooks';
+//import { TUserForm } from '../services/types/types';
 
 export function ResetPasswordPage() {
   const isToken = getCookie('refreshToken');
@@ -13,7 +13,7 @@ export function ResetPasswordPage() {
   const history = useHistory();
   const { state } = useLocation();
   const dispatch = useDispatch();
-  const user = useSelector((store: any) => store.user);
+  const user = useSelector(store => store.user);
   const updateStatus = user.passwordReset.passwordUpdate;
 
   const onChange = (e: any) => {

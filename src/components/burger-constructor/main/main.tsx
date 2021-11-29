@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 //import PropTypes from 'prop-types';
 import mainStyle from './main.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../../services/types/hooks';
 import { REORDER_MAIN_ELEMENTS, DELETE_MAIN_ELEMENT } from '../../../services/actions/burger-constructor';
 import ElementBurger from './element-burger';
 import { TItemIngridient } from '../../../services/types/types';
@@ -10,7 +10,7 @@ type TMainProps = {
 };
 
 export default function Main(props: TMainProps) {
-  const burgerMain: Array<TItemIngridient> = useSelector((store: any) => store.burger.main);
+  const burgerMain = useSelector(store => store.burger.main);
   const dispatch = useDispatch();
   const { deleteCountElement } = props;
   const moveElementBurger = useCallback(
