@@ -7,7 +7,6 @@ import {
   WS_GET_MESSAGE,
   WS_CONNECTION_CLOSE,
   WS_SEND_MESSAGE,
-  TWSOrdersFeed,
   TWSActions
 } from '../actions/ws-action-type';
 
@@ -41,7 +40,7 @@ export const socketMiddleware = (): Middleware => {
         socket.onmessage = (event: MessageEvent) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          const { success, ...restParsedData }: TWSOrdersFeed = parsedData;
+          const { success } = parsedData;
           if (success) {
             dispatch({ type: WS_GET_MESSAGE, payload: JSON.stringify(parsedData) });
           }
