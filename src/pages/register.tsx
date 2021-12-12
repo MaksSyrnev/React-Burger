@@ -17,7 +17,7 @@ export function RegisterPage() {
     alert('Icon Click Callback');
   };
 
-  const onChange = (e: any) => {
+  const onChange = (e: { target: { name: string; value: string; }; }) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -89,7 +89,7 @@ export function RegisterPage() {
 
           <p className={`${styles.text} text text_type_main-default`}>
             Уже зарегистрированы?
-            <Link to="/login">
+            <Link to="/login" className={styles.link}>
               <span className={styles.link}>
                 Войти
               </span>

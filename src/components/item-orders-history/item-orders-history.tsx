@@ -13,8 +13,8 @@ const ItemOrdersHistory: FC = () => {
   const dispatch = useDispatch();
   const orderId = useParams<TOrderId>();
   const data: Array<TItemIngridient> = useSelector(store => store.ingredients.items);
-  const orderData: TItemFeed = useSelector((store: any) => store.itemFeed);
-  const feedOrders: TWSOrders = useSelector((store: any) => store.ws.orders);
+  const orderData = useSelector((store) => store.itemFeed);
+  const feedOrders = useSelector((store) => store.ws.orders);
   const ordersData = feedOrders.orders;
 
   const init = () => {
@@ -42,12 +42,14 @@ const ItemOrdersHistory: FC = () => {
 
 
   let total: number = 0;
-  orderData.list.forEach(function (item) {
-    const ingredientData = data.filter(element => element._id === item);
-    if (ingredientData[0] !== undefined) {
-      total = ingredientData[0].type === "bun" ? total + ingredientData[0].price * 2 : total + ingredientData[0].price;
-    }
-  });
+  if (orderData.list) {
+    orderData.list.forEach(function (item) {
+      const ingredientData = data.filter(element => element._id === item);
+      if (ingredientData[0] !== undefined) {
+        total = ingredientData[0].type === "bun" ? total + ingredientData[0].price * 2 : total + ingredientData[0].price;
+      }
+    });
+  }
 
   return (
     <div className={style.box}>

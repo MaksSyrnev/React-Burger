@@ -6,7 +6,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import { IModal } from '../../services/types/types';
 //import PropTypes from 'prop-types';
 
-const modalRoot: any = document.getElementById("react-modals");
+const modalRoot: HTMLElement = document.getElementById("react-modals")!;
 
 const Modal: FC<IModal> = (props) => {
 

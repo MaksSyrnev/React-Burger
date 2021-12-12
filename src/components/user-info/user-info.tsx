@@ -1,9 +1,9 @@
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './user-info.module.css';
-import { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { EDIT_USER, getUser, refreshToken, saveUserEdit } from '../../services/actions/auth';
 import { useSelector, useDispatch } from '../../services/types/hooks';
-import { TUserInfo, THandleInput, THandleE } from '../../services/types/types';
+import { TUserInfo, } from '../../services/types/types';//THandleInput, THandleE
 
 export function UserInfo() {
   const user = useSelector(store => store.user);
@@ -24,14 +24,14 @@ export function UserInfo() {
     }
   }, [dispatch, refreshStatus, user.getToken.refreshSuccess]);
 
-  const onChange: THandleInput = (e) => {
+  const onChange = (e: { target: { name: string; value: string; }; }) => {
     dispatch({
       type: EDIT_USER,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSaveUserInfo = useCallback<THandleE>((e) => {
+  const handleSaveUserInfo = useCallback((e) => {
     e.preventDefault();
     dispatch(saveUserEdit(userInfo));
   }, [dispatch, userInfo]

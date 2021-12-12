@@ -17,7 +17,7 @@ export function LoginPage() {
     alert('пока не готово, но в будущем ...');
   };
 
-  const onChange = (e: any) => {
+  const onChange = (e: { target: { name: string; value: string; }; }) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -78,14 +78,14 @@ export function LoginPage() {
 
           <p className={`${styles.text} text text_type_main-default`}>
             Вы — новый пользователь?
-            <Link to="/register">
-              <span className={styles.link}>Зарегистрироваться</span>
+            <Link to="/register" className={styles.link}>
+              <span className={styles.link}> Зарегистрироваться</span>
             </Link>
           </p>
 
           <p className={`${styles.text} text text_type_main-default`}>
             Забыли пароль?
-            <Link to="/forgot-password">
+            <Link to="/forgot-password" className={styles.link}>
               <span className={styles.link}> Восстановить пароль</span>
             </Link>
           </p>

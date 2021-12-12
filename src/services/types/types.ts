@@ -66,10 +66,6 @@ export type TAddUser = {
   name: string;
 };
 
-export type THandleE = (e: any) => void;
-
-export type THandleInput = (e: any) => void;
-
 export type TOrder = {
   orderNumber: number;
 };
@@ -181,7 +177,6 @@ export type TLoginResponse = {
   message?: string;
 };
 
-
 export type TOrderResponse = {
   success: boolean;
   message?: string;
@@ -241,3 +236,6 @@ export type TTokenRefreshState = {
   refreshSuccess: boolean;
   refreshFail: boolean;
 };
+
+//export type THandleE = (e) => void;
+//export type THandleInput = (e) => void;
