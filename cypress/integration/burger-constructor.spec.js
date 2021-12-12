@@ -13,21 +13,23 @@ describe('burger constructor component works test', () => {
 
     it('логин пользователя', () => {
         cy.visit('http://localhost:3000/login');
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(5000);
         cy.contains('Вход');
         cy.get('input').get('[name^=email]').as('email');
+        cy.get('@email').type('retro@example.org').should('have.value', 'retro@example.org');
         cy.get('input').get('[name^=password]').as('pass');
-        cy.get('@email').click();
-        cy.get('@email').type("retro@example.org");
-        cy.get('@pass').click();
-        cy.get('@pass').type('123');
+        cy.get('@pass').type('123').should('have.value', '123');
         cy.get('[class^=button]').contains('Войти').as('button');
         cy.get('@button').click();
-        cy.wait(2000);
     });
 
+
+
     it('открытие модального окна ингридиента', () => {
-        cy.visit('http://localhost:3000');
-        //cy.wait(2000);
+        //cy.visit('http://localhost:3000');
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(2000);
         cy.get('[class^=ingredient_product_card]').as('ingredients');
         cy.get('@ingredients').contains('Краторная').first().click();
         cy.get('[class^=modal-overlay_popup]');
@@ -49,7 +51,21 @@ describe('burger constructor component works test', () => {
 
     it('оформление заказа', () => {
         cy.get('[class^=button]').contains('Оформить заказ').click();
-        cy.get('[class^=text]').contains('идентификатор заказа');
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(5000);
+        cy.contains('Вход');
+        cy.get('input').get('[name^=email]').as('email');
+        cy.get('@email').type('retro@example.org').should('have.value', 'retro@example.org');
+        cy.get('input').get('[name^=password]').as('pass');
+        cy.get('@pass').type('123').should('have.value', '123');
+        cy.get('[class^=button]').contains('Войти').as('button');
+        cy.get('@button').click();
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(5000);
+        cy.get('[class^=button]').contains('Оформить заказ').click();
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.wait(5000);
+        cy.get('[class^=order-details]').contains('идентификатор заказа');
     });
 
 });
