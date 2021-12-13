@@ -16,7 +16,7 @@ export function ResetPasswordPage() {
   const user = useSelector(store => store.user);
   const updateStatus = user.passwordReset.passwordUpdate;
 
-  const onChange = (e: any) => {
+  const onChange = (e: { target: { name: string; value: string; }; }) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -91,7 +91,7 @@ export function ResetPasswordPage() {
 
           <p className={`${styles.text} text text_type_main-default`}>
             Вспомнили пароль?
-            <Link to="/login">
+            <Link to="/login" className={styles.link}>
               <span className={styles.link}>
                 Войти
               </span>

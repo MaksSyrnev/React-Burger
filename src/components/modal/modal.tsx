@@ -6,7 +6,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import { IModal } from '../../services/types/types';
 //import PropTypes from 'prop-types';
 
-const modalRoot: any = document.getElementById("react-modals");
+const modalRoot: HTMLElement = document.getElementById("react-modals")!;
 
 const Modal: FC<IModal> = (props) => {
 
@@ -16,7 +16,7 @@ const Modal: FC<IModal> = (props) => {
         <div className={`${modalStyle.box} pl-10 pr-10 pt-10 pb-15`} onClick={(e) => e.stopPropagation()}>
           <div className={modalStyle.header}>
             <h2 className={`${modalStyle.title} text text_type_main-large`}>{props.title}</h2>
-            <CloseIcon type="primary" onClick={props.onClose} />
+            <div className={modalStyle.button_close}> <CloseIcon type="primary" onClick={props.onClose} /></div>
           </div>
           <div>
             {props.children}

@@ -30,3 +30,7 @@
 .close:hover {
   cursor: pointer;
 }
+
+.button_close {
+  box-sizing: border-box;
+}

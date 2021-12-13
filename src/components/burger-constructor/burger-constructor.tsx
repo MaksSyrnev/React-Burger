@@ -28,8 +28,6 @@ function BurgerConstructor(props: TPropsBurgerConstructor) {
   const burger = useSelector(store => store.burger);
   const dispatch = useDispatch();
   const history = useHistory<TLocataionState>();
-  //const user = useSelector((store: any) => store.user);
-  //const order = useSelector((store: any) => store.order);
 
   //принятие дропа элемента булка
   const [{ isBunHover }, DropBunTarget] = useDrop({
